@@ -1,0 +1,21 @@
+DELETE THIS LINE AFTER CODE REVIEW
+//------------------------------------------------------------------------------
+// Name: @PATH
+// 
+// @TIMESTAMP @USER
+// Written for use with mrgsolve and R Version 3.X
+//------------------------------------------------------------------------------
+// Purpose: @PURPOSE
+//------------------------------------------------------------------------------
+
+@PLUGIN
+@GLOBAL
+@CMT
+@PARAM
+@OMEGA
+@SIGMA
+@MAIN
+@PRED
+@ODE
+@TABLE
+@CAPTURE

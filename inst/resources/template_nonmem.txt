@@ -1,0 +1,26 @@
+@PROB1
+;;------------------------------------------------------------------------------
+;; Name: @PATH
+;; 
+;; Created on @TIMESTAMP by @USER
+;; Written for use with NONMEM @VERSION
+;;------------------------------------------------------------------------------
+;; @PURPOSE
+
+@PROB2
+@INPUT
+@DATA
+@SUBROUTINE
+@MODEL
+@ABBREVIATED
+@THETA
+@OMEGA
+@SIGMA
+@PRIOR
+@PK
+@PRED
+@DES
+@ERROR
+@TASK
+@TABLE
+@TAGS

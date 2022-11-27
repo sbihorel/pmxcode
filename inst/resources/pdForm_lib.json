@@ -1,0 +1,226 @@
+[
+  {
+    "TYPE": "direct_er",
+    "FORM": "lin",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "power",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "power",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "power",
+    "PARAMETERIZATION": 3,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "power",
+    "PARAMETERIZATION": 4,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "exp",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "exp",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "exp",
+    "PARAMETERIZATION": 3,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "exp",
+    "PARAMETERIZATION": 4,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "mm",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "mm",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "mm",
+    "PARAMETERIZATION": 3,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "hill",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "hill",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "hill",
+    "PARAMETERIZATION": 3,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "weibull",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "weibull",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "direct_er",
+    "FORM": "weibull",
+    "PARAMETERIZATION": 3,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "base",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "lin",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "power",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "power",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "power",
+    "PARAMETERIZATION": 3,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "exp",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "exp",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "exp",
+    "PARAMETERIZATION": 3,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "mm",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "mm",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "hill",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "hill",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 0,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "weibull",
+    "PARAMETERIZATION": 1,
+    "DECREASE": 1,
+    "INCREASE": 1
+  },
+  {
+    "TYPE": "logis_ordcat",
+    "FORM": "weibull",
+    "PARAMETERIZATION": 2,
+    "DECREASE": 0,
+    "INCREASE": 1
+  }
+]

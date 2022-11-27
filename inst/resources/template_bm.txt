@@ -1,0 +1,18 @@
+DELETE THIS LINE AFTER CODE REVIEW
+;;------------------------------------------------------------------------------
+;; Name: @PATH
+;; 
+;; @TIMESTAMP @USER
+;; Written for use with Berkeley Madonna Version 8.3.18
+;;------------------------------------------------------------------------------
+;; Purpose: @PURPOSE
+;;------------------------------------------------------------------------------
+
+@INTEGRATION
+@GLOBAL
+@DOSING
+@PARAM
+@MAIN
+@PRED
+@ODE
+@OUTPUT

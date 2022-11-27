@@ -1,0 +1,714 @@
+[
+  {
+    "PARM": "ALAG1",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG10",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG2",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG3",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG4",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG5",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG6",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG7",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG8",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "ALAG9",
+    "LABEL": "Lag-time of Absorption",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "BASE",
+    "LABEL": "Baseline Response",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "CL",
+    "LABEL": "Elimination Clearance",
+    "UNIT": "L/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "CLD1",
+    "LABEL": "1st Distribution Clearance",
+    "UNIT": "L/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "CLD2",
+    "LABEL": "2nd Distribution Clearance",
+    "UNIT": "L/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D1",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D10",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D2",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D3",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D4",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D5",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D6",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D7",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D8",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "D9",
+    "LABEL": "Zero-order Absorption Duration",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "DELTA",
+    "LABEL": "Magnitude of Change in Response",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "EXPO",
+    "LABEL": "Exponent",
+    "UNIT": "",
+    "FORM": "exp",
+    "INCREASE": "NA",
+    "INFO": "FORM"
+  },
+  {
+    "PARM": "HILL",
+    "LABEL": "Hill Coefficient",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "IC50",
+    "LABEL": "Half-inhibitory <DRIVER>",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "IMAX",
+    "LABEL": "Maximum Inhibition",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "INT",
+    "LABEL": "Baseline Response",
+    "UNIT": "Define units",
+    "FORM": "lin",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KA",
+    "LABEL": "First-order Absorption Rate Constant",
+    "UNIT": "1/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KD",
+    "LABEL": "Equilibrium Dissociation Constant",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KDEG",
+    "LABEL": "Receptor Degradation Rate",
+    "UNIT": "1/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KE0",
+    "LABEL": "First-order Distribution Rate Constant to Biophase",
+    "UNIT": "1/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KIN",
+    "LABEL": "Production Rate of Response",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KINT",
+    "LABEL": "Drug-Receptor Complex Internalization Rate",
+    "UNIT": "1/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KM",
+    "LABEL": "Half-inhibitory <ELIM>",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KOFF",
+    "LABEL": "Drug-Receptor Dissociation Rate",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KON",
+    "LABEL": "Drug-Receptor Binding Rate",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KOUT",
+    "LABEL": "Elimination Rate of Response",
+    "UNIT": "1/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KSS",
+    "LABEL": "Steady-state Dissociation Constant",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "KSYN",
+    "LABEL": "Receptor Production Rate",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LBASE",
+    "LABEL": "Baseline Response (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI0",
+    "LABEL": "Intercept for DV=0 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI1",
+    "LABEL": "Intercept for DV=1 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI2",
+    "LABEL": "Intercept for DV=2 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI3",
+    "LABEL": "Intercept for DV=3 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI4",
+    "LABEL": "Intercept for DV=4 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI5",
+    "LABEL": "Intercept for DV=5 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI6",
+    "LABEL": "Intercept for DV=6 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI7",
+    "LABEL": "Intercept for DV=7 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI8",
+    "LABEL": "Intercept for DV=8 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI9",
+    "LABEL": "Intercept for DV=9 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "LGI10",
+    "LABEL": "Intercept for DV=10 (logit)",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "MAX",
+    "LABEL": "Maximum Response",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "MIN",
+    "LABEL": "Minimum Response",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "MTT",
+    "LABEL": "Mean Transit Time",
+    "UNIT": "h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "NN",
+    "LABEL": "Number of Transit Compartments",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "PCT",
+    "LABEL": "Percent Decrease",
+    "UNIT": "%",
+    "FORM": "",
+    "INCREASE": 0,
+    "INFO": "INCREASE"
+  },
+  {
+    "PARM": "PCT",
+    "LABEL": "Percent Increase",
+    "UNIT": "%",
+    "FORM": "",
+    "INCREASE": 1,
+    "INFO": "INCREASE"
+  },
+  {
+    "PARM": "POW",
+    "LABEL": "Power",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "Q",
+    "LABEL": "Distribution Clearance",
+    "UNIT": "L/h",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R1",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R10",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R2",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R3",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R4",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R5",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R6",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R7",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R8",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "R9",
+    "LABEL": "Rate of Input",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "RBAS",
+    "LABEL": "Baseline Response",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "RINF",
+    "LABEL": "Limit Response",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "RO",
+    "LABEL": "Receptor Concentration at Baseline",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "RTOT",
+    "LABEL": "Total Receptor Concentration",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "SC50",
+    "LABEL": "Half-stimulatory <DRIVER>",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "SCALE",
+    "LABEL": "Scaling Factor",
+    "UNIT": "",
+    "FORM": "exp",
+    "INCREASE": "NA",
+    "INFO": "FORM"
+  },
+  {
+    "PARM": "SCALE",
+    "LABEL": "Scaling Factor",
+    "UNIT": "",
+    "FORM": "pow",
+    "INCREASE": "NA",
+    "INFO": "FORM"
+  },
+  {
+    "PARM": "SLOPE",
+    "LABEL": "Slope",
+    "UNIT": "Define units",
+    "FORM": "lin",
+    "INCREASE": "NA",
+    "INFO": "FORM"
+  },
+  {
+    "PARM": "SMAX",
+    "LABEL": "Maximum Stimulation",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "VC",
+    "LABEL": "Central Volume",
+    "UNIT": "L",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "VMAX",
+    "LABEL": "Maximum Rate of Elimination",
+    "UNIT": "Define units",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "VP",
+    "LABEL": "Peripheral Volume",
+    "UNIT": "L",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "VP1",
+    "LABEL": "1st Peripheral Volume",
+    "UNIT": "L",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "VP2",
+    "LABEL": "2nd Peripheral Volume",
+    "UNIT": "L",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "VSS",
+    "LABEL": "Steady-state Volume of Distribution",
+    "UNIT": "L",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "WK",
+    "LABEL": "Weibull Shape Coefficient",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "WL",
+    "LABEL": "Weibull Scale Coefficient",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  }
+]

@@ -1,0 +1,632 @@
+[
+  {
+    "CMT": 1,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(CENTRAL DEFDOSE DEFOBS)",
+    "MRGSOLVE": "  A1 : Central"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(CENTRAL DEFDOSE DEFOBS)",
+    "MRGSOLVE": "  A1 : Central"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "first",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(CENTRAL DEFDOSE DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Central|  A2 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(CENTRAL DEFDOSE DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Central|  A2 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "first",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central|  A3 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central|  A3 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central|  A3 : Peripheral"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(CENTRAL DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Central|  A2 : Peripheral 1|  A3 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(CENTRAL DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Central|  A2 : Peripheral 1|  A3 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "first",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "mmlin",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CENTRAL DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Central|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(CFREE DEFDOSE DEFOBS)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Free drug|  A2 : Free receptor|  A3 : Drug-receptor complex"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(CFREE DEFDOSE DEFOBS)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Free drug|  A2 : Free receptor|  A3 : Drug-receptor complex"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Free receptor|  A4 : Drug-receptor complex"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Free receptor|  A4 : Drug-receptor complex"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Free receptor|  A4 : Drug-receptor complex"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(CFREE DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Free drug|  A2 : Peripheral |  A3 : Free receptor|  A4 : Drug-receptor complex"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(CFREE DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Free drug|  A2 : Peripheral |  A3 : Free receptor|  A4 : Drug-receptor complex"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(PERI1)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Peripheral |  A4 : Free receptor|  A5 : Drug-receptor complex"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(PERI1)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Peripheral |  A4 : Free receptor|  A5 : Drug-receptor complex"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(PERI1)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Peripheral |  A4 : Free receptor|  A5 : Drug-receptor complex"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(CFREE DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Free drug|  A2 : Peripheral 1|  A3 : Peripheral 2|  A4 : Free receptor|  A5 : Drug-receptor complex"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(CFREE DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Free drug|  A2 : Peripheral 1|  A3 : Peripheral 2|  A4 : Free receptor|  A5 : Drug-receptor complex"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Free receptor|  A6 : Drug-receptor complex"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Free receptor|  A6 : Drug-receptor complex"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmdd",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CFREE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RFREE)|  COMP=(RC)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Free drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Free receptor|  A6 : Drug-receptor complex"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral|  A3 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral|  A3 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral|  A4 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral|  A4 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral|  A4 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2|  A4 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2|  A4 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqe",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)",
+    "MRGSOLVE": "  A1 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)",
+    "MRGSOLVE": "  A1 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqer",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral|  A3 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral|  A3 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral|  A4 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral|  A4 : Total receptor"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral|  A4 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2|  A4 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2|  A4 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Total receptor"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqss",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)|  COMP=(RTOT)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2|  A5 : Total receptor"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)",
+    "MRGSOLVE": "  A1 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)",
+    "MRGSOLVE": "  A1 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug"
+  },
+  {
+    "CMT": 1,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral"
+  },
+  {
+    "CMT": 2,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "bolus",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "zero",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(CTOT DEFDOSE DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Total drug|  A2 : Peripheral 1|  A3 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "first",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "sig",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  },
+  {
+    "CMT": 3,
+    "ABSORPTION": "transit",
+    "ELIMINATION": "tmddqssr",
+    "NONMEM": "  COMP=(DEPOT DEFDOSE)|  COMP=(CTOT DEFOBS)|  COMP=(PERI1)|  COMP=(PERI2)",
+    "MRGSOLVE": "  A1 : Depot|  A2 : Total drug|  A3 : Peripheral 1|  A4 : Peripheral 2"
+  }
+]
