@@ -28,6 +28,8 @@ replace_pk_pred(
 
 \item{parms_code}{Typical and individual parameter code}
 
+\item{derived_parms_code}{Derived parameter code}
+
 \item{scaling_code}{Dose scaling and bioavailability code}
 
 \item{init_code}{Compartment initialization code}

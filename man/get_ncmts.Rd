@@ -15,7 +15,7 @@ get_ncmts(input, new, model_lib, isPRED, isPREDPP)
 
 \item{isPRED}{Reactive object - is model coded with $PRED?}
 
-\item{isPREDD}{Reactive object - is mode coded with $PK?}
+\item{isPREDPP}{Reactive object - is mode coded with $PK?}
 }
 \description{
 Get the number of PK and PD compartments

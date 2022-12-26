@@ -15,7 +15,7 @@ replace_model(input, new, model_lib, isPRED, isPREDPP)
 
 \item{isPRED}{Reactive object - is model coded with $PRED?}
 
-\item{isPREDD}{Reactive object - is mode coded with $PK?}
+\item{isPREDPP}{Reactive object - is mode coded with $PK?}
 }
 \description{
 Replace @MODEL tag

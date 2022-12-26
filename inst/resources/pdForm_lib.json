@@ -126,98 +126,98 @@
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "base",
     "PARAMETERIZATION": 1,
     "DECREASE": 0,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "lin",
     "PARAMETERIZATION": 1,
     "DECREASE": 1,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "power",
     "PARAMETERIZATION": 1,
     "DECREASE": 0,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "power",
     "PARAMETERIZATION": 2,
     "DECREASE": 1,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "power",
     "PARAMETERIZATION": 3,
     "DECREASE": 0,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "exp",
     "PARAMETERIZATION": 1,
     "DECREASE": 0,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "exp",
     "PARAMETERIZATION": 2,
     "DECREASE": 1,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "exp",
     "PARAMETERIZATION": 3,
     "DECREASE": 0,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "mm",
     "PARAMETERIZATION": 1,
     "DECREASE": 1,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "mm",
     "PARAMETERIZATION": 2,
     "DECREASE": 0,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "hill",
     "PARAMETERIZATION": 1,
     "DECREASE": 1,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "hill",
     "PARAMETERIZATION": 2,
     "DECREASE": 0,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "weibull",
     "PARAMETERIZATION": 1,
     "DECREASE": 1,
     "INCREASE": 1
   },
   {
-    "TYPE": "logis_ordcat",
+    "TYPE": "logistic_ordcat",
     "FORM": "weibull",
     "PARAMETERIZATION": 2,
     "DECREASE": 0,

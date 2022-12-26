@@ -9,7 +9,7 @@ replace_theta(new, parms)
 \arguments{
 \item{new}{Text template}
 
-\item{vars}{Character vector of variable names}
+\item{parms}{Parameter selection}
 }
 \description{
 Replacement of @THETA tag

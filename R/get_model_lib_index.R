@@ -5,12 +5,30 @@ get_model_lib_index <- function(
     parm_lib
 ) {
 
+  req( input$ivInput, input$poInput, input$pkCMTInput, input$eliminationInput )
+
+  req( length(advan()) > 0 )
+
+  if ( grepl('tmdd', input$eliminationInput) ){
+    req(input$tmddInput)
+  }
+
+  absorptionInput <- sub(
+    "none_|zero_|bolus_",
+    "",
+    sub(
+      "_none",
+      "",
+      paste(input$ivInput, input$poInput, sep = "_")
+    )
+  )
+
   parm_lib %>%
     dplyr::filter(
       # CMT criteria
-      CMT == as.numeric( sub('cmt', '', input$pkCMTInput) ) &
-        ABSORPTION == switch(
-          input$absorptionInput,
+      .data$CMT == as.numeric( sub('cmt', '', input$pkCMTInput) ) &
+        .data$ABSORPTION == switch(
+          absorptionInput,
           'bolus' = 'bolus_zero',
           'zero' = 'bolus_zero',
           'first' = 'first_sig',
@@ -18,9 +36,9 @@ get_model_lib_index <- function(
           'transit'
         ) &
         # Elimination criteria
-        ELIMINATION == input$eliminationInput &
+        .data$ELIMINATION == input$eliminationInput &
         # ADVAN criteria
-        ADVAN == ifelse(
+        .data$ADVAN == ifelse(
           is.na(advan()),
           '.',
           ifelse(
@@ -30,12 +48,12 @@ get_model_lib_index <- function(
           )
         ) &
         # TRANS criteria
-        TRANS == ifelse(
+        .data$TRANS == ifelse(
           grepl('tmdd', input$eliminationInput),
-          input$tmddParmInput,
+          input$tmddInput,
           trans()
         )
     ) %>%
-    dplyr::pull(N)
+    dplyr::pull(.data$N)
 
 }

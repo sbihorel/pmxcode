@@ -19,6 +19,10 @@
 
 attachment::att_amend_desc()
 
+# update README
+devtools::build_readme()
+
+
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module(name = "new_model", with_test = FALSE) # Name of the module

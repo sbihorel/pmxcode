@@ -15,7 +15,7 @@ NULL
 
 #' Multi-argument version of isTruthy
 #'
-#' See \code{shiny::\link[shiny:isTruthy]} for details.
+#' See \code{shiny::\link[shiny:isTruthy]{isTruthy}} for details.
 #'
 #' @name areTruthy
 #'
@@ -44,17 +44,6 @@ notTruthy <- function(...){
 
 }
 
-#' Lower part of a matrix (including diagoncal element)
-#'
-#' @name bottom_triangle
-#' @param x A matrix
-#' @return A matrix of logicals identifying the elements of x which part of the
-#' lower triangle and the diagonal of x
-
-bottom_triangle <- function(x){
-  lower.tri(x) | as.logical(diag(nrow(x)))
-}
-
 #' Convert of covariance matrix into a 0/1 correlation map table
 #' @name get_correlation_table
 #' @param x A covariance matrix
@@ -66,14 +55,11 @@ get_correlation_table <- function(x, na_zero = FALSE){
   if ( na_zero ){
     x[is.na(x)] <- 0
   }
-
-  x[bottom_triangle(x)] <- ifelse(
-    is.na(x[bottom_triangle(x)]),
-    0,
-    x[bottom_triangle(x)]
-  )
+  pos <- lower.tri(x, diag = TRUE)
+  x[pos] <- ifelse( is.na(x[pos]), 0, x[pos] )
   x[!is.na(x) & x != 0] <- 1
   x
+
 }
 
 #' Determine if a square matrix is of type block, band or error
@@ -131,4 +117,3 @@ is_EDB <- function(x){
   }
 
 }
-

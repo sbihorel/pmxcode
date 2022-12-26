@@ -1,9 +1,9 @@
-DELETE THIS LINE AFTER CODE REVIEW
+
 ;;------------------------------------------------------------------------------
 ;; Name: @PATH
-;; 
-;; @TIMESTAMP @USER
-;; Written for use with Berkeley Madonna Version 8.3.18
+;;
+;; Created on @TIMESTAMP @USER
+;;         for Berkeley Madonna Version @VERSION
 ;;------------------------------------------------------------------------------
 ;; Purpose: @PURPOSE
 ;;------------------------------------------------------------------------------

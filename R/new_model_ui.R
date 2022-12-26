@@ -1,5 +1,5 @@
 new_model_ui <- function(){
-  shiny::tabPanel(
+  tabPanel(
     title = "New",
     icon = icon("square-plus", verify_fa = FALSE),
     value = "new",
@@ -22,7 +22,7 @@ new_model_ui <- function(){
                   radioButtons(
                     inputId = "platformInput",
                     label = " ",
-                    choices = c("NONMEM", "Berkeley Madonna", "mrgsolve"),
+                    choices = c("NONMEM", "mrgsolve"), #"Berkeley Madonna", "mrgsolve"),
                     selected = "NONMEM"
                   )
                 ),
@@ -78,14 +78,13 @@ new_model_ui <- function(){
             )
           ),
 
-          #---- PK model - Structure ----
+          #---- PK model structure ----
           tabPanel(
             title = "Structure",
             wellPanel(
               h4(strong("Pharmacokinetic model")),
               fluidRow(
-                column(
-                  width = 12,
+                col_12(
                   selectInput(
                     inputId = "pkInput",
                     width = "100%",
@@ -101,9 +100,19 @@ new_model_ui <- function(){
                   )
                 )
               ),
+              # First row for LINMAT and ODE model
               conditionalPanel(
-                condition = "input.pkInput == 'pk'",
+                condition = "input.pkInput == 'linmat' | input.pkInput == 'ode'",
                 fluidRow(
+                  col_4( uiOutput("pknCMTUI") ),
+                  col_4( uiOutput("pkDefaultDoseUI") ),
+                  col_4( uiOutput("pkDefaultObsUI") )
+                )
+              ),
+              # First row
+              fluidRow(
+                conditionalPanel(
+                  condition = "input.pkInput == 'pk'",
                   col_4(
                     selectInput(
                       inputId = "pkCMTInput",
@@ -117,52 +126,54 @@ new_model_ui <- function(){
                       selected = 1
                     )
                   )
-                )
-              ),
-              conditionalPanel(
-                condition = "input.pkInput == 'linmat' | input.pkInput == 'ode'",
-                fluidRow(
-                  col_4( uiOutput("pknCMTUI") ),
-                  col_4( uiOutput("pkDefaultDoseUI") ),
-                  col_4( uiOutput("pkDefaultObsUI") )
-                )
-              ),
-              conditionalPanel(
-                condition = "input.pkInput == 'pk'",
-                fluidRow(
-                  uiOutput("absorptionUI"),
-                  uiOutput("pkZeroEstUI"),
-                  uiOutput("alagUI")
                 ),
+                uiOutput("ivDosingUI"),
+                uiOutput("poDosingUI")
+              ),
+              # Second row
+              fluidRow(
                 conditionalPanel(
                   condition = "input.pkInput == 'pk'",
-                  fluidRow(
-                    col_4(
-                      uiOutput("eliminationUI")
-                    ),
-                    conditionalPanel(
-                      condition = "input.eliminationInput == 'mm' | input.eliminationInput == 'mmlin'",
-                      col_4(
-                        selectInput(
-                          inputId = "kmScaleInput",
-                          width = "100%",
-                          label = "KM scale",
-                          choices = c(
-                            "Concentration"= TRUE, "Amount" = FALSE
-                          ),
-                          selected = TRUE
-                        )
-                      )
-                    ),
-                    conditionalPanel(
-                      condition = "input.eliminationInput == 'tmdd' | input.eliminationInput == 'tmddqe' | input.eliminationInput == 'tmddqer' | input.eliminationInput == 'tmddqss' | input.eliminationInput == 'tmddqssr'",
-                      col_8(
-                        uiOutput("tmddUI")
-                      )
-                    )
+                  uiOutput("eliminationUI")
+                ),
+                conditionalPanel(
+                  condition = "input.pkInput == 'pk' | input.pkInput == 'linmat' | input.pkInput == 'ode'",
+                  uiOutput("ivRateUI"),
+                  uiOutput("poRateUI"),
+                  conditionalPanel(
+                    condition = "input.poInput != 'sig'",
+                    uiOutput("alagUI1")
                   )
                 )
-              )
+              ),
+              # Third row
+              fluidRow(
+                conditionalPanel(
+                  condition = "input.pkInput == 'pk' & (input.eliminationInput == 'mm' | input.eliminationInput == 'mmlin')",
+                  col_4(
+                    selectInput(
+                      inputId = "kmScaleInput",
+                      width = "100%",
+                      label = "KM scale",
+                      choices = c(
+                        "Concentration"= TRUE, "Amount" = FALSE
+                      ),
+                      selected = TRUE
+                    )
+                  )
+                ),
+                conditionalPanel(
+                  condition = "input.pkInput == 'pk' & (input.eliminationInput == 'tmdd' | input.eliminationInput == 'tmddqe' | input.eliminationInput == 'tmddqer' | input.eliminationInput == 'tmddqss' | input.eliminationInput == 'tmddqssr')",
+                  col_8(
+                    uiOutput("tmddUI")
+                  )
+                ),
+                conditionalPanel(
+                  condition = "(input.pkInput == 'pk' | input.pkInput == 'linmat' | input.pkInput == 'ode') & input.poInput == 'sig'",
+                  uiOutput("alagUI2")
+                )
+              ),
+              uiOutput("warningDosingUI")
             ),
 
             #---- PD model structure ----
@@ -172,11 +183,11 @@ new_model_ui <- function(){
                 col_12( uiOutput("pdUI") )
               ),
 
-              # UI for functional form of direct effect, link, and exposure-response models
+              # UI for functional form of direct effect, biophase, and exposure-response models
               conditionalPanel(
                 condition = paste(
-                  "input.pdInput == 'direct' | input.pdInput == 'link' |",
-                  "input.pdInput == 'er'  | input.pdInput == 'logis' | input.pdInput == 'ordcat'"),
+                  "input.pdInput == 'direct' | input.pdInput == 'biophase' |",
+                  "input.pdInput == 'er'  | input.pdInput == 'logistic' | input.pdInput == 'ordcat'"),
                 fluidRow(
                   conditionalPanel(
                     condition = "input.pdInput == 'ordcat'",
@@ -184,7 +195,7 @@ new_model_ui <- function(){
                   ),
                   col_4(
                     uiOutput("exposureVarUI"),
-                    uiOutput("logisDriverVarUI")
+                    uiOutput("logisticDriverVarUI")
                   )
                 ),
                 fluidRow(
@@ -241,7 +252,7 @@ new_model_ui <- function(){
 
               # Ui for driver of drug effect
               conditionalPanel(
-                condition = "input.pdInput == 'direct' | input.pdInput == 'link' | input.pdInput == 'idr'",
+                condition = "input.pdInput == 'direct' | input.pdInput == 'biophase' | input.pdInput == 'idr'",
                 fluidRow(
                   col_6( uiOutput("effectDriverUI") ),
                   col_6(
@@ -295,8 +306,9 @@ new_model_ui <- function(){
             title = "Parameters",
             wellPanel(
               uiOutput("parameterWarningUI"),
-              uiOutput("parmsUI"),
-              uiOutput("duplicateParmWarningUI")
+              uiOutput("parameterUI"),
+              uiOutput("warningParameterUI"),
+              uiOutput("importParameterUI")
             )
           ),
 
@@ -333,26 +345,26 @@ new_model_ui <- function(){
             )
           ),
 
-          #---- Misc. ----
+          #---- Scaling ----
           tabPanel(
-            title = "Misc.",
+            title = "Scaling",
             wellPanel(
               uiOutput("scalingUI")
-            ),
-            uiOutput("optionsUI")
+            )
           )
         )
       ),
 
       #---- ACE editor ----
       col_6(
+        rclipboard::rclipboardSetup(),
         uiOutput('aceToolbarUI'),
         p(),
         shinyAce::aceEditor(
           outputId = "aceNew",
           mode = "plain_text",
           theme = "crimson_editor",
-          height = "800px",
+          height = "775px",
           fontSize = 12,
           wordWrap = TRUE
         )

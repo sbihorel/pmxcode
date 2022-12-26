@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils_nonmem.R
 \name{replace_prior}
 \alias{replace_prior}
-\title{Replacement of @SIGMA tag}
+\title{Replacement of @PRIOR tag}
 \usage{
 replace_prior(input, new, parms, varianceTable, estimations)
 }
@@ -15,8 +15,8 @@ replace_prior(input, new, parms, varianceTable, estimations)
 
 \item{varianceTable}{Variability selection}
 
-\item{rvTable}{Residual variability selection}
+\item{estimations}{Table of estimation tasks}
 }
 \description{
-Replacement of @SIGMA tag
+Replacement of @PRIOR tag
 }

@@ -1,13 +1,13 @@
-DELETE THIS LINE AFTER CODE REVIEW
+
 //------------------------------------------------------------------------------
 // Name: @PATH
-// 
-// @TIMESTAMP @USER
-// Written for use with mrgsolve and R Version 3.X
+//
+// Created on @TIMESTAMP @USER
+//         for mrgsolve and R @VERSION
 //------------------------------------------------------------------------------
 // Purpose: @PURPOSE
-//------------------------------------------------------------------------------
 
+@NMEXT
 @PLUGIN
 @GLOBAL
 @CMT

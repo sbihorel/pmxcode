@@ -1,9 +1,9 @@
 @PROB1
 ;;------------------------------------------------------------------------------
 ;; Name: @PATH
-;; 
+;;
 ;; Created on @TIMESTAMP by @USER
-;; Written for use with NONMEM @VERSION
+;;         for NONMEM @VERSION
 ;;------------------------------------------------------------------------------
 ;; @PURPOSE
 

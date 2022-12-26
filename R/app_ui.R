@@ -10,37 +10,31 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    navbarPage(
-      title = "pmxCode",
-      theme = bslib::bs_theme(bootswatch = "sandstone", version = 3),
-      htmltools::tags$head(
-        htmltools::tags$style(
-          htmltools::HTML(
-            paste(
-              "@import url(https://use.fontawesome.com/releases/v6.2.0/css/all.css);",
-              ".btn.active{",
-              "  background-color: #baa;",
-              "}",
-              ".btn.active:hover{",
-              "  background-color: #baa;",
-              "}",
-              # ".jexcel_selectall {",
-              # "  display: none",
-              # "}",
-              # ".jexcel_row {",
-              # "  display: none",
-              # "}",
-              # "colgroup>col:last-child {",
-              # "  width:0;",
-              # "}",
-              sep = "\n"
+    suppressWarnings(
+      navbarPage(
+        title = "pmxCode",
+        theme = bslib::bs_theme(bootswatch = "sandstone", version = 3),
+        htmltools::tags$head(
+          htmltools::tags$style(
+            htmltools::HTML(
+              paste(
+                "@import url(https://use.fontawesome.com/releases/v6.2.0/css/all.css);",
+                ".btn.active{",
+                "  background-color: #c96674;",
+                "}",
+                ".btn.active:hover{",
+                "  background-color: #c96674;",
+                "}",
+                sep = "\n"
+              )
             )
           )
-        )
-      ),
-      new_model_ui(),
-      header = NULL,
-      footer = NULL
+        ),
+        new_model_ui(),
+        help_ui(),
+        header = NULL,
+        footer = NULL
+      )
     )
   )
 }

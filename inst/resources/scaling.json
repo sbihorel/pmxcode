@@ -15,19 +15,19 @@
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "mol",
@@ -45,19 +45,19 @@
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "g",
@@ -81,13 +81,13 @@
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -111,19 +111,19 @@
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -147,13 +147,13 @@
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -177,7 +177,7 @@
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
@@ -189,25 +189,25 @@
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "mol",
@@ -219,25 +219,25 @@
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "g",
@@ -255,19 +255,19 @@
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "mol",
@@ -285,19 +285,19 @@
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "g",
@@ -321,13 +321,13 @@
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -351,73 +351,73 @@
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-18
+    "SCALING": 1E-18
   },
   {
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-18
+    "SCALING": 1E-18
   },
   {
     "DOSE": "g",
@@ -429,25 +429,25 @@
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "mol",
@@ -459,25 +459,25 @@
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "g",
@@ -489,25 +489,25 @@
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "mol",
@@ -519,25 +519,25 @@
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "g/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "g",
@@ -561,13 +561,13 @@
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -591,19 +591,19 @@
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -627,13 +627,13 @@
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -657,19 +657,19 @@
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -693,13 +693,13 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -735,19 +735,19 @@
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "mol",
@@ -765,19 +765,19 @@
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "g",
@@ -801,13 +801,13 @@
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -831,19 +831,19 @@
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -867,13 +867,13 @@
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -897,7 +897,7 @@
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
@@ -909,25 +909,25 @@
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "mol",
@@ -939,25 +939,25 @@
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-15
+    "SCALING": 1E-15
   },
   {
     "DOSE": "g",
@@ -975,19 +975,19 @@
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "mol",
@@ -1005,19 +1005,19 @@
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "g",
@@ -1035,19 +1035,19 @@
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "mol",
@@ -1065,25 +1065,25 @@
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "mg/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -1107,13 +1107,13 @@
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -1137,19 +1137,19 @@
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -1173,13 +1173,13 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -1203,19 +1203,19 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -1233,19 +1233,19 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -1281,13 +1281,13 @@
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -1311,19 +1311,19 @@
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -1347,13 +1347,13 @@
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -1377,19 +1377,19 @@
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -1413,13 +1413,13 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -1455,19 +1455,19 @@
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "mol",
@@ -1485,19 +1485,19 @@
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "g",
@@ -1521,13 +1521,13 @@
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -1551,13 +1551,13 @@
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
@@ -1581,13 +1581,13 @@
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -1611,25 +1611,25 @@
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/uL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -1653,13 +1653,13 @@
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -1683,19 +1683,19 @@
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -1713,19 +1713,19 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -1743,25 +1743,25 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pg",
@@ -1773,25 +1773,25 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pmol",
@@ -1803,7 +1803,7 @@
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -1827,13 +1827,13 @@
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -1857,19 +1857,19 @@
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -1893,13 +1893,13 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -1923,19 +1923,19 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -1953,19 +1953,19 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "ng/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -2001,13 +2001,13 @@
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -2031,19 +2031,19 @@
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -2067,13 +2067,13 @@
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -2097,19 +2097,19 @@
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -2133,13 +2133,13 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "ug/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -2163,19 +2163,19 @@
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -2193,19 +2193,19 @@
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -2223,25 +2223,25 @@
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pg",
@@ -2253,25 +2253,25 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pmol",
@@ -2283,73 +2283,73 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1e+18
+    "SCALING": 1E+18
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1e+18
+    "SCALING": 1E+18
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -2373,13 +2373,13 @@
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -2403,19 +2403,19 @@
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -2433,19 +2433,19 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -2463,25 +2463,25 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pg",
@@ -2493,25 +2493,25 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/mL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pmol",
@@ -2523,7 +2523,7 @@
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -2547,13 +2547,13 @@
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -2577,19 +2577,19 @@
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -2613,13 +2613,13 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -2643,13 +2643,13 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -2673,13 +2673,13 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pg/uL",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -2715,19 +2715,19 @@
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "mol",
@@ -2745,19 +2745,19 @@
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-12
+    "SCALING": 1E-12
   },
   {
     "DOSE": "g",
@@ -2781,13 +2781,13 @@
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -2811,19 +2811,19 @@
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -2847,13 +2847,13 @@
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -2877,7 +2877,7 @@
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "mol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
@@ -2901,13 +2901,13 @@
     "DOSE": "ng",
     "VOLUME": "L",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "mol",
@@ -2931,19 +2931,19 @@
     "DOSE": "nmol",
     "VOLUME": "L",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1e-09
+    "SCALING": 1E-09
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -2967,13 +2967,13 @@
     "DOSE": "pg",
     "VOLUME": "mL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -2997,19 +2997,19 @@
     "DOSE": "pmol",
     "VOLUME": "mL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -3033,13 +3033,13 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "mmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -3063,7 +3063,7 @@
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mg",
@@ -3087,13 +3087,13 @@
     "DOSE": "pg",
     "VOLUME": "L",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mmol",
@@ -3117,19 +3117,19 @@
     "DOSE": "pmol",
     "VOLUME": "L",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1e-06
+    "SCALING": 1E-06
   },
   {
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -3153,13 +3153,13 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -3183,19 +3183,19 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -3213,19 +3213,19 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "umol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -3243,13 +3243,13 @@
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ug",
@@ -3273,13 +3273,13 @@
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "umol",
@@ -3303,19 +3303,19 @@
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -3333,19 +3333,19 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -3363,25 +3363,25 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pg",
@@ -3393,25 +3393,25 @@
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "nmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pmol",
@@ -3423,19 +3423,19 @@
     "DOSE": "g",
     "VOLUME": "L",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mg",
     "VOLUME": "L",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ug",
     "VOLUME": "L",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "ng",
@@ -3453,19 +3453,19 @@
     "DOSE": "mol",
     "VOLUME": "L",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "mmol",
     "VOLUME": "L",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "umol",
     "VOLUME": "L",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "nmol",
@@ -3483,25 +3483,25 @@
     "DOSE": "g",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mg",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "ug",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "ng",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pg",
@@ -3513,25 +3513,25 @@
     "DOSE": "mol",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "mmol",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "umol",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "nmol",
     "VOLUME": "mL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "pmol",
@@ -3543,60 +3543,60 @@
     "DOSE": "g",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1e+18
+    "SCALING": 1E+18
   },
   {
     "DOSE": "mg",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "ug",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "ng",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "pg",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   },
   {
     "DOSE": "mol",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1e+18
+    "SCALING": 1E+18
   },
   {
     "DOSE": "mmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1e+15
+    "SCALING": 1E+15
   },
   {
     "DOSE": "umol",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000000
+    "SCALING": 1E+12
   },
   {
     "DOSE": "nmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000000
+    "SCALING": 1E+9
   },
   {
     "DOSE": "pmol",
     "VOLUME": "uL",
     "CONCENTRATION": "pmol/L",
-    "SCALING": 1000000
+    "SCALING": 1E+6
   }
 ]

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils_common.R
 \name{align_tags}
 \alias{align_tags}
-\title{Auto indent code tags}
+\title{Auto indent NONMEM code tags}
 \usage{
 align_tags(code)
 }
@@ -10,5 +10,5 @@ align_tags(code)
 \item{code}{Code lines containing comments to align across}
 }
 \description{
-Auto indent code tags
+Auto indent NONMEM code tags
 }

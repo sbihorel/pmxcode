@@ -9,11 +9,11 @@ replace_omega(new, parms, varianceTable, blocks)
 \arguments{
 \item{new}{Text template}
 
+\item{parms}{Parameter selection}
+
 \item{varianceTable}{Variability selection}
 
-\item{vars}{Character vector of variable names}
-
-\item{covarianceBlock}{Variance - covariance matrix}
+\item{blocks}{Variance - covariance matrix}
 }
 \description{
 Replacement of @OMEGA tag

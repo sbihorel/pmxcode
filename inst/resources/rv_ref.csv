@@ -1,5 +1,0 @@
-TYPE,ERROR,MRG_ERROR
-add,"  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  |  Y = IPRED + EPS(<1>)",  double <DRIVER>i = <DRIVER> + <ENDPOINT>ADD;
-ccv,"  IPRED = <F>|  IRES = <DV> - IPRED|  W = (IPRED + FLAG)*SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  |  Y = IPRED + IPRED*EPS(<1>)",  double <DRIVER>i = <DRIVER> + <DRIVER>*<ENDPOINT>CCV;
-accv,"  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(IPRED**2*SIGMA(<1>,<1>) + SIGMA(<2>,<2>))|  IWRES = IRES/W|  |  Y = IPRED + IPRED*EPS(<1>) + EPS(<2>)",  double <DRIVER>i = <DRIVER> + <DRIVER>*<ENDPOINT>CCV + <ENDPOINT>ADD;
-log,"  IPRED = LOG(<F> + FLAG)|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  |  Y = IPRED + EPS(<1>)",  double <DRIVER>i = exp(<DRIVER> + <ENDPOINT>ADD);

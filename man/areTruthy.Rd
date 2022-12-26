@@ -13,5 +13,5 @@ areTruthy(...)
 TRUE if all objects are "truthy", FALSE if at least one is not.
 }
 \description{
-See \code{shiny::\link[shiny:isTruthy]} for details.
+See \code{shiny::\link[shiny:isTruthy]{isTruthy}} for details.
 }

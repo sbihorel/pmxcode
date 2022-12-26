@@ -82,7 +82,7 @@
   {
     "PARM": "BASE",
     "LABEL": "Baseline Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -194,7 +194,7 @@
   {
     "PARM": "DELTA",
     "LABEL": "Magnitude of Change in Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -208,6 +208,78 @@
     "INFO": "FORM"
   },
   {
+    "PARM": "F1",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F2",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F3",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F4",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F5",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F6",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F7",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F8",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
+    "PARM": "F9",
+    "LABEL": "Bioavailability",
+    "UNIT": "",
+    "FORM": "",
+    "INCREASE": "NA",
+    "INFO": ""
+  },
+  {
     "PARM": "HILL",
     "LABEL": "Hill Coefficient",
     "UNIT": "",
@@ -218,7 +290,7 @@
   {
     "PARM": "IC50",
     "LABEL": "Half-inhibitory <DRIVER>",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -234,7 +306,7 @@
   {
     "PARM": "INT",
     "LABEL": "Baseline Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "lin",
     "INCREASE": "NA",
     "INFO": ""
@@ -250,7 +322,7 @@
   {
     "PARM": "KD",
     "LABEL": "Equilibrium Dissociation Constant",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -274,7 +346,7 @@
   {
     "PARM": "KIN",
     "LABEL": "Production Rate of Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -290,7 +362,7 @@
   {
     "PARM": "KM",
     "LABEL": "Half-inhibitory <ELIM>",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -298,7 +370,7 @@
   {
     "PARM": "KOFF",
     "LABEL": "Drug-Receptor Dissociation Rate",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -306,7 +378,7 @@
   {
     "PARM": "KON",
     "LABEL": "Drug-Receptor Binding Rate",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -322,7 +394,7 @@
   {
     "PARM": "KSS",
     "LABEL": "Steady-state Dissociation Constant",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -330,7 +402,7 @@
   {
     "PARM": "KSYN",
     "LABEL": "Receptor Production Rate",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -434,7 +506,7 @@
   {
     "PARM": "MAX",
     "LABEL": "Maximum Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -442,7 +514,7 @@
   {
     "PARM": "MIN",
     "LABEL": "Minimum Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -498,7 +570,7 @@
   {
     "PARM": "R1",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -506,7 +578,7 @@
   {
     "PARM": "R10",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -514,7 +586,7 @@
   {
     "PARM": "R2",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -522,7 +594,7 @@
   {
     "PARM": "R3",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -530,7 +602,7 @@
   {
     "PARM": "R4",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -538,7 +610,7 @@
   {
     "PARM": "R5",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -546,7 +618,7 @@
   {
     "PARM": "R6",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -554,7 +626,7 @@
   {
     "PARM": "R7",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -562,7 +634,7 @@
   {
     "PARM": "R8",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -570,7 +642,7 @@
   {
     "PARM": "R9",
     "LABEL": "Rate of Input",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -578,7 +650,7 @@
   {
     "PARM": "RBAS",
     "LABEL": "Baseline Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -586,7 +658,7 @@
   {
     "PARM": "RINF",
     "LABEL": "Limit Response",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -594,7 +666,7 @@
   {
     "PARM": "RO",
     "LABEL": "Receptor Concentration at Baseline",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -602,7 +674,7 @@
   {
     "PARM": "RTOT",
     "LABEL": "Total Receptor Concentration",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -610,7 +682,7 @@
   {
     "PARM": "SC50",
     "LABEL": "Half-stimulatory <DRIVER>",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""
@@ -634,7 +706,7 @@
   {
     "PARM": "SLOPE",
     "LABEL": "Slope",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "lin",
     "INCREASE": "NA",
     "INFO": "FORM"
@@ -658,7 +730,7 @@
   {
     "PARM": "VMAX",
     "LABEL": "Maximum Rate of Elimination",
-    "UNIT": "Define units",
+    "UNIT": "units",
     "FORM": "",
     "INCREASE": "NA",
     "INFO": ""

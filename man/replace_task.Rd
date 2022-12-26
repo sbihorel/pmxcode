@@ -6,6 +6,15 @@
 \usage{
 replace_task(input, new, estimations, isODE)
 }
+\arguments{
+\item{input}{Internal parameter for {shiny}}
+
+\item{new}{Text template}
+
+\item{estimations}{Table of estimation tasks}
+
+\item{isODE}{Reactive object - is model coded with ODEs?}
+}
 \description{
 Replace @TASK tag
 }

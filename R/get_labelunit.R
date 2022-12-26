@@ -17,15 +17,15 @@ get_labelunit <- function(
     ),
     labelunit_lib %>%
       dplyr::filter(
-        PARM %in% parms &
-          (is.na(INCREASE) | INCREASE == as.integer(as.logical(tmp)) ) &
-          (FORM %in% c("", input$effectFormInput))
+        .data$PARM %in% parms &
+          (is.na(.data$INCREASE) | .data$INCREASE == as.integer(as.logical(tmp)) ) &
+          (.data$FORM %in% c("", input$effectFormInput))
       ),
     by = "PARM"
   ) %>%
     dplyr::mutate(
-      LABEL = ifelse(is.na(LABEL), "", LABEL),
-      UNIT = ifelse(is.na(UNIT), "", UNIT)
+      LABEL = ifelse(is.na(.data$LABEL), "", .data$LABEL),
+      UNIT = ifelse(is.na(.data$UNIT), "", .data$UNIT)
     )
 
   labels <- labelunits$LABEL

@@ -41,6 +41,8 @@ get_nonmem_code(
 
 \item{isLINMAT}{Reactive object - is model coded as linear matrix?}
 
+\item{isPREDPP}{Reactive object - is mode coded with $PK?}
+
 \item{varianceTable}{Variance- table}
 
 \item{covarianceBlock}{Variance-covariance matrix}
@@ -56,8 +58,6 @@ get_nonmem_code(
 \item{scaling}{Library for scaling}
 
 \item{replacement}{Logical value indicating with replacement is required}
-
-\item{isPREDD}{Reactive object - is mode coded with $PK?}
 }
 \description{
 Creation of NONMEM code
