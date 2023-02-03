@@ -1,10 +1,10 @@
 new_model_ui <- function(){
   tabPanel(
-    title = "New",
-    icon = icon("square-plus", verify_fa = FALSE),
+    title = "Library",
+    icon = icon("school", verify_fa = FALSE),
     value = "new",
     fluidRow(
-      col_6(
+      col_7(
         navlistPanel(
           id = "new_menu",
           widths = c(2, 10),
@@ -356,8 +356,7 @@ new_model_ui <- function(){
       ),
 
       #---- ACE editor ----
-      col_6(
-        rclipboard::rclipboardSetup(),
+      col_5(
         uiOutput('aceToolbarUI'),
         p(),
         shinyAce::aceEditor(

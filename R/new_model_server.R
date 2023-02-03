@@ -170,7 +170,7 @@ new_model_server <- function(session, input, output, resources ){
   # Data file content report
   output$dataFile <- renderText({
 
-    req( dataFileReactive())
+    req( dataFileReactive() )
 
     text <- glue::glue("Data file: {dataFileReactive()}")
 
@@ -305,7 +305,7 @@ new_model_server <- function(session, input, output, resources ){
     tmp <- rhandsontable(
       data = DF,
       rowHeaders = FALSE,
-      colHeaders = c("Description", "Reserved keyword", "Dataset variable"),
+      colHeaders = c("Definition", "Reserved keyword", "Dataset variable"),
       contextMenu = FALSE,
       manualColumnMove = FALSE,
       manualRowMove = FALSE,
@@ -543,6 +543,7 @@ new_model_server <- function(session, input, output, resources ){
 
   # Create UI component for elimination
   output$eliminationUI <- renderUI({
+
     req( input$pkInput )
     col_4(
       selectInput(
@@ -1430,7 +1431,7 @@ new_model_server <- function(session, input, output, resources ){
               Initial = "1",
               Max = "+INF",
               Fixed = "No",
-              Variability = "None",
+              Variability = "none",
               stringsAsFactors = FALSE
             )
           )
@@ -1448,7 +1449,7 @@ new_model_server <- function(session, input, output, resources ){
               Initial = "0.9",
               Max = "1",
               Fixed = "No",
-              Variability = "None",
+              Variability = "none",
               stringsAsFactors = FALSE
             )
           )
@@ -1516,7 +1517,7 @@ new_model_server <- function(session, input, output, resources ){
         Initial = "1",
         Max = "+INF",
         Fixed = "No",
-        Variability = ifelse(grepl("ALAG", PKparms), "None", "exp"),
+        Variability = ifelse(grepl("ALAG", PKparms), "none", "exp"),
         stringsAsFactors = FALSE
       ) %>%
         dplyr::mutate(
@@ -1537,7 +1538,7 @@ new_model_server <- function(session, input, output, resources ){
               Initial = "0.9",
               Max = "1",
               Fixed = "No",
-              Variability = "None",
+              Variability = "none",
               stringsAsFactors = FALSE
             )
           )
@@ -3123,11 +3124,17 @@ new_model_server <- function(session, input, output, resources ){
 
   #---- Ace toolbar ----
 
+  output$copyBtn <- renderUI({
+    rclipboard::rclipButton(
+      inputId = "copyButton",
+      label = NULL,#"Copy to clipboard",
+      clipText = input$aceNew,
+      icon = icon("copy")
+    )
+  })
   output$aceToolbarUI <- renderUI({
     fluidRow(
-      column(
-        width = 12,
-        rclipboard::rclipboardSetup(),
+      col_12(
         shinyBS::bsButton(
           inputId = "lockButton",
           icon = icon("lock-open"),
@@ -3141,12 +3148,7 @@ new_model_server <- function(session, input, output, resources ){
           label = NULL,#"(Re)generate",
           icon = icon("sync")
         ),
-        rclipboard::rclipButton(
-          inputId = "copyButton",
-          label = NULL,#"Copy to clipboard",
-          clipText = input$aceNew,
-          icon = icon("copy")
-        ),
+        uiOutput('copyBtn', style = 'display: inline-block;'),
         downloadButton(
           outputId = "downloadButton",
           label = NULL,#"Download",
@@ -3234,7 +3236,7 @@ new_model_server <- function(session, input, output, resources ){
 
   modelCode <- reactive({
 
-    req( "lockButton" %in% names(input) )
+    req( "linkButton" %in% names(input) )
 
     if ( notTruthy(input$pkInput, input$pdInput) ){
       return(
@@ -3279,7 +3281,7 @@ new_model_server <- function(session, input, output, resources ){
 
   output$newCode <- newCode <- reactive({
 
-    req( input$platformInput)
+    req( input$platformInput )
 
     dummy <- input$nmFlavorInput
 
@@ -3296,6 +3298,7 @@ new_model_server <- function(session, input, output, resources ){
   observeEvent(
     newCode(),
     {
+
       if ( isFALSE(input$lockButton) ){
         shinyAce::updateAceEditor(
           session = session,
@@ -3305,9 +3308,27 @@ new_model_server <- function(session, input, output, resources ){
             input$platformInput == "NONMEM",
             "nmtran",
             "text"
-          )
+          ),
+          wordWrap = TRUE
         )
       }
+    }
+  )
+
+  observeEvent(
+    input$refreshButton ,
+    {
+      shinyAce::updateAceEditor(
+        session = session,
+        editorId = "aceNew",
+        value = newCode(),
+        mode = ifelse(
+          input$platformInput == "NONMEM",
+          "nmtran",
+          "text"
+        ),
+        wordWrap = TRUE
+      )
     }
   )
 

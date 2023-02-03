@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+_disable_autoload.R
+rsconnect
+rsconnect/*

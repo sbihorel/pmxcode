@@ -42,14 +42,17 @@ get_nonmem_code <- function(
 
   new <- template
 
-  if (!replacement){
+  if ( !replacement ){
     return(new)
   }
+
+  debug <- FALSE
 
   user <- Sys.info()["user"]
   date <- format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
 
   # Replace @TIMESTAMP
+
   new <- sub("@TIMESTAMP", date, new)
 
   # Replace @USER
@@ -60,25 +63,31 @@ get_nonmem_code <- function(
 
   # Replace @PROB1 and @PROB2
   if ( isTruthy(input$modelInput) ){
+    if ( debug ) message("PROBLEM")
     new <- replace_problem(input = input, new = new)
   }
 
   # Replace @PURPOSE
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("PRUPOSE")
     new <- replace_purpose(input = input, new = new, varianceTable = varianceTable)
   }
 
   # Replace @PATH
+  if ( debug ) message("PATH")
   new <- replace_path(input = input, new = new)
 
   # Replace @INPUT
+  if ( debug ) message("INPUT")
   new <- replace_input(input = input, new = new, vars = vars)
 
   # Replace @DATA
+  if ( debug ) message("DATA")
   new <- replace_data(input = input, new = new)
 
   # Replace @SUBROUTINE
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("SUBROUTINE")
     new <- replace_subroutine(
       input = input,
       new = new,
@@ -92,6 +101,7 @@ get_nonmem_code <- function(
 
   # Replace @MODEL
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("MODEL")
     new <- replace_model(
       input = input,
       new = new,
@@ -103,6 +113,7 @@ get_nonmem_code <- function(
 
   # Replace @ABBREVIATED
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("ABBREVIATED")
     new <- replace_abbreviated(input = input, new = new, vars = vars)
   }
 
@@ -112,11 +123,13 @@ get_nonmem_code <- function(
 
   # Replace @THETA
   if (isTruthy(parms) ){
+    if ( debug ) message("THETA")
     new <- replace_theta(new = new, parms = parms)
   }
 
   # Replace @OMEGA
   if ( areTruthy(parms, covarianceBlock) ){
+    if ( debug ) message("OMEGA")
     new <- replace_omega(
       new = new,
       parms = parms,
@@ -126,20 +139,25 @@ get_nonmem_code <- function(
 
   # Replace @SIGMA
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("SIGMA")
     new <- replace_sigma(input = input, new = new, rvTable = rvTable)
   }
 
   # Create @PRIOR
-  new <- replace_prior(
-    input = input,
-    new = new,
-    parms = parms,
-    varianceTable = varianceTable,
-    estimations = estimations
-  )
+  if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("PRIOR")
+    new <- replace_prior(
+      input = input,
+      new = new,
+      parms = parms,
+      varianceTable = varianceTable,
+      estimations = estimations
+    )
+  }
 
   # Create lines of preamble code
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("preamble")
     preamble_code <- get_preamble_code(
       input = input,
       parms = parms,
@@ -149,6 +167,7 @@ get_nonmem_code <- function(
 
   # Create code lines for PK, PD, and other parameters
   if ( areTruthy(input$pkInput, input$pdInput, varianceTable) ){
+    if ( debug ) message("parms")
     parms_code <- get_parms_code(
       input = input,
       parms = parms,
@@ -159,6 +178,7 @@ get_nonmem_code <- function(
 
   # Create code lines for derived parameters
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("derived")
     derived_parms_code <- get_derived_parms_code(
       input = input,
       advan = advan,
@@ -173,6 +193,7 @@ get_nonmem_code <- function(
 
   # Create code lines for dose scaling and bioavailability
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("scaling")
     scaling_code <- get_scaling_code(
       input = input,
       advan = advan,
@@ -184,6 +205,7 @@ get_nonmem_code <- function(
 
   # Determine the number of compartments for PK and PD components
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("cmts")
     ncmts <- get_ncmts(
       input = input,
       model_lib = model_lib,
@@ -196,6 +218,7 @@ get_nonmem_code <- function(
 
   # Create code lines for compartment initialization
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("init")
     init_code <- get_init_code(
       input = input,
       advan = advan,
@@ -209,6 +232,7 @@ get_nonmem_code <- function(
   # Replace @PRED or @PK
   if ( areTruthy(input$pkInput, input$pdInput, varianceTable) &
        (isTruthy(input$pkInput) | isTruthy(input$pdInput)) ){
+    if ( debug ) message("PK/PRED")
     new <- replace_pk_pred(
       input = input,
       new = new,
@@ -227,6 +251,7 @@ get_nonmem_code <- function(
 
   # Replace @DES
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("DES")
     new <- replace_des(
       input = input,
       new = new,
@@ -242,6 +267,7 @@ get_nonmem_code <- function(
 
   # Replace @ERROR
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("ERROR")
     new <- replace_error(
       input = input,
       new = new,
@@ -257,6 +283,7 @@ get_nonmem_code <- function(
 
   # Replace @TASK
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("TASKS")
     new <- replace_task(
       input = input,
       new = new,
@@ -268,6 +295,7 @@ get_nonmem_code <- function(
 
   # Replace @TABLE
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("TABLE")
     new <- replace_table(
       input = input,
       new = new,
@@ -277,11 +305,17 @@ get_nonmem_code <- function(
 
   # Replace @TAGS
   if ( areTruthy(input$pkInput, input$pdInput) ){
+    if ( debug ) message("TAGS")
     new <- replace_tags(
       input = input,
       new = new
     )
   }
+
+  if ( debug )
+    message(
+      paste(new, collapse = "\n")
+    )
 
   # Dummy call to implement manual refresh
   dummy <- input$refreshButton
@@ -1603,7 +1637,7 @@ replace_pk_pred <- function(
               glue::glue("  Y{i} = P{i}  ; P(Y={i}|X)"),
               glue::glue(
                 "  Y{i} = {val} - P{i-1}  ; P(Y={i}|X)",
-                val = ifelse(i == maxCategory, "1", glue::glue('P{i}'))
+                val = ifelse(i == maxCategory, "1", glue::glue("P{i}"))
               )
             )
           )
