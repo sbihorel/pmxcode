@@ -1,7 +1,10 @@
+#' Load resource files
+#'
+#' @name resources
 
-resources <- function(what){
+resources <- function(){
 
-  if ( "pmxcode" %in% installed.packages() ){
+  if ( "pmxcode" %in% utils::installed.packages() ){
     pmxcode_file <- function(x){
       system.file(x, package = "pmxcode")
     }

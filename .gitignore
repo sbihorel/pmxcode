@@ -5,3 +5,9 @@
 _disable_autoload.R
 rsconnect
 rsconnect/*
+builds/
+*.Rcheck
+inst/doc
+doc
+Meta
+public

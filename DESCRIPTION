@@ -18,7 +18,6 @@ Imports:
     magrittr,
     markdown,
     pillar,
-    pkgload,
     rclipboard,
     readr,
     rhandsontable,

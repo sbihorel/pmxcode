@@ -35,6 +35,7 @@
 #' @importFrom tools file_ext
 #' @importFrom utils capture.output
 #' @importFrom utils globalVariables
+#' @importFrom utils installed.packages
 #' @importFrom utils modifyList
 #' @importFrom xfun relative_path
 ## usethis namespace: end
