@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pmxcode <img src="inst/app/www/favicon_source.png" align="right" />
+# pmxcode <img src="inst/app/www/favicon.png" align="right" />
 
 # pmxcode
 
