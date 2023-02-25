@@ -1828,11 +1828,11 @@ get_mrg_individual_parm_code <- function(parms, iparm, eparm){
         )
       } else if (parms$Min[iparm] == 0 & parms$Max[iparm] != 1){
         glue::glue(
-          "  double {parm} = {parms$High[iparm]}/((1/TV{parm} - 1)*exp(-E{eparm}) + 1);"
+          "  double {parm} = {parms$Max[iparm]}/((1/TV{parm} - 1)*exp(-E{eparm}) + 1);"
         )
       } else {
         glue::glue(
-          "  {parm} = {parms$Low[iparm]} + ({parms$High[iparm]} - {parms$Low[iparm]})/((1/TV{parm} - 1)*exp(-E{eparm}) + 1)"
+          "  {parm} = {parms$Min[iparm]} + ({parms$Max[iparm]} - {parms$Min[iparm]})/((1/TV{parm} - 1)*exp(-E{eparm}) + 1)"
         )
       }
   )

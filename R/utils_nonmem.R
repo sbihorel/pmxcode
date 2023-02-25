@@ -816,16 +816,16 @@ replace_omega <- function(
               levels(varianceTable$Variability)[varianceTable$Variability[index]],
               "Additive" = "add",
               "Exponential" = "exp",
-              "Logit" = if (parms$Low[index] == 0 & parms$High[index] == 1){
+              "Logit" = if (parms$Min[index] == 0 & parms$Max[index] == 1){
                 glue::glue("cv=100*(1-th{parms$TH[index]})*eta{ieta}")
-              } else if (parms$Low[index] == 0 & parms$High[index] != 1){
-                glue::glue("cv=100*{parms$High[index]}*(1-th{parms$TH[index]})*eta{ieta}")
+              } else if (parms$Min[index] == 0 & parms$Max[index] != 1){
+                glue::glue("cv=100*{parms$Max[index]}*(1-th{parms$TH[index]})*eta{ieta}")
               } else {
                 glue::glue(
                   "cv=100*((th{th}-{lo})*({hi}-th{th})/(th{th}*({hi}-{lo})))*eta{ieta}",
                   th = parms$TH[index],
-                  lo = parms$Low[index],
-                  hi = parms$High[index]
+                  lo = parms$Min[index],
+                  hi = parms$Max[index]
                 )
               }
             )
@@ -3047,21 +3047,21 @@ get_individual_parm_code <- function(parms, varianceTable, iparm, ieta, mu){
       "Exponential" = glue::glue("  {parm} = TV{parm}*EXP(ETA({ieta}))"),
       "Logit" =
         # Numerically stable of logit transform
-        if ( parms$Low[iparm] == 0 & parms$High[iparm] == 1 ){
+        if ( parms$Min[iparm] == 0 & parms$Max[iparm] == 1 ){
           # Individual parameter within 0 and 1
           glue::glue("  {parm} = 1/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)")
-        } else if ( parms$Low[iparm] == 0 & parms$High[iparm] != 1 ){
+        } else if ( parms$Min[iparm] == 0 & parms$Max[iparm] != 1 ){
           # Individual parameter between 0 and a positive value different from 1
           glue::glue(
             "  {parm} = {hi}/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)",
-            hi = parms$High[iparm]
+            hi = parms$Max[iparm]
           )
         } else {
           # Individual parameter boundaries different from 0 and 1
           glue::glue(
             "  {parm} = {lo} + ({hi} - {lo})/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)",
-            lo = parms$Low[iparm],
-            hi = parms$High[iparm]
+            lo = parms$Min[iparm],
+            hi = parms$Max[iparm]
           )
         }
     )

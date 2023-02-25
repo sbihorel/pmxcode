@@ -32,6 +32,7 @@ app_ui <- function(request) {
           )
         ),
         new_model_ui(),
+        covariates_ui(),
         help_ui(),
         header = NULL,
         footer = NULL
