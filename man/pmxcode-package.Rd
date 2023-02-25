@@ -4,7 +4,7 @@
 \name{pmxcode-package}
 \alias{pmxcode}
 \alias{pmxcode-package}
-\title{pmxcode: Create Mharmacometric Models}
+\title{pmxcode: Create Pharmacometric Models}
 \description{
 Provides a user interface to create or modify pharmacometric models for various modeling and simulation software platforms.
 }

@@ -1,5 +1,5 @@
 Package: pmxcode
-Title: Create Mharmacometric Models
+Title: Create Pharmacometric Models
 Version: 0.1
 Authors@R: 
     person("Sebastien", "Bihorel", , "sb.pmlab@gmail.com", role = c("cre", "aut"))
@@ -24,6 +24,7 @@ Imports:
     rlang,
     shiny (>= 1.7.1),
     shinyAce,
+    shinyBS,
     shinyFiles,
     stats,
     tidyr,
@@ -33,5 +34,3 @@ Imports:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
-Depends: 
-    shinyBS
