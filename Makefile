@@ -10,6 +10,8 @@ build:
 	@rm -rf /tmp/$(PKGNAME)
 	cp -R ./ /tmp/$(PKGNAME)
 	rm /tmp/$(PKGNAME)/Makefile
+	rm -rf /tmp/$(PKGNAME)/dev
+	rm -rf /tmp/$(PKGNAME)/builds
 
 	# set tags
 	{ \
