@@ -3251,11 +3251,25 @@ new_model_server <- function(session, input, output, resources ){
       )
     } else {
       parameterTable <- hot_to_r(input$parameterTable)
+      varianceTable <- hot_to_r(input$varianceTable)
+      covarianceTable <- hot_to_r(input$covarianceTable)
       rvTable <- hot_to_r(input$rvTable)
+
+      req(
+        length(parameterTable) > 0,
+        length(varianceTable) > 0,
+        length(covarianceTable) > 0
+      )
 
       if ( length(parameterTable$Parameter) != length(unique(parameterTable$Parameter)) ){
         return("Duplicates in parameter tables prevents the code generation.")
+      } else if (
+        nrow(parameterTable) != nrow(varianceTable) |
+        nrow(varianceTable) != nrow(covarianceTable)
+      ) {
+        return("Inconsistent dimension of parameter and variance/covariance tables.")
       } else {
+
         get_code(
           input = input,
           template = template,

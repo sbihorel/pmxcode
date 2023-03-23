@@ -1259,17 +1259,21 @@ replace_pk_pred <- function(
         dplyr::filter( grepl("^F[0-9]", .data$Parameter) ) %>%
         dplyr::pull( .data$Parameter ) %>%
         as.character()
-      f_row <- which(
-        grepl( glue::glue("^\\s+{bio}\\s+=\\s+TV{bio}"), parms_code$PK )
-      )
-      f_line <- parms_code$PK[f_row]
-      parms_code$PK <- parms_code$PK[-f_row]
 
-      # Substitute in the scaling code
-      f_row <- which(
-        grepl( "^\\s+F[0-9]+\\s+=", scaling_code )
-      )
-      scaling_code[f_row] <- f_line
+      if ( length(bio) > 0 ){
+        f_row <- which(
+          grepl( glue::glue("^\\s+{bio}\\s+=\\s+TV{bio}"), parms_code$PK )
+        )
+        f_line <- parms_code$PK[f_row]
+        parms_code$PK <- parms_code$PK[-f_row]
+
+        # Substitute in the scaling code
+        f_row <- which(
+          grepl( "^\\s+F[0-9]+\\s+=", scaling_code )
+        )
+        scaling_code[f_row] <- f_line
+      }
+
     }
 
     new <- new[ !grepl("@PRED", new) ]
@@ -1534,7 +1538,7 @@ replace_pk_pred <- function(
         minCategory <- min(
           floor( c(input$minCategoryInput, input$maxCategoryInput) )
         )
-        maxCategory <- min(
+        maxCategory <- max(
           ceiling( c(input$minCategoryInput, input$maxCategoryInput) )
         )
         event <- ifelse(
