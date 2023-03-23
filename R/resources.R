@@ -4,14 +4,12 @@
 
 resources <- function(){
 
-  if ( "pmxcode" %in% utils::installed.packages() ){
-    pmxcode_file <- function(x){
-      system.file(x, package = "pmxcode")
+  pmxcode_file <- function(x){
+    tmp <- system.file(x, package = "pmxcode")
+    if ( tmp == ''){
+      tmp <- file.path('./inst', x)
     }
-  } else {
-    pmxcode_file <- function(x){
-      file.path('./inst', x)
-    }
+    tmp
   }
 
   list(
