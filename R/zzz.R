@@ -1,8 +1,6 @@
 
 .onLoad <- function(libname, pkgname) {
 
-  packageStartupMessage('Welcome to pmxcode!')
-
   # Make R check happy when resources are used
   utils::globalVariables(
     c("parm_lib", "pdForm_lib", "labelunit_lib", "rv_lib", "scaling",

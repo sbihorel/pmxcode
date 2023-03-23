@@ -9,9 +9,10 @@ build:
 	mkdir -p builds
 	@rm -rf /tmp/$(PKGNAME)
 	cp -R ./ /tmp/$(PKGNAME)
-	rm /tmp/$(PKGNAME)/Makefile
-	rm -rf /tmp/$(PKGNAME)/dev
-	rm -rf /tmp/$(PKGNAME)/builds
+	@rm /tmp/$(PKGNAME)/Makefile
+	@rm /tmp/$(PKGNAME)/README.Rmd
+	@rm -rf /tmp/$(PKGNAME)/dev
+	@rm -rf /tmp/$(PKGNAME)/builds
 
 	# set tags
 	{ \
@@ -32,8 +33,12 @@ build:
 check: build
 	R CMD check builds/$(PKGNAME)_$(PKGVERS).tar.gz
 
+check-cran: build
+	R CMD check --as-cran builds/$(PKGNAME)_$(PKGVERS).tar.gz
+
 install:
 	R CMD INSTALL --library=$(R_LIBS_USER) builds/$(PKGNAME)_$(PKGVERS).tar.gz
 
 clean:
 	@rm -rf $(PKGNAME).Rcheck
+	@rm -rf builds/$(PKGNAME).Rcheck
