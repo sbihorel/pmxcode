@@ -7,6 +7,13 @@
 #' @export
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
+#' @value{ Starts the PMXcode Shiny application }
+#' @examples
+#' \dontrun{
+#' if( interactive() ){
+#'   pmxcode::run_app()
+#' }
+#' }
 
 run_app <- function(
   onStart = NULL,

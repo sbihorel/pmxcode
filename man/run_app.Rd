@@ -39,3 +39,10 @@ See `?golem::get_golem_options` for more details.}
 \description{
 Run the Shiny Application
 }
+\examples{
+\dontrun{
+if( interactive() ){
+  pmxcode::run_app()
+}
+}
+}
