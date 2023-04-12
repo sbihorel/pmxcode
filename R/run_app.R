@@ -22,7 +22,6 @@ run_app <- function(
   uiPattern = "/",
   ...
 ) {
-  library(shinyBS)
   with_golem_options(
     app = shinyApp(
       ui = app_ui,
