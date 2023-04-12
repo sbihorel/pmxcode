@@ -595,8 +595,8 @@ new_model_server <- function(session, input, output, resources ){
         if ( input$platformInput == "NONMEM" ) {
           choices <- c(
             "Fixed in dataset" = 0,
-            "estimated rate" = -1,
-            "estimated duration" = -2
+            "Estimated rate" = -1,
+            "Estimated duration" = -2
           )
         } else {
           choices <- c(
@@ -648,7 +648,7 @@ new_model_server <- function(session, input, output, resources ){
         if ( input$platformInput == "NONMEM" ) {
           choices <- c(
             "Estimated rate" = -1,
-            "estimated duration" = -2
+            "Estimated duration" = -2
           )
         } else {
           choices <- c(
@@ -1379,10 +1379,10 @@ new_model_server <- function(session, input, output, resources ){
             dplyr::bind_rows(
               data.frame(
                 Type = "PK",
-                SourceParam = .data$PARM,
-                Parameter = .data$PARM,
-                Label = .data$PARM,
-                Unit = .data$PARM,
+                SourceParam = PARM,
+                Parameter = PARM,
+                Label = PARM,
+                Unit = PARM,
                 Min = "0",
                 Initial = "1",
                 Max = "+INF",
@@ -1402,10 +1402,10 @@ new_model_server <- function(session, input, output, resources ){
             dplyr::bind_rows(
               data.frame(
                 Type = "PK",
-                SourceParam = .data$PARM,
-                Parameter = .data$PARM,
-                Label = .data$PARM,
-                Unit = .data$PARM,
+                SourceParam = PARM,
+                Parameter = PARM,
+                Label = PARM,
+                Unit = PARM,
                 Min = "0",
                 Initial = "1",
                 Max = "+INF",
@@ -3312,7 +3312,6 @@ new_model_server <- function(session, input, output, resources ){
   observeEvent(
     newCode(),
     {
-
       if ( isFALSE(input$lockButton) ){
         shinyAce::updateAceEditor(
           session = session,
