@@ -498,18 +498,20 @@ get_preamble_code <- function(
       tmp <- c(
         tmp,
         glue::glue(
-          paste0(
+          paste(
             "  CALLFL = -2",
             "  ",
             "  ; Capture dose record information",
-            "  if ( NEWIND < 2) {doseCounter} = 0",
-            "  if ( AMT > 0 .AND. CMT == 1) THEN",
+            "  IF ( NEWIND < 2) {doseCounter} = 0",
+            "  IF ( AMT > 0 .AND. CMT == 1) THEN",
             "    {doseCounter} = {doseCounter} + 1",
             "    {doseTime}({doseCounter}) = TIME",
             "    {doseAmount}({doseCounter}) = AMT",
             "  ENDIF",
-            "  "
-          )
+            "  ",
+            sep = "\n"
+          ),
+          .trim = FALSE
         )
       )
 

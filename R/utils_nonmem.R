@@ -1870,7 +1870,7 @@ replace_des <- function(
           while( any(grepl(doseAmount, vars())) ){
             doseAmount <- glue::glue("Z{doseAmount}")
           }
-          tmpModel <- gsub("<DOSEANT>", doseAmount, tmpModel)
+          tmpModel <- gsub("<DOSEAMT>", doseAmount, tmpModel)
 
           while ( any(grepl(doseCounter, vars())) ){
             doseCounter <- glue::glue("Z{doseCounter}")
@@ -2602,15 +2602,21 @@ replace_table <- function(
       tmp,
       as.character(mappingTable %>% dplyr::slice(n = 5) %>% dplyr::pull(.data$Variable))
     )
+  } else {
+    if ( input$pkInput %in% c("pk", "linmat", "ode") |
+         input$pdInput %in% c("direct", "idr", "biophase", "ode") ){
+      tmp <- c( tmp, "TIME" )
+    }
   }
-  if ( "EVID" %in% local.vars )
-    tmp <- c(tmp, "EVID")
-  if ( "MDV" %in% local.vars )
+
+  if ( "EVID" %in% local.vars | length(local.vars) == 0 )
+    tmp <- c( tmp, "EVID" )
+  if ( "MDV" %in% local.vars  | length(local.vars) == 0 )
     tmp <- c( tmp, "MDV" )
 
   # Add variables for logistic regression and ordered categorical models
   if (input$pdInput == "logistic") {
-    tmp <- c(tmp, "PROB", "EVENT")
+    tmp <- c( tmp, "PROB", "EVENT" )
   }
   if (input$pdInput == "ordcat") {
     req(input$minCategoryInput, input$maxCategoryInput)
@@ -2628,9 +2634,9 @@ replace_table <- function(
   # Add variables for ER models
   if (input$pdInput == "er") {
     if (length(input$exposureVarInput) > 0 && input$exposureVarInput != "")
-      tmp <- c(tmp, input$exposureVarInput)
+      tmp <- c( tmp, input$exposureVarInput )
     if (length(input$exposureVarTextInput) > 0 && input$exposureVarTextInput != "")
-      tmp <- c(tmp, input$exposureVarTextInput)
+      tmp <- c( tmp, input$exposureVarTextInput )
   }
 
   # Get model parameters with IIV
