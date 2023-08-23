@@ -1262,7 +1262,7 @@ replace_pk_pred <- function(
 
       if ( length(bio) > 0 ){
         f_row <- which(
-          grepl( glue::glue("^\\s+{bio}\\s+=\\s+TV{bio}"), parms_code$PK )
+          grepl( glue::glue("^\\s+{bio}\\s+=.*TV{bio}"), parms_code$PK )
         )
         f_line <- parms_code$PK[f_row]
         parms_code$PK <- parms_code$PK[-f_row]
