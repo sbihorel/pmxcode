@@ -175,7 +175,7 @@ new_model_server <- function(session, input, output, resources ){
     text <- glue::glue("Data file: {dataFileReactive()}")
 
     if ( inherits(dataFile(), "try-error") | !inherits(dataFile(), "data.frame") ){
-      text <- paste(
+      text <- paste0(
         text,
         "\n",
         "Error: Could not extract data file content",
@@ -541,50 +541,62 @@ new_model_server <- function(session, input, output, resources ){
   outputOptions(output, "isPDpred", suspendWhenHidden = FALSE)
   outputOptions(output, "isPREDPP", suspendWhenHidden = FALSE)
 
+
+  # Create UI component for number of PK compartment
+  output$pkCmtUI <- renderUI({
+    if ( input$pkInput == "pk" ){
+      selectInput(
+        inputId = "pkCMTInput",
+        width = "100%",
+        label = "Disposition",
+        choices = c(
+          "1-compartment" = 1,
+          "2-compartment" = 2,
+          "3-compartment" = 3
+        ),
+        selected = 1
+      )
+    }
+  })
+
   # Create UI component for elimination
   output$eliminationUI <- renderUI({
-
     req( input$pkInput )
-    col_4(
-      selectInput(
-        inputId = "eliminationInput",
-        width = "100%",
-        label = "Elimination",
-        choices = list(
-          "Basic" = c(
-            "Linear"= "lin",
-            "Saturable" = "mm",
-            "Linear + saturable" = "mmlin"
-          ),
-          "TMDD" = c(
-            "Full TMDD" = "tmdd",
-            "QE" = "tmddqe",
-            "QE, constant Rtot" = "tmddqer",
-            "QSS" = "tmddqss",
-            "QSS, constant Rtot" = "tmddqssr"
-          )
+    selectInput(
+      inputId = "eliminationInput",
+      width = "100%",
+      label = "Elimination",
+      choices = list(
+        "Basic" = c(
+          "Linear"= "lin",
+          "Saturable" = "mm",
+          "Linear + saturable" = "mmlin"
         ),
-        selected = "lin"
-      )
+        "TMDD" = c(
+          "Full TMDD" = "tmdd",
+          "QE" = "tmddqe",
+          "QE, constant Rtot" = "tmddqer",
+          "QSS" = "tmddqss",
+          "QSS, constant Rtot" = "tmddqssr"
+        )
+      ),
+      selected = "lin"
     )
   })
 
   # Create UI components for IV dosing
   output$ivDosingUI <- renderUI({
     if ( input$pkInput %in% c("pk", "linmat", "ode") ) {
-      choices <- c(
-        "None" = "none",
-        "Bolus" = "bolus",
-        "Infusion" = "zero"
-      )
-      col_4(
-        selectInput(
-          inputId = "ivInput",
-          width = "100%",
-          label = "Intravascular dosing",
-          choices = choices,
-          selected = "none"
-        )
+      selectInput(
+        inputId = "ivInput",
+        width = "100%",
+        label = "Intravascular dosing",
+        choices = c(
+          "None" = "none",
+          "Bolus" = "bolus",
+          "Infusion" = "zero"
+        ),
+        selected = "none"
       )
     }
   })
@@ -605,14 +617,12 @@ new_model_server <- function(session, input, output, resources ){
           )
         }
         selected <- choices[0]
-        col_4(
-          selectInput(
-            inputId = "ivRateInput",
-            width = "100%",
-            label = "Zero-order rate",
-            choices = choices,
-            selected = selected
-          )
+        selectInput(
+          inputId = "ivRateInput",
+          width = "100%",
+          label = "Zero-order rate",
+          choices = choices,
+          selected = selected
         )
       }
     }
@@ -630,14 +640,12 @@ new_model_server <- function(session, input, output, resources ){
       if ( input$pkInput == "linmat" ){
         choices <- choices[ !grepl( "transit", choices) ]
       }
-      col_4(
-        selectInput(
-          inputId = "poInput",
-          width = "100%",
-          label = "Extravascular dosing",
-          choices = choices,
-          selected = "first"
-        )
+      selectInput(
+        inputId = "poInput",
+        width = "100%",
+        label = "Extravascular dosing",
+        choices = choices,
+        selected = "first"
       )
     }
   })
@@ -657,16 +665,14 @@ new_model_server <- function(session, input, output, resources ){
           )
         }
         selected <- choices[2]
-        col_4(
-          selectInput(
-            inputId = "poRateInput",
-            width = "100%",
-            label = "Zero-order rate",
-            choices = choices,
-            selected = selected
-          ),
-          offset = ifelse( input$ivInput == "zero", 0, 4)
+        selectInput(
+          inputId = "poRateInput",
+          width = "100%",
+          label = "Zero-order rate",
+          choices = choices,
+          selected = selected
         )
+          # offset = ifelse( input$ivInput == "zero", 0, 4)
       }
     }
   })
@@ -678,16 +684,14 @@ new_model_server <- function(session, input, output, resources ){
     }
 
     if ( input$pkInput %in% c("pk", "linmat", "ode") ) {
-      col_4(
-        radioButtons(
-          inputId = "alagInput1",
-          label = "Include dosing lag?",
-          choices = choices <- c("Yes" = TRUE, "No" = FALSE),
-          selected = FALSE,
-          inline = FALSE
-        ),
-        offset = ifelse( input$ivInput == "zero", 0, 4)
+      radioButtons(
+        inputId = "alagInput1",
+        label = "Include dosing lag?",
+        choices = choices <- c("Yes" = TRUE, "No" = FALSE),
+        selected = FALSE,
+        inline = FALSE
       )
+        # offset = ifelse( input$ivInput == "zero", 0, 4)
     }
   })
 
@@ -699,21 +703,12 @@ new_model_server <- function(session, input, output, resources ){
     }
 
     if ( input$pkInput %in% c("pk", "linmat", "ode") ) {
-      col_4(
-        radioButtons(
-          inputId = "alagInput2",
-          label = "Include dosing lag?",
-          choices = choices <- c("Yes" = TRUE, "No" = FALSE),
-          selected = FALSE,
-          inline = FALSE
-        ),
-        offset = dplyr::case_when(
-          # TMDD model
-          grepl( 'tmdd', input$eliminationInput ) ~ 0,
-          # Saturable or linear+saturation elimination
-          input$eliminationInput != 'lin' ~ 4,
-          TRUE ~ 8
-        )
+      radioButtons(
+        inputId = "alagInput2",
+        label = "Include dosing lag?",
+        choices = choices <- c("Yes" = TRUE, "No" = FALSE),
+        selected = FALSE,
+        inline = FALSE
       )
     }
   })
@@ -735,8 +730,6 @@ new_model_server <- function(session, input, output, resources ){
   })
 
   # Create UI components for disposition
-
-
   output$pknCMTUI <- renderUI({
     req( input$ivInput )
     if ( input$pkInput %in% c("pk", "linmat", "ode") ) {
@@ -775,12 +768,103 @@ new_model_server <- function(session, input, output, resources ){
     )
   })
 
+  # Create Ui for first row for LINMAT and ODE model
+  output$pkFirstRowUI <- renderUI({
+    req(input$pkInput)
+    if ( input$pkInput %in% c("linmat", "ode") ){
+      fluidRow(
+        col_4( uiOutput("pknCMTUI") ),
+        col_4( uiOutput("pkDefaultDoseUI") ),
+        col_4( uiOutput("pkDefaultObsUI") )
+      )
+    }
+  })
+
+  # Create UI for second row
+  output$pkSecondRowUI <- renderUI({
+    req(input$pkInput)
+    ui <- NULL
+    if ( input$pkInput == "pk" ) {
+      ui <- fluidRow(
+        col_4( uiOutput("pkCmtUI") ),
+        col_4( uiOutput("ivDosingUI") ),
+        col_4( uiOutput("poDosingUI") )
+      )
+    } else if ( input$pkInput %in% c("linmat", "ode") ) {
+      ui <- fluidRow(
+        col_4( uiOutput("ivDosingUI") ),
+        col_4( uiOutput("poDosingUI") )
+      )
+    }
+    ui
+  })
+
+  # Create UI for third row
+  output$pkThirdRowUI <- renderUI({
+    req(input$pkInput, input$poInput)
+    ui <- NULL
+    if ( input$pkInput == "pk" ) {
+      ui <- fluidRow(
+        col_4( uiOutput("eliminationUI") ),
+        col_4( uiOutput("ivRateUI") ),
+        col_4(
+          uiOutput( ifelse(input$poInput != "sig", "alagUI1", "poRateUI") )
+        )
+      )
+    } else if ( input$pkInput %in% c("linmat", "ode") ) {
+      ui <- fluidRow(
+        col_4( uiOutput("ivRateUI") ),
+        col_4(
+          uiOutput( ifelse(input$poInput != "sig", "alagUI1", "poRateUI") )
+        )
+      )
+    }
+    ui
+  })
+
+  # Create UI for fourth row
+  output$pkFourthRowUI <- renderUI({
+    req(input$pkInput, input$eliminationInput, input$poInput)
+    fluidRow(
+      if ( input$pkInput == "pk" & input$eliminationInput %in% c("mm", "mmlin") ){
+        col_4(
+          selectInput(
+            inputId = "kmScaleInput",
+            width = "100%",
+            label = "KM scale",
+            choices = c(
+              "Concentration"= TRUE, "Amount" = FALSE
+            ),
+            selected = TRUE
+          )
+        )
+      },
+      if ( input$pkInput == "pk" & grepl("^tmdd", input$eliminationInput) ) {
+        col_8( uiOutput("tmddUI") )
+      },
+      if ( input$pkInput %in% c("pk", "linmat", "ode") & input$poInput == "sig" ) {
+        col_4(
+          uiOutput("alagUI2"),
+          offset = dplyr::case_when(
+            # TMDD model
+            grepl( 'tmdd', input$eliminationInput ) ~ 0,
+            # Saturable or linear+saturation elimination
+            input$eliminationInput != 'lin' ~ 4,
+            TRUE ~ 8
+          )
+        )
+      }
+    )
+  })
+
   # Create UI for ADVAN/TRANS parameterization
   output$advanUI <- renderUI({
 
     if ( isPRED() ){
       return(NULL)
     }
+
+    req( input$pkInput, input$eliminationInput )
 
     if ( input$pkInput == "ode" |
          (input$pkInput == "pk" & input$eliminationInput != "lin" | grepl("transit", input$poInput)) |
@@ -1882,7 +1966,7 @@ new_model_server <- function(session, input, output, resources ){
       contextMenu = FALSE,
       manualColumnMove = FALSE,
       manualRowMove = TRUE,
-      width = "100%",
+      width = ifelse( input$platformInput == "NONMEM", 690, 640),
       height = max(200, (nrow(DF) + 1)*25 + 10)  # 25 px per row + 10 for potential scroll bar
     ) %>%
       hot_table(contextMenu = FALSE) %>%
@@ -1946,7 +2030,13 @@ new_model_server <- function(session, input, output, resources ){
 
   outputOptions(output, "parameterTable", suspendWhenHidden = FALSE)
 
-  output$parameterTableUI <- renderUI( {rHandsontableOutput("parameterTable")} )
+  output$parameterTableUI <- renderUI( {
+    fluidRow(
+      col_12(
+        rHandsontableOutput("parameterTable")
+        )
+      )
+  } )
 
   parameterTable_content <- reactive({
     if ( is.null(input$parameterTable) | length(input$parameterTable$data) == 0) {
@@ -1960,49 +2050,61 @@ new_model_server <- function(session, input, output, resources ){
 
     req( input$pkInput, input$pdInput)
 
+    if ( input$platformInput == 'NONMEM' & input$pdInput != 'logistic' & input$pdInput != 'ordcat' ){
+      muBtn <- col_3(
+        radioButtons(
+          inputId = "muInput",
+          label = "MU referencing",
+          choices = c("Yes" = TRUE, "No" = FALSE),
+          selected = FALSE,
+          inline = TRUE
+        )
+      )
+    } else {
+      muBtn <- NULL
+    }
+
+    # Number of custom PK parameters
+    if ( isPKpred() | input$pkInput == 'ode' | input$pkInput == 'linmat' ) {
+      nPK <- col_3(
+        numericInput(
+          inputId = "nPKParmInput",
+          width = "100%",
+          label = "Additional PK parameters",
+          value = 1,
+          min = 1,
+          step = 1
+        )
+      )
+    } else {
+      nPK <- NULL
+    }
+
+    # Number of additional PD parameters
+    if ( input$pdInput == 'pred' | input$pdInput == 'ode' ) {
+      nPD <- col_3(
+        numericInput(
+          inputId = "nPDParmInput",
+          width = "100%",
+          label = "Additional PD parameters",
+          value = 1,
+          min = 1,
+          step = 1
+        )
+      )
+    } else {
+      nPD <- NULL
+    }
+
     fluidRow(
       col_12(
         fluidRow(
-          conditionalPanel(
-            condition = "input.platformInput == 'NONMEM' && input.pdInput != 'logistic' && input.pdInput != 'ordcat'",
-            col_3(
-              radioButtons(
-                inputId = "muInput",
-                label = "MU referencing",
-                choices = c("Yes" = TRUE, "No" = FALSE),
-                selected = FALSE,
-                inline = TRUE
-              )
-            )
-          ),
+          # MU referencing
+          muBtn,
           # Number of custom PK parameters
-          conditionalPanel(
-            condition = "output.isPKpred | input.pkInput == 'ode' | input.pkInput == 'linmat'",
-            col_3(
-              numericInput(
-                inputId = "nPKParmInput",
-                width = "100%",
-                label = "Additional PK parameters",
-                value = 1,
-                min = 1,
-                step = 1
-              )
-            )
-          ),
+          nPK,
           # Number of additional PD parameters
-          conditionalPanel(
-            condition = "input.pdInput == 'pred' | input.pdInput == 'ode'",
-            col_3(
-              numericInput(
-                inputId = "nPDParmInput",
-                width = "100%",
-                label = "Additional PD parameters",
-                value = 1,
-                min = 1,
-                step = 1
-              )
-            )
-          ),
+          nPD,
           # Number of other parameters
           col_3(
             numericInput(
@@ -2152,7 +2254,7 @@ new_model_server <- function(session, input, output, resources ){
       contextMenu = FALSE,
       manualColumnMove = FALSE,
       manualRowMove = TRUE,
-      width = 200,
+      width = 150,
       height = max(200, (nrow(DF) + 1)*25 + 10)  # 25 px per row + 10 for potential scroll bar
     ) %>%
       hot_table(contextMenu = FALSE) %>%
@@ -2957,6 +3059,18 @@ new_model_server <- function(session, input, output, resources ){
     )
   })
 
+  output$covarianceEstimationUI <- renderUI({
+    if ( input$platformInput != "NONMEM" ){
+      return(NULL)
+    }
+    req( input$estimationInput )
+    checkboxInput(
+      inputId = "covarianceInput",
+      label = "Perform covariance step",
+      value = TRUE
+    )
+  })
+
   output$simulationUI <- renderUI({
     if ( input$platformInput != "NONMEM" ){
       return(NULL)
@@ -2965,6 +3079,30 @@ new_model_server <- function(session, input, output, resources ){
       inputId = "simulationInput",
       label = "Perform simulation(s)",
       value = FALSE
+    )
+  })
+
+  output$nsimUI <- renderUI({
+    req(input$simulationInput)
+    numericInput(
+      inputId = "nsubInput",
+      label = "Number of simulations",
+      width = "100%",
+      min = 1,
+      step = 1,
+      value = 1
+    )
+  })
+
+  output$seedUI <- renderUI({
+    req(input$simulationInput)
+    numericInput(
+      inputId = "simulationSeedInput",
+      label = "Seed number",
+      width = "100%",
+      min = 1,
+      step = 1,
+      value = round(100000 * signif(stats::runif(1), 5),0)
     )
   })
 
@@ -2990,46 +3128,19 @@ new_model_server <- function(session, input, output, resources ){
         col_6(
           uiOutput("estimationUI")
         ),
-        conditionalPanel(
-          condition = "input.estimationInput",
-          col_6(
-            checkboxInput(
-              inputId = "covarianceInput",
-              label = "Perform covariance step",
-              value = TRUE
-            )
-          )
+        col_6(
+          uiOutput("covarianceEstimationUI")
         )
       ),
       fluidRow(
         col_4(
           uiOutput("simulationUI")
         ),
-        conditionalPanel(
-          condition = "input.simulationInput",
-          col_4(
-            numericInput(
-              inputId = "nsubInput",
-              label = "Number of simulations",
-              width = "100%",
-              min = 1,
-              step = 1,
-              value = 1
-            )
-          )
+        col_4(
+          uiOutput("nsimUI")
         ),
-        conditionalPanel(
-          condition = "input.simulationInput",
-          col_4(
-            numericInput(
-              inputId = "simulationSeedInput",
-              label = "Seed number",
-              width = "100%",
-              min = 1,
-              step = 1,
-              value = round(100000 * signif(stats::runif(1), 5),0)
-            )
-          )
+        col_4(
+          uiOutput("seedUI")
         )
       ),
       conditionalPanel(
