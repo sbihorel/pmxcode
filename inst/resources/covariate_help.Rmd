@@ -1,0 +1,26 @@
+---
+output: html_document
+---
+
+This *pmxcode* module supports the creation of univariate models for execution of stepwise covariate analysis in NONMEM.
+
+You can define parameter/covariate relationships as individual rows in the interface table. Relationships are defined for each step of the forward selection or backward elimination stages using the table provided in the interface. Since NONMEM execution can take time, the covariate effect definitions can be saved (using the `r fontawesome::fa('download')` button) in a .csv file and later uploaded (using the `r fontawesome::fa('upload')`) for further modifications.
+
+The interface table includes multiple columns:
+
+* Parameter and covariate must be entered as single variables in the eponymous columns (using alphanumeric characters only);
+* The *Type* column defines whether the covariate is discrete or continuous variables;
+* The *Functional form* column defines the mathematical form of the relationship: "Linear", "Power", or "Exponential" for continuous variables and "Additive", "Proportional", or "Direct proportional" for discrete variables;
+* Any centering value of the covariate effect must be entered in the *Center value for continuous covariate*;
+* The initial estimate of the covariate effect must be entered in the eponymous column;
+* For discrete covariates with \> 2 category, non-reference categories are each associated with a specific dichotomous flag and initial estimate. The flags must be entered in the *Dichotomous flags for discrete covariate* column separated by colons without spaces and estimates must be entered in a similar fashion (and corresponding order) in the *Initial estimate* column. For instance, to define the effects of renal function category, one can enter "RFMILD:RFMOD:RFSEV" in the flag column and "0.1:0.2:0.3" in the estimate column.
+* The *Action* column defines what action will be taken based upon the information entered in the row: "Create" to create a control stream, "Do not create" to perform no action, and "Select" to indicate that the covariate effect was selected at a particular step
+
+Use the `r fontawesome::fa('plus')` and `r fontawesome::fa('minus')` buttons to add and delete rows in the interface table. Table content can also be copied (`r fontawesome::fa('copy')`) and pasted (`r fontawesome::fa('paste')`). You can also click on <img src='www/duplicate_black.svg' width='13px'> to create a new step by duplicating the content of the current step (selected covariate effect will be filtered out). 
+
+The downloaded .csv files will contain the following data column: *Stage*, *Step*, *Parameter*, *Covariate*, *Type*, *Function*, *Center*, *Flags*, *Initial*, and *Action*. 
+
+Note that :
+
+* The variables (parameters, covariates, and flags) must be defined in the NONMEM control stream in the \$INPUT, \$PRED, or \$PK block.
+* If covariates and flags need to be defined in the control stream, this must be done prior to ;--INSERT COVARIATE EFFECTS.

@@ -1035,7 +1035,7 @@ get_init_code <- function(
 #'
 #' @param x  Character vectors of variables
 
-tenvars <- function(x ){
+tenvars <- function( x ){
   varsBy10 <- NULL
   while ( length(x) > 0 ) {
     varsBy10 <- c(
@@ -1048,4 +1048,20 @@ tenvars <- function(x ){
     x <- x[-( 1:min(10, length(x) ) )]
   }
   varsBy10
+}
+
+#' Determines if a file path exists
+#'
+#' @param file a path to a file
+
+
+file_exists <- function( file ){
+
+  tryCatch(
+    expr = { file.exists( file ) },
+    error = function(e ){ FALSE },
+    warning = function(e ){ FALSE },
+    finally = {}
+  )
+
 }
