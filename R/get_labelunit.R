@@ -32,11 +32,13 @@ get_labelunit <- function(
   units <- labelunits$UNIT
 
   # Replace <ELIM>
-  labels <- gsub(
-    "<ELIM>",
-    ifelse(input$kmScaleInput, "Concentration", "Amount"),
-    labels
-  )
+  if ( isTruthy(input$kmScaleInput) ){
+    labels <- gsub(
+      "<ELIM>",
+      ifelse(input$kmScaleInput, "Concentration", "Amount"),
+      labels
+    )
+  }
 
   # Replace <DRIVER>
   if (input$pdInput %in% c("direct", "link", "idr")){
