@@ -3236,40 +3236,60 @@ new_model_server <- function(session, input, output, resources ){
   #---- Ace toolbar ----
 
   output$copyBtn <- renderUI({
-    rclipboard::rclipButton(
-      inputId = "copyButton",
-      label = NULL,#"Copy to clipboard",
-      clipText = input$aceNew,
-      icon = icon("copy")
+    bslib::tooltip(
+      rclipboard::rclipButton(
+        inputId = "copyButton",
+        label = NULL,#"Copy to clipboard",
+        clipText = input$aceNew,
+        icon = icon("copy")
+      ),
+      "Copy",
+      options = list(delay =list(show=800, hide=100))
     )
   })
   output$aceToolbarUI <- renderUI({
     fluidRow(
       col_12(
-        shinyBS::bsButton(
-          inputId = "lockButton",
-          icon = icon("lock-open"),
-          label = NULL,
-          block = FALSE,
-          type = "toggle",
-          value = FALSE
+        bslib::tooltip(
+          shinyBS::bsButton(
+            inputId = "lockButton",
+            icon = icon("lock-open"),
+            label = NULL,
+            block = FALSE,
+            type = "toggle",
+            value = FALSE
+          ),
+          "Lock/unlock",
+          options = list(delay =list(show=800, hide=100))
         ),
-        actionButton(
-          inputId = "refreshButton",
-          label = NULL,#"(Re)generate",
-          icon = icon("sync")
+        bslib::tooltip(
+          actionButton(
+            inputId = "refreshButton",
+            label = NULL,#"(Re)generate",
+            icon = icon("sync")
+          ),
+          "Refresh",
+          options = list(delay =list(show=800, hide=100))
         ),
         uiOutput('copyBtn', style = 'display: inline-block;'),
-        downloadButton(
-          outputId = "downloadButton",
-          label = NULL,#"Download",
-          icon = icon("download")
+        bslib::tooltip(
+          downloadButton(
+            outputId = "downloadButton",
+            label = NULL,#"Download",
+            icon = icon("download")
+          ),
+          "Download",
+          options = list(delay =list(show=800, hide=100))
         ),
-        actionButton(
-          inputId = "linkButton",
-          label = NULL,#"Keyboard shortcuts",
-          icon = icon("keyboard"),
-          onclick ="window.open('https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts', '_blank')"
+        bslib::tooltip(
+          actionButton(
+            inputId = "linkButton",
+            label = NULL,#"Keyboard shortcuts",
+            icon = icon("keyboard"),
+            onclick ="window.open('https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts', '_blank')"
+          ),
+          "Keyboard showrtcuts",
+          options = list(delay =list(show=800, hide=100))
         )
       )
     )
