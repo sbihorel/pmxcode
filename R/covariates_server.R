@@ -384,23 +384,20 @@ covariates_server <- function(session, input, output, resources ){
           actionButton(
             inputId = "covariateExtractBtn",
             label = NULL,
-            icon = icon("stamp"),
             width = "39px",
-            # icon = NULL,
-            # img(
-            #   src = "www/duplicate.svg",
-            #   padding = '3px'
-            # ),
-            # style = "margin-right: 10px;"
+            icon = NULL,
+            img(
+              src = "www/extract.svg",
+              padding = '3px'
+            )
           ),
           "Extract from reference model",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         ),
         bslib::tooltip(
           actionButton(
             inputId = "covariateMoveBtn",
             label = NULL,
-            # icon = icon("stamp"),
             width = "39px",
             icon = NULL,
             img(
@@ -410,7 +407,7 @@ covariates_server <- function(session, input, output, resources ){
             style = "margin-right: 10px;"
           ),
           "Copy data to next step",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         )
       )
     } else {
@@ -418,7 +415,6 @@ covariates_server <- function(session, input, output, resources ){
         actionButton(
           inputId = "covariateMoveBtn",
           label = NULL,
-          # icon = icon("stamp"),
           width = "39px",
           icon = NULL,
           img(
@@ -428,7 +424,7 @@ covariates_server <- function(session, input, output, resources ){
           style = "margin-right: 10px;"
         ),
         "Copy data to next step",
-        options = list(delay =list(show=800, hide=100))
+        options = list(delay = list(show = 800, hide = 100), trigger = "hover")
       )
     }
 
@@ -447,7 +443,7 @@ covariates_server <- function(session, input, output, resources ){
             width = "39px"
           ),
           "Load",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         ),
         bslib::tooltip(
           downloadButton(
@@ -458,7 +454,7 @@ covariates_server <- function(session, input, output, resources ){
             style = " margin-right: 10px;"
           ),
           "Download",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         ),
         bslib::tooltip(
           actionButton(
@@ -468,7 +464,7 @@ covariates_server <- function(session, input, output, resources ){
             width = "39px"
           ),
           "Add row",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         ),
         bslib::tooltip(
           actionButton(
@@ -479,7 +475,7 @@ covariates_server <- function(session, input, output, resources ){
             style = "margin-right: 10px"
           ),
           "Delete row(s)",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         ),
         bslib::tooltip(
           actionButton(
@@ -489,7 +485,7 @@ covariates_server <- function(session, input, output, resources ){
             width = "39px"
           ),
           "Copy step data",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         ),
         bslib::tooltip(
           actionButton(
@@ -499,7 +495,7 @@ covariates_server <- function(session, input, output, resources ){
             width = "39px"
           ),
           "Paste step data",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         ),
         div(
           uiOutput("extractBtnUI"),
@@ -513,7 +509,7 @@ covariates_server <- function(session, input, output, resources ){
             width = "39px"
           ),
           "Help",
-          options = list(delay =list(show=800, hide=100))
+          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         )
       ),
       col_3(
