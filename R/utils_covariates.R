@@ -281,6 +281,17 @@ check_covariate_table <- function(
     stop("Invalid content in Function column")
   }
 
+  continuous <- table %>%
+    dplyr::filter( Type == "Continuous" )
+  discrete  <- table %>%
+    dplyr::filter( Type != "Continuous" )
+  if (
+    any( continuous$Function %in% c("Additive", "Proportional", "Direct proportional") ) |
+    any( discrete$Function %in% c("Linear", "Power") )
+  ){
+    stop("Invalid functional form for selected covariate type")
+  }
+
   # Center
   if ( !is.numeric(table$Center) ){
     stop("Invalid content in Center column")
@@ -332,21 +343,25 @@ check_covariate_table <- function(
   if (
     !(
       ( inherits(table$Action, "character") | inherits(table$Action, "factor") ) &
-      all( is.na(table$Action) | table$Action %in% c("Create", "Do not create", "Select") )
+      all( is.na(table$Action) | table$Action %in% c("Create", "Do not create", "Select", "Remove") )
     )
   ) {
     stop("Invalid content in Action column")
   }
 
-  continuous <- table %>%
-    dplyr::filter( Type == "Continuous" )
-  discrete  <- table %>%
-    dplyr::filter( Type != "Continuous" )
   if (
-    any( continuous$Function %in% c("Additive", "Proportional", "Direct proportional") ) |
-    any( discrete$Function %in% c("Linear", "Power") )
+    table %>%
+    dplyr::filter(Stage == "Forward" & Action == "Remove") %>%
+    nrow() > 0
   ){
-    stop("Invalid functional form for selected covariate type")
+    stop("Invalid content in Action column")
+  }
+  if (
+    table %>%
+    dplyr::filter(Stage == "Backward" & Action == "Select") %>%
+    nrow() > 0
+  ){
+    stop("Invalid content in Action column")
   }
 
   return(table)
@@ -497,7 +512,10 @@ create_univariate_models <- function(
           "{Step}",
           "{Parameter}",
           "{Covariate}",
+          "{Type}",
           "{Function}",
+          "{ifelse(is.na(Center), '-', Center)}",
+          "{ifelse(is.na(Flags), '-', Flags)}",
           sep = " / "
         )
       )
@@ -520,9 +538,8 @@ create_univariate_models <- function(
 
   code <- unlist( strsplit(gsub("\n", " @@@", code), split = " @@@") )
 
-  # Prepare template code
+  # Forward selection ----
   if ( stage == "Forward" ){
-    # Forward selection
 
     # Add tags in header section of temple code ---
     if ( step == 1 ) {
@@ -585,313 +602,466 @@ create_univariate_models <- function(
     index <- which(grepl(";-- COVARIATE EFFECT START", pkpred))
     if ( length(index ) == 0){
       index <- min(
-        which(grepl("^\\s*CALLFL\\s*=", pkpred)),
-        which(grepl("^[$]PK", pkpred)),
-        which(grepl("^[$]PRED", pkpred))
+        which( grepl("^\\s*CALLFL\\s*=", pkpred) ),
+        which( grepl("^[$]PK", pkpred) ),
+        which( grepl("^[$]PRED", pkpred) )
+      )
+    } else {
+      index <- max(
+        index,
+        which( grepl(glue::glue("^\\s+COV{step-1}"), pkpred) )
       )
     }
 
     pkpred <- c(
       pkpred[1:index],
       "@CODECOV",
-      "",
       pkpred[(index+1):length(pkpred)]
     )
 
     blockCode[ pkpredBlock ] <- paste(pkpred, collapse = " @@@")
 
-  } else {
-    # Backward elimination
+    # Convert from NONMEM blocks to line by line format
+    code <- paste(blockCode, collapse = " @@@")
+    code <- unlist( strsplit(gsub("\n", " @@@", code), split = " @@@") )
 
-  }
-
-  # Convert from NONMEM blocks to line by line format
-  code <- paste(blockCode, collapse = " @@@")
-  code <- unlist( strsplit(gsub("\n", " @@@", code), split = " @@@") )
-
-  # Add @COVDEF tag
-  index <- which(grepl("^;--covdef-", code))
-  if ( length(index) > 0 ){
-    code <- c(
-      code[1:index],
-      ";--covdef- @COVDEF",
-      code[(index+1):length(code)]
-    )
-  } else {
-    index <- which(grepl("^[$]PRO", code))[1]
-    code <- c(
-      code[1:index],
-      ";--covdef- @COVDEF",
-      code[(index+1):length(code)]
-    )
-  }
-
-  # Create univariate control streams ----
-
-  univariates <- vector("list", nrow(table))
-
-  for ( iEffect in 1:nrow(table) ){
-
-    # Create a copy
-    tmp <- code
-
-    # Update date in header section
-    index <- which(grepl("^;; Created on", tmp))[1]
-    tmp[index] <- glue::glue(
-      ";; Created on {date} by {Sys.info()['user']}",
-      date = format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
-    )
-
-    # Update path in header section
-    index <- which(grepl("^;; Name:", tmp))[1]
-    tmp[index] <- glue::glue(
-      ";; Name: {path}/{referenceFilename}",
-      path = ifelse(
-        length(path) == 0,
-        referenceDir,
-        path
-      )
-    )
-
-    # Update other instance of filename
-    if ( style == "Standard") {
-      tmp <- gsub(
-        pattern = referenceName,
-        replacement = table$name[iEffect],
-        tmp
+    # Add @COVDEF tag
+    index <- which(grepl("^;--covdef-", code))
+    if ( length(index) > 0 ){
+      index <- index[length(index)]
+      code <- c(
+        code[1:index],
+        ";--covdef- @COVDEF",
+        code[(index+1):length(code)]
       )
     } else {
-      tmp <- gsub(
-        pattern = referenceName,
-        replacement = sprintf(
-          ifelse(
-            startNumber + nrow(table) < 1000,
-            "run%03d",
-            "run%04d"
-          ),
-          startNumber + iEffect - 1
-        ),
-        tmp
-      )
-      tmp <- gsub(
-        glue::glue("(FILE\\s*=\\s*[[:alpha:]]+){runno}"),
-        sprintf(
-          ifelse(
-            startNumber + nrow(table) < 1000,
-            "\\1%03d",
-            "\\1%04d"
-          ),
-          startNumber + iEffect - 1
-        ),
-        tmp
+      index <- which(grepl("^[$]PRO", code))
+      code <- c(
+        code[1:index],
+        ";--covdef- @COVDEF",
+        code[(index+1):length(code)]
       )
     }
 
-    # Replace @COVARIATE tag
-    tmp <- sub("@COVARIATE", table$Covariate[iEffect], tmp)
+    # * Create univariate control streams ----
 
-    # Replace @PARAMETER tag
-    tmp <- sub("@PARAMETER", table$Parameter[iEffect], tmp)
+    univariates <- vector("list", nrow(table))
 
-    # Replace @FUNCTION tag
-    tmp <- sub("@FUNCTION", paste(tolower(table$Function[iEffect]), "effect"), tmp)
+    for ( iEffect in 1:nrow(table) ){
 
-    # Replace @COVDEF tag
-    tmp <- sub("@COVDEF", table$info[iEffect], tmp)
+      # Create a copy
+      tmp <- code
 
-    # Replace @THETACOV tag
-    initials <- unlist( strsplit(table$Initial[iEffect], ":") )
-    tag_replacement <- c()
-
-    for ( iTheta in 1:length(initials) ){
-      covariate <- ifelse(
-        length(initials) == 1,
-        table$Covariate[iEffect],
-        unlist( strsplit(table$Flags[iEffect], ":") )[iTheta]
+      # Update date in header section
+      index <- which(grepl("^;; Created on", tmp))[1]
+      tmp[index] <- glue::glue(
+        ";; Created on {date} by {Sys.info()['user']}",
+        date = format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
       )
 
-      tag_replacement <- c(
-        tag_replacement,
-        sprintf(
-          glue::glue(
-            "  ({lo}, {init}, +INF)  ;--th{iTheta+nThetas} {key}: {label}",
-            lo = dplyr::case_when(
-              table$Function[iEffect] == "Proportional" ~ "-1",
-              table$Function[iEffect] == "Direct proportional" ~ "0",
-              TRUE ~ "-INF"
+      # Update path in header section
+      index <- which(grepl("^;; Name:", tmp))[1]
+      tmp[index] <- glue::glue(
+        ";; Name: {path}/{referenceFilename}",
+        path = ifelse(
+          length(path) == 0,
+          referenceDir,
+          path
+        )
+      )
+
+      # Update other instance of filename
+      if ( style == "Standard") {
+        tmp <- gsub(
+          pattern = referenceName,
+          replacement = table$name[iEffect],
+          tmp
+        )
+      } else {
+        tmp <- gsub(
+          pattern = referenceName,
+          replacement = sprintf(
+            ifelse(
+              startNumber + nrow(table) < 1000,
+              "run%03d",
+              "run%04d"
             ),
-            init = initials[iTheta],
-            key = table$Parameter[iEffect],
-            label = dplyr::case_when(
-              table$Function[iEffect] == "Linear" ~ glue::glue(
-                "Slope of {effect} effect on {table$Parameter[iEffect]}",
-                effect = ifelse(
-                  is.na(table$Center[iEffect]),
-                  covariate,
-                  glue::glue(
-                    "{covariate}{sign}{abs(table$Center[iEffect])}",
-                    sign = ifelse( table$Center[iEffect] < 0, "+", "-")
+            startNumber + iEffect - 1
+          ),
+          tmp
+        )
+        tmp <- gsub(
+          glue::glue("(FILE\\s*=\\s*[[:alpha:]]+){runno}"),
+          sprintf(
+            ifelse(
+              startNumber + nrow(table) < 1000,
+              "\\1%03d",
+              "\\1%04d"
+            ),
+            startNumber + iEffect - 1
+          ),
+          tmp
+        )
+      }
+
+      # Replace @COVARIATE tag
+      tmp <- sub("@COVARIATE", table$Covariate[iEffect], tmp)
+
+      # Replace @PARAMETER tag
+      tmp <- sub("@PARAMETER", table$Parameter[iEffect], tmp)
+
+      # Replace @FUNCTION tag
+      tmp <- sub("@FUNCTION", paste(tolower(table$Function[iEffect]), "effect"), tmp)
+
+      # Replace @COVDEF tag
+      tmp <- sub("@COVDEF", table$info[iEffect], tmp)
+
+      # Replace @THETACOV tag
+      initials <- unlist( strsplit(table$Initial[iEffect], ":") )
+      tag_replacement <- c()
+
+      for ( iTheta in 1:length(initials) ){
+        covariate <- ifelse(
+          length(initials) == 1,
+          table$Covariate[iEffect],
+          unlist( strsplit(table$Flags[iEffect], ":") )[iTheta]
+        )
+
+        tag_replacement <- c(
+          tag_replacement,
+          sprintf(
+            glue::glue(
+              "  ({lo}, {init}, +INF)  ;--th{iTheta+nThetas}- {key}: {label}",
+              lo = dplyr::case_when(
+                table$Function[iEffect] == "Proportional" ~ "-1",
+                table$Function[iEffect] == "Direct proportional" ~ "0",
+                TRUE ~ "-INF"
+              ),
+              init = initials[iTheta],
+              key = table$Parameter[iEffect],
+              label = dplyr::case_when(
+                table$Function[iEffect] == "Linear" ~ glue::glue(
+                  "Slope of {effect} effect on {table$Parameter[iEffect]}",
+                  effect = ifelse(
+                    is.na(table$Center[iEffect]),
+                    covariate,
+                    glue::glue(
+                      "{covariate}{sign}{abs(table$Center[iEffect])}",
+                      sign = ifelse( table$Center[iEffect] < 0, "+", "-")
+                    )
                   )
-                )
-              ),
-              table$Function[iEffect] == "Power" ~ glue::glue(
-                "Exponent of {effect} effect on {table$Parameter[iEffect]}",
-                effect = ifelse(
-                  is.na(table$Center[iEffect]),
-                  covariate,
-                  glue::glue(
-                    "{sign}{covariate}/{abs(table$Center[iEffect])}",
-                    sign = ifelse(table$Center[iEffect] < 0, "-", "")
+                ),
+                table$Function[iEffect] == "Power" ~ glue::glue(
+                  "Exponent of {effect} effect on {table$Parameter[iEffect]}",
+                  effect = ifelse(
+                    is.na(table$Center[iEffect]),
+                    covariate,
+                    glue::glue(
+                      "{sign}{covariate}/{abs(table$Center[iEffect])}",
+                      sign = ifelse(table$Center[iEffect] < 0, "-", "")
+                    )
                   )
-                )
-              ),
-              table$Function[iEffect] == "Exponential" & table$Type[iEffect] == "Continuous" ~ glue::glue(
-                "Slope of {effect} effect on log({table$Parameter[iEffect]})",
-                effect = ifelse(
-                  is.na(table$Center[iEffect]),
-                  covariate,
-                  glue::glue(
-                    "{covariate}{sign}{abs(table$Center[iEffect])}",
-                    sign = ifelse(table$Center[iEffect] < 0, "+", "-")
+                ),
+                table$Function[iEffect] == "Exponential" & table$Type[iEffect] == "Continuous" ~ glue::glue(
+                  "Slope of {effect} effect on log({table$Parameter[iEffect]})",
+                  effect = ifelse(
+                    is.na(table$Center[iEffect]),
+                    covariate,
+                    glue::glue(
+                      "{covariate}{sign}{abs(table$Center[iEffect])}",
+                      sign = ifelse(table$Center[iEffect] < 0, "+", "-")
+                    )
                   )
+                ),
+                table$Function[iEffect] == "Exponential" & table$Type[iEffect] == "Discrete" ~ glue::glue(
+                  "Additive shift in log({table$Parameter[iEffect]}) for {covariate} = 1",
+                ),
+                table$Function[iEffect] == "Additive" ~ glue::glue(
+                  "Additive shift in {table$Parameter[iEffect]} for {covariate} = 1",
+                ),
+                table$Function[iEffect] == "Proportional" ~ glue::glue(
+                  "Proportional shift in {table$Parameter[iEffect]} for {covariate} = 1",
+                ),
+                table$Function[iEffect] == "Direct proportional" ~ glue::glue(
+                  "Fold-change in {table$Parameter[iEffect]} for {covariate} = 1",
                 )
-              ),
-              table$Function[iEffect] == "Exponential" & table$Type[iEffect] == "Discrete" ~ glue::glue(
-                "Additive shift in log({table$Parameter[iEffect]}) for {covariate} = 1",
-              ),
-              table$Function[iEffect] == "Additive" ~ glue::glue(
-                "Additive shift in {table$Parameter[iEffect]} for {covariate} = 1",
-              ),
-              table$Function[iEffect] == "Proportional" ~ glue::glue(
-                "Proportional shift in {table$Parameter[iEffect]} for {covariate} = 1",
-              ),
-              table$Function[iEffect] == "Direct proportional" ~ glue::glue(
-                "Fold-change in {table$Parameter[iEffect]} for {covariate} = 1",
               )
             )
           )
         )
-      )
-    }
-
-    tmp <- sub("@THETACOV", paste(tag_replacement, collapse = "\n"), tmp)
-
-    # Replace @CODECOV tag
-    tag_replacement <- c()
-
-    for ( iTheta in 1:length(initials) ){
-      covariate <- ifelse(
-        length(initials) == 1,
-        table$Covariate[iEffect],
-        unlist( strsplit(table$Flags[iEffect], ":") )[iTheta]
-      )
-
-      if ( iTheta == 1 ){
-        tag_replacement <- ifelse(
-          table$Type[iEffect] == "Continuous",
-          # Continuous effects
-          dplyr::case_when(
-            table$Function[iEffect] == "Linear" ~ glue::glue(
-              "THETA({iTheta + nThetas})*({covariate}{sign}{abs(table$Center[iEffect])})",
-              sign = ifelse( table$Covariate[iEffect] < 0, "+", "-")
-            ),
-            table$Function[iEffect] == "Exponential" ~ glue::glue(
-              "EXP(THETA({iTheta + nThetas})*({covariate}{sign}{abs(table$Center[iEffect])}))",
-              sign = ifelse( table$Covariate[iEffect] < 0, "+", "-")
-            ),
-            table$Function[iEffect] == "Power" ~ glue::glue(
-              "({sign}{covariate}/{abs(table$Center[iEffect])})**THETA({iTheta + nThetas})",
-              sign = ifelse( table$Covariate[iEffect] < 0, "-", "")
-            )
-          ),
-          # Discrete effects
-          dplyr::case_when(
-            table$Function[iEffect] == "Additive" ~ glue::glue(
-              "THETA({iTheta + nThetas})*{covariate}"
-            ),
-            table$Function[iEffect] == "Proportional" ~ glue::glue(
-              "1 + THETA({iTheta + nThetas})*{covariate}"
-            ),
-            table$Function[iEffect] == "Direct proportional" ~ glue::glue(
-              "(THETA({iTheta + nThetas})**{covariate}"
-            ),
-            table$Function[iEffect] == "Exponential" ~ glue::glue(
-              "EXP(THETA({iTheta + nThetas})*{covariate}"
-            )
-          )
-        )
       }
 
-      # Categorical covariate effects
-      if ( iTheta > 1 ){
-        tag_replacement <- paste0(
-          tag_replacement,
+      tmp <- sub("@THETACOV", paste(tag_replacement, collapse = "\n"), tmp)
+
+      # Replace @CODECOV tag
+      tag_replacement <- c()
+
+      for ( iTheta in 1:length(initials) ){
+        covariate <- ifelse(
+          length(initials) == 1,
+          table$Covariate[iEffect],
+          unlist( strsplit(table$Flags[iEffect], ":") )[iTheta]
+        )
+
+        if ( iTheta == 1 ){
+          tag_replacement <- ifelse(
+            table$Type[iEffect] == "Continuous",
+            # Continuous effects
+            dplyr::case_when(
+              table$Function[iEffect] == "Linear" ~ glue::glue(
+                "THETA({iTheta + nThetas})*({covariate}{sign}{abs(table$Center[iEffect])})",
+                sign = ifelse( table$Covariate[iEffect] < 0, "+", "-")
+              ),
+              table$Function[iEffect] == "Exponential" ~ glue::glue(
+                "EXP(THETA({iTheta + nThetas})*({covariate}{sign}{abs(table$Center[iEffect])}))",
+                sign = ifelse( table$Covariate[iEffect] < 0, "+", "-")
+              ),
+              table$Function[iEffect] == "Power" ~ glue::glue(
+                "({sign}{covariate}/{abs(table$Center[iEffect])})**THETA({iTheta + nThetas})",
+                sign = ifelse( table$Covariate[iEffect] < 0, "-", "")
+              )
+            ),
+            # Discrete effects
+            dplyr::case_when(
+              table$Function[iEffect] == "Additive" ~ glue::glue(
+                "THETA({iTheta + nThetas})*{covariate}"
+              ),
+              table$Function[iEffect] == "Proportional" ~ glue::glue(
+                "1 + THETA({iTheta + nThetas})*{covariate}"
+              ),
+              table$Function[iEffect] == "Direct proportional" ~ glue::glue(
+                "(THETA({iTheta + nThetas})**{covariate}"
+              ),
+              table$Function[iEffect] == "Exponential" ~ glue::glue(
+                "EXP(THETA({iTheta + nThetas})*{covariate}"
+              )
+            )
+          )
+        }
+
+        # Categorical covariate effects
+        if ( iTheta > 1 ){
+          tag_replacement <- paste0(
+            tag_replacement,
+            ifelse(
+              table$Function[iEffect] == "Direct proportional",
+              glue::glue( " * THETA({iTheta + nThetas})**{covariate}" ),
+              glue::glue( " + THETA({iTheta + nThetas})*{covariate}" )
+            )
+          )
+        }
+
+        if ( iTheta == length(initials) & table$Type[iEffect] == "Discrete" &
+             table$Function[iEffect] == "Exponential"){
+          tag_replacement <- paste0(tag_replacement, ")")
+        }
+
+      }
+
+      tmp <- sub("@CODECOV", sprintf("  COV%s = %s", step, tag_replacement), tmp)
+      rm(tag_replacement)
+
+      # Insert covariate variable COVn on the line defining TVx (for additive
+      # or linear effect) or TVxI (for other effects)
+      if ( table$Function[iEffect] %in% c("Additive", "Linear")){
+        index <- which( grepl( glue::glue("^\\s*TV{table$Parameter[iEffect]}\\s*="), tmp ) )
+        if ( length(index) == 0 ){
+          tmp <- glue::glue(
+            paste(
+              "TV{table$Parameter[iEffect]} was not present in reference model code",
+              "",
+              "Covariate effect definition:",
+              "{table$info[iEffect]}",
+              sep = "\n"
+            )
+          )
+        } else {
+          tmp[index] <- paste0( tmp[index], glue::glue(" + COV{step}") )
+        }
+      } else {
+        index <- which( grepl( sprintf("^\\s*TV%sI\\s*=", table$Parameter[iEffect]), tmp ) )
+        if ( length(index) == 0 ){
+          tmp <- glue::glue(
+            paste(
+              "TV{table$Parameter[iEffect]}I was not present in reference model code",
+              "",
+              "Covariate effect definition:",
+              "{table$info[iEffect]}",
+              sep = "\n"
+            )
+          )
+        } else {
+          tmp[index] <- paste0( tmp[index], glue::glue(" * COV{step}") )
+        }
+      }
+
+      # Finalize
+      univariates[[iEffect]] <- paste(tmp, collapse = "\n")
+      names(univariates)[iEffect] <- ifelse(
+        style == "Standard",
+        paste0(table$name[iEffect], ".ctl"),
+        sprintf(
           ifelse(
-            table$Function[iEffect] == "Direct proportional",
-            glue::glue( " * THETA({iTheta + nThetas})**{covariate}" ),
-            glue::glue( " + THETA({iTheta + nThetas})*{covariate}" )
-          )
+            startNumber + nrow(table) < 1000,
+            "run%03d.mod",
+            "run%04d.mod"
+          ),
+          startNumber + iEffect - 1
         )
-      }
-
-      if ( iTheta == length(initials) & table$Type[iEffect] == "Discrete" &
-          table$Function[iEffect] == "Exponential"){
-        tag_replacement <- paste0(tag_replacement, ")")
-      }
-
+      )
     }
 
-    tmp <- sub("@CODECOV", sprintf("  COV%s = %s", step, tag_replacement), tmp)
-    rm(tag_replacement)
+  # Backward elimination ----
 
-    # Insert covariate variable COVn on the line defining TVx (for additive
-    # or linear effect) or TVxI (for other effects)
-    if ( table$Function[iEffect] %in% c("Additive", "Linear")){
-      index <- which( grepl( glue::glue("^\\s*TV{table$Parameter[iEffect]}\\s*="), tmp ) )
-      if ( length(index) == 0 ){
-        tmp <- glue::glue(
-          paste(
-            "TV{table$Parameter[iEffect]} was not present in reference model code",
-            "",
-            "Covariate effect definition:",
-            "{table$info[iEffect]}",
-            sep = "\n"
-          )
+  } else {
+
+    # Add tags in header section of temple code ---
+    if ( step == 1 ) {
+      if ( style == "Standard" ){
+        insertAfter <- which(grepl("^;;--[-]*", code))[2]
+        insertLines <- c(
+          ";; Backward elimination:",
+          ";;    Backward step 1: removal of effect of @COVARIATE on @PARAMETER as a @FUNCTION relationship"
         )
       } else {
-        tmp[index] <- paste0( tmp[index], glue::glue(" + COV{step}") )
+        insertAfter <- which(grepl("^;; 5. Covariate model:", code))[1]
+        insertLines <- ";;    Backward step 1: removal of effect of @COVARIATE on @PARAMETER as a @FUNCTION relationship"
       }
     } else {
-      index <- which( grepl( sprintf("^\\s*TV%sI\\s*=", table$Parameter[iEffect]), tmp ) )
-      if ( length(index) == 0 ){
-        tmp <- glue::glue(
-          paste(
-            "TV{table$Parameter[iEffect]}I was not present in reference model code",
-            "",
-            "Covariate effect definition:",
-            "{table$info[iEffect]}",
-            sep = "\n"
-          )
-        )
-      } else {
-        tmp[index] <- paste0( tmp[index], glue::glue(" * COV{step}") )
-      }
+      insertAfter <- which(
+        grepl(glue::glue("^;;    Backward step {step-1}"), code)
+      )[1]
+      insertLines <- glue::glue(
+        ";;    Backward step {step}: removal of effect of @COVARIATE on @PARAMETER as a @FUNCTION relationship"
+      )
     }
 
-    # Finalize
-    univariates[[iEffect]] <- paste(tmp, collapse = "\n")
-    names(univariates)[iEffect] <- ifelse(
-      style == "Standard",
-      paste0(table$name[iEffect], ".ctl"),
-      sprintf(
-        ifelse(
-          startNumber + nrow(table) < 1000,
-          "run%03d.mod",
-          "run%04d.mod"
-        ),
-        startNumber + iEffect - 1
-      )
+    if ( style == "Standard" & !grepl("^;;\\s*$", code[insertAfter+1]) ) {
+      insertLines <- c(insertLines, ";;")
+    }
+
+    code <- c(
+      code[1:insertAfter],
+      insertLines,
+      code[(insertAfter+1):length(code)]
     )
+
+    # Find regex pattern to turn off covariate effect
+    table <- table %>%
+      dplyr::mutate(
+        pattern = dplyr::case_when(
+          Function == "Linear" ~ glue::glue("Slope of .*{Covariate}.* effect on {Parameter}"),
+          Function == "Power" ~ glue::glue("Exponent of .*{Covariate}.* effect on {Parameter}"),
+          Function == "Linear" ~ glue::glue("Slope of .*{Covariate}.* effect on {Parameter}"),
+          Function == "Exponential" & Type == "Continuous" ~ glue::glue("Slope of .*{Covariate}.* effect on log({Parameter})"),
+          Function == "Exponential" & Type != "Continuous" ~ glue::glue( "Additive shift in log({Parameter}) for {Covariate} = 1"),
+          Function == "Additive" ~ glue::glue( "Additive shift in {Parameter} for {Covariate} = 1"),
+          Function == "Proportional" ~ glue::glue( "Proportional shift in {Parameter} for {Covariate} = 1"),
+          TRUE ~ glue::glue("Fold-change in {Parameter} for {Covariate} = 1")
+        )
+      )
+
+    # * Create univariate control streams ----
+
+    univariates <- vector("list", nrow(table))
+
+    for ( iEffect in 1:nrow(table) ){
+
+      # Create a copy
+      tmp <- code
+
+      # Update date in header section
+      index <- which(grepl("^;; Created on", tmp))[1]
+      tmp[index] <- glue::glue(
+        ";; Created on {date} by {Sys.info()['user']}",
+        date = format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
+      )
+
+      # Update path in header section
+      index <- which(grepl("^;; Name:", tmp))[1]
+      tmp[index] <- glue::glue(
+        ";; Name: {path}/{referenceFilename}",
+        path = ifelse(
+          length(path) == 0,
+          referenceDir,
+          path
+        )
+      )
+
+      # Update other instance of filename
+      if ( style == "Standard") {
+        tmp <- gsub(
+          pattern = referenceName,
+          replacement = table$name[iEffect],
+          tmp
+        )
+      } else {
+        tmp <- gsub(
+          pattern = referenceName,
+          replacement = sprintf(
+            ifelse(
+              startNumber + nrow(table) < 1000,
+              "run%03d",
+              "run%04d"
+            ),
+            startNumber + iEffect - 1
+          ),
+          tmp
+        )
+        tmp <- gsub(
+          glue::glue("(FILE\\s*=\\s*[[:alpha:]]+){runno}"),
+          sprintf(
+            ifelse(
+              startNumber + nrow(table) < 1000,
+              "\\1%03d",
+              "\\1%04d"
+            ),
+            startNumber + iEffect - 1
+          ),
+          tmp
+        )
+      }
+
+      # Replace @COVARIATE tag
+      tmp <- sub("@COVARIATE", table$Covariate[iEffect], tmp)
+
+      # Replace @PARAMETER tag
+      tmp <- sub("@PARAMETER", table$Parameter[iEffect], tmp)
+
+      # Replace @FUNCTION tag
+      tmp <- sub("@FUNCTION", paste(tolower(table$Function[iEffect]), "effect"), tmp)
+
+
+      # Find line of code defining the covariate THETA to be turned off
+      index <- grepl(table$pattern[iEffect], tmp)
+
+      if ( length(index) == 0 ){
+        tmp <- "Covariate definition was not found!"
+      } else {
+        tmp[index] <- sub(
+          pattern = glue::glue(".*(;--th[0-9]+-.*{table$pattern[iEffect]})"),
+          replacement = glue::glue("  {table$Initial[iEffect]} FIXED \\1"),
+          tmp[index]
+        )
+      }
+
+      # Finalize
+      univariates[[iEffect]] <- paste(tmp, collapse = "\n")
+      names(univariates)[iEffect] <- ifelse(
+        style == "Standard",
+        paste0(table$name[iEffect], ".ctl"),
+        sprintf(
+          ifelse(
+            startNumber + nrow(table) < 1000,
+            "run%03d.mod",
+            "run%04d.mod"
+          ),
+          startNumber + iEffect - 1
+        )
+      )
+
+    }
+
   }
 
   return(univariates)

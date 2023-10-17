@@ -109,50 +109,76 @@ covariates_server <- function(session, input, output, resources ){
 
     req( input$aceReference, referenceFileStyle() )
 
-    check <- TRUE
+    headerCheck <- TRUE
 
     code <- unlist( strsplit( input$aceReference, split = '\n') )
 
     # Header must contain at least 2 rows of separator hyphens
-    headerCheck <- sum(which(grepl('^;;--[-]+', code))) >= 2
+    if ( sum(which(grepl('^;;--[-]+', code))) < 2){
+      headerCheck <- "Missing separator lines"
+    }
 
     # Header must contain a row starting with ;; Name:
-    if ( headerCheck ){
-      headerCheck <- any(grepl('^;; Name:', code))
+    if ( isTRUE(headerCheck) & !any(grepl('^;; Name:', code)) ){
+      headerCheck <- "Missing \";; Name:...\" line"
     }
 
     # Header must contain a row starting with ;; Created on
-    if ( headerCheck ){
-      headerCheck <- any(grepl('^;; Created on', code))
+    if (
+      isTRUE(headerCheck) & !any(grepl('^;; Created on', code)) ){
+      headerCheck <- "Missing \";; Created on ...\" line"
     }
 
     # If standard style, header must contain a row starting with ;; PRUPOSE:
-    if ( headerCheck & referenceFileStyle() == 'Standard' ){
-      headerCheck <- any(grepl('^;; PURPOSE:', code))
+    if (
+      isTRUE(headerCheck) &
+      referenceFileStyle() == 'Standard' &
+      !any(grepl('^;; PURPOSE:', code))
+    ){
+      headerCheck <- "Missing \";; PURPOSE: ...\" line"
     }
 
     # If PsN style, header must contain rows starting with
     # ;; 1. Based on
     # ;; 2. Description
     # ;; 5. Covariate model
-    if ( headerCheck & referenceFileStyle() == 'PsN' ){
-      headerCheck <- any(grepl('^;; 1. Based on', code))
-    }
-    if ( headerCheck & referenceFileStyle() == 'PsN' ){
-      headerCheck <- any(grepl('^;; 6. Interindividual variability', code))
-    }
-    if ( headerCheck & referenceFileStyle() == 'PsN' ){
-      headerCheck <- any(grepl('^;; 5. Covariate model', code))
-    }
-
-    if ( !headerCheck ){
-      return('Invalid or missing descriptive header section (see Library for examples)')
-    }
-
     if (
-      !any( grepl(glue::glue(';; Name: {referenceFileReactive()}'), code) )
+      isTRUE(headerCheck) &
+      referenceFileStyle() == 'PsN' &
+      !any(grepl('^;; 1. Based on', code))
     ){
-      return('Missing or inconsistent path and filename in header (see Library for examples)')
+      headerCheck <- "Missing \";; 1. Based on:...\" line"
+    }
+    if (
+      isTRUE(headerCheck) &
+      referenceFileStyle() == 'PsN' &
+      !any(grepl('^;; 6. Interindividual variability', code))
+    ){
+      headerCheck <- "Missing \";; 6. Interindividual variability\" line"
+    }
+   if (
+     isTRUE(headerCheck) &
+     referenceFileStyle() == 'PsN' &
+     !any(grepl('^;; 5. Covariate model', code))
+   ){
+     headerCheck <- "Missing \";; 5. Covariate model\" line"
+   }
+
+   if (
+     isTRUE(headerCheck) &
+     !any( grepl(glue::glue(';; Name: {referenceFileReactive()}'), code) )
+   ){
+     headerCheck <- "Path and filename in header is inconsistent with file location"
+   }
+
+   if ( !isTRUE(headerCheck) ){
+      return(
+        paste(
+          'Invalid or missing descriptive header section (see Library for examples)',
+          headerCheck,
+          sep = "\n"
+        )
+      )
     }
 
     # Check expected NONMEM blocks
@@ -173,7 +199,7 @@ covariates_server <- function(session, input, output, resources ){
       return( 'No $THETA block present in NONMEM control stream' )
     }
 
-    check
+    headerCheck
 
   })
 
@@ -350,49 +376,45 @@ covariates_server <- function(session, input, output, resources ){
   # Parameter / covariate relationships ----
 
   # * Create table toolbar ----
-  output$covariateToolboxUI <- renderUI({
-    fluidRow(
-      col_4(
-        shinyFiles::shinyFilesButton(
-          id = "covariateLoadChoose",
-          title = "Import covariate",
-          label = NULL,
-          icon = icon("download"),
-          multiple = FALSE,
-          width = "39px"
+  output$extractBtnUI <- renderUI({
+
+    if (input$fsbeInput == "Backward elimination" & input$stepInput == 1 ) {
+      tagList(
+        bslib::tooltip(
+          actionButton(
+            inputId = "covariateExtractBtn",
+            label = NULL,
+            icon = icon("stamp"),
+            width = "39px",
+            # icon = NULL,
+            # img(
+            #   src = "www/duplicate.svg",
+            #   padding = '3px'
+            # ),
+            # style = "margin-right: 10px;"
+          ),
+          "Extract from reference model",
+          options = list(delay =list(show=800, hide=100))
         ),
-        downloadButton(
-          outputId = "covariateSaveBtn",
-          label = NULL,
-          icon = icon("upload"),
-          width = "39px",
-          style = " margin-right: 10px;"
-        ),
-        actionButton(
-          inputId = "covariateAddBtn",
-          label = NULL,
-          icon = icon("plus"),
-          width = "39px"
-        ),
-        actionButton(
-          inputId = "covariateDeleteBtn",
-          label = NULL,
-          icon = icon("minus"),
-          width = "39px",
-          style = "margin-right: 10px"
-        ),
-        actionButton(
-          inputId = "covariateCopyBtn",
-          label = NULL,
-          icon = icon("copy"),
-          width = "39px"
-        ),
-        actionButton(
-          inputId = "covariatePasteBtn",
-          label = NULL,
-          icon = icon("paste"),
-          width = "39px"
-        ),
+        bslib::tooltip(
+          actionButton(
+            inputId = "covariateMoveBtn",
+            label = NULL,
+            # icon = icon("stamp"),
+            width = "39px",
+            icon = NULL,
+            img(
+              src = "www/duplicate.svg",
+              padding = '3px'
+            ),
+            style = "margin-right: 10px;"
+          ),
+          "Copy data to next step",
+          options = list(delay =list(show=800, hide=100))
+        )
+      )
+    } else {
+      bslib::tooltip(
         actionButton(
           inputId = "covariateMoveBtn",
           label = NULL,
@@ -405,11 +427,93 @@ covariates_server <- function(session, input, output, resources ){
           ),
           style = "margin-right: 10px;"
         ),
-        actionButton(
-          inputId = "covariateHelpBtn",
-          label = NULL,
-          icon = icon("question"),
-          width = "39px"
+        "Copy data to next step",
+        options = list(delay =list(show=800, hide=100))
+      )
+    }
+
+  })
+
+  output$covariateToolboxUI <- renderUI({
+    fluidRow(
+      col_4(
+        bslib::tooltip(
+          shinyFiles::shinyFilesButton(
+            id = "covariateLoadChoose",
+            title = "Import covariate",
+            label = NULL,
+            icon = icon("download"),
+            multiple = FALSE,
+            width = "39px"
+          ),
+          "Load",
+          options = list(delay =list(show=800, hide=100))
+        ),
+        bslib::tooltip(
+          downloadButton(
+            outputId = "covariateSaveBtn",
+            label = NULL,
+            icon = icon("upload"),
+            width = "39px",
+            style = " margin-right: 10px;"
+          ),
+          "Download",
+          options = list(delay =list(show=800, hide=100))
+        ),
+        bslib::tooltip(
+          actionButton(
+            inputId = "covariateAddBtn",
+            label = NULL,
+            icon = icon("plus"),
+            width = "39px"
+          ),
+          "Add row",
+          options = list(delay =list(show=800, hide=100))
+        ),
+        bslib::tooltip(
+          actionButton(
+            inputId = "covariateDeleteBtn",
+            label = NULL,
+            icon = icon("minus"),
+            width = "39px",
+            style = "margin-right: 10px"
+          ),
+          "Delete row(s)",
+          options = list(delay =list(show=800, hide=100))
+        ),
+        bslib::tooltip(
+          actionButton(
+            inputId = "covariateCopyBtn",
+            label = NULL,
+            icon = icon("copy"),
+            width = "39px"
+          ),
+          "Copy step data",
+          options = list(delay =list(show=800, hide=100))
+        ),
+        bslib::tooltip(
+          actionButton(
+            inputId = "covariatePasteBtn",
+            label = NULL,
+            icon = icon("paste"),
+            width = "39px"
+          ),
+          "Paste step data",
+          options = list(delay =list(show=800, hide=100))
+        ),
+        div(
+          uiOutput("extractBtnUI"),
+          style = "display: inline-block;"
+        ),
+        bslib::tooltip(
+          actionButton(
+            inputId = "covariateHelpBtn",
+            label = NULL,
+            icon = icon("question"),
+            width = "39px"
+          ),
+          "Help",
+          options = list(delay =list(show=800, hide=100))
         )
       ),
       col_3(
@@ -595,6 +699,8 @@ covariates_server <- function(session, input, output, resources ){
       }
     }
   )
+
+  # * Toolbar button action ----
 
   # Data upload
   observeEvent(
@@ -852,6 +958,128 @@ covariates_server <- function(session, input, output, resources ){
     }
   )
 
+  # Extract from full multivariable model
+  observeEvent(
+    input$covariateExtractBtn,
+    {
+
+      # Mulltivariable model can only come from reference code
+      refCode <- unlist(
+        strsplit(input$aceReference, split = '\n')
+      )
+
+      index <- which(grepl('^;--covdef', refCode))
+
+      # Build backward step 1 table
+      if ( length(index) > 0 ){
+        newStep <- data.frame(
+          Stage = character(),
+          Step = numeric(),
+          Parameter = character(),
+          Covariate = character(),
+          Type = character(),
+          Function = character(),
+          Center = numeric(),
+          Flags = character(),
+          Initial = character(),
+          Action = character(),
+          stringsAsFactors = FALSE
+        )
+
+        for ( iEffect in 1:length(index) ){
+          effect <- sub('$;--covef- ', '', refCode[index[iEffect]])
+          effect <- unlist( strsplit(effect, split = ' / ') )
+          flags <- unlist( strsplit(effect[8], ':') )
+
+          for ( flag in flags ){
+            newStep <- dplyr::bind_rows(
+              newStep,
+              data.frame(
+                Stage = "Backward",
+                Step = 1,
+                Parameter = effect[3],
+                Covariate = ifelse( length(flags) > 1, flag, effect[4] ),
+                Type = effect[5],
+                Function = effect[6],
+                Center = as.numeric( ifelse( effect[7] == "-", NA_real_, effect[7] ) ),
+                Flags = NA_character_,
+                Initial = "0",
+                Action = "Create",
+                stringsAsFactors = FALSE
+              )
+            )
+          }
+        }
+
+        covariateCopyData(newStep)
+
+        DF <- hot_to_r_raw( input$covariateTable )
+
+        # Display a modal if the current handsontable is not empty
+        if ( !all(is.na(DF %>% dplyr::select(-Stage, -Step))) ){
+          showModal(
+            modalDialog(
+              title = "Overwrite current content?",
+              glue::glue(
+                paste(
+                  "Do you want to overwrite the current definition of",
+                  "{tolower(input$fsbeInput)}",
+                  "step {input$stepInput}?"
+                )
+              ),
+              footer = tagList(
+                actionButton(inputId = "yesExtract", label = "Yes"),
+                modalButton("No")
+              )
+            )
+          )
+        } else {
+          covariateData(
+            bind_rows(
+              # Remove data for current step from covariate data
+              covariateData()  %>% dplyr::filter( !(Stage ==  currentStage() & Step == currentStep() ) ),
+              # Add copied data and update stage and step
+              newStep
+            ) %>%
+              dplyr::filter(
+                !(
+                  is.na(Covariate) & is.na(Parameter) & is.na(Type) & is.na(Function) &
+                    is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
+                )
+              ) %>%
+              dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+          )
+        }
+      }
+    }
+  )
+
+  observeEvent(
+    input$yesExtract,
+    {
+      covariateData(
+        bind_rows(
+          # Remove data for current step from covariate data
+          covariateData() %>% dplyr::filter( !(Stage ==  currentStage() & Step == currentStep() ) ),
+          # Add copied data and update stage and step
+          covariateCopyData() %>%
+            dplyr::mutate(
+              Stage = currentStage(),
+              Step = currentStep()
+            )
+        ) %>%
+          dplyr::filter(
+            !(
+              is.na(Covariate) & is.na(Parameter) & is.na(Type) & is.na(Function) &
+                is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
+            )
+          ) %>%
+          dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+      )
+      removeModal()
+    }
+  )
+
   # Create new stage
   observeEvent(
     input$covariateMoveBtn,
@@ -865,7 +1093,7 @@ covariates_server <- function(session, input, output, resources ){
       DF <- DF %>%
         dplyr::mutate( combo = paste(Covariate, Parameter) )
       selectCovariateEffect <- DF %>%
-        dplyr::filter( Action == "Select" )
+        dplyr::filter( Action == "Select" | Action == "Remove" )
       if ( nrow(selectCovariateEffect) > 0 ){
         DF <- DF %>%
           dplyr::filter( !(combo %in% selectCovariateEffect$combo ) )
@@ -887,14 +1115,22 @@ covariates_server <- function(session, input, output, resources ){
         showModal(
           modalDialog(
             title = "Overwrite content of next step?",
-            glue::glue(
-              paste(
-                "Covariate effects are alread defined for",
-                "{tolower(input$fsbeInput)}",
-                "step {input$stepInput + 1}<\br>",
-                "Do you want to overwrite this information by importing the covariate effect definition of",
-                "{tolower(input$fsbeInput)}",
-                "step {input$stepInput}?"
+            p(
+              glue::glue(
+                paste(
+                  "Covariate effects are alread defined for",
+                  "{tolower(input$fsbeInput)}",
+                  "step {input$stepInput + 1}."
+                ),
+              )
+            ),
+            p(
+              glue::glue(
+                paste(
+                  "Do you want to overwrite this information by importing the",
+                  "covariate effect definition of {tolower(input$fsbeInput)}",
+                  "step {input$stepInput}?"
+                )
               )
             ),
             footer = tagList(
@@ -1023,7 +1259,7 @@ covariates_server <- function(session, input, output, resources ){
         ),
         Action = factor(
           Action,
-          levels = c("Create", "Do not create", "Select"),
+          levels = c("Create", "Do not create", "Select", "Remove"),
           ordered = TRUE
         )
       )
@@ -1056,7 +1292,7 @@ covariates_server <- function(session, input, output, resources ){
       rhandsontable::hot_col(
         col = "Action",
         type = "dropdown",
-        source = c("Create", "Do not create", "Select")
+        source = c("Create", "Do not create", "Select", "Remove")
       ) %>%
       # To fix display problem: https://github.com/jrowen/rhandsontable/issues/366
       htmlwidgets::onRender("
@@ -1537,6 +1773,13 @@ covariates_server <- function(session, input, output, resources ){
       # Get stage
       stage <- sub("(^\\w+)\\s.+", "\\1", input$fsbeUnivariateInput)
 
+      # Get path
+      tmp <- unlist( strsplit(refCode, split = '\n') )
+      index <- which( grepl("^;; Name:",  tmp) )[1]
+      path <- dirname(
+        gsub('^;; Name:\\s+|\\s+', '', tmp[index])
+      )
+
       # Call utility function
       create_univariate_models(
         code = refCode,
@@ -1553,7 +1796,7 @@ covariates_server <- function(session, input, output, resources ){
         ),
         style = referenceFileStyle(),
         startNumber = input$univariateMinRunInput,
-        path = univariateDirReactive()
+        path = path
       )
 
     }
@@ -1592,7 +1835,9 @@ covariates_server <- function(session, input, output, resources ){
   # Univariate model content as plain text
   output$univariateSelectedContent <- renderText ({
     req( univariateModels(), input$univariateSelectInput )
-    univariateModels()[[which(names(univariateModels()) == input$univariateSelectInput)]]
+    index <- which(names(univariateModels()) == input$univariateSelectInput)
+    req(index)
+    univariateModels()[[index]]
   })
 
   # Cross univariate model checks
@@ -1600,24 +1845,75 @@ covariates_server <- function(session, input, output, resources ){
     req(univariateModels())
     tmp <- c()
 
+    # Determine which code to use as reference
+    # Converted code must be used if available and for forward step 1 otherwise
+    # reference code must be used
+    if (
+      as.numeric(input$stepUnivariateInput) == 1 &
+      input$fsbeUnivariateInput == "Forward selection" &
+      ( length(input$aceConverted) && !input$aceConverted %in% c("", " "))
+    ) {
+      refCode <- unlist(strsplit(input$aceConverted, "\n"))
+    } else {
+      refCode <- unlist(strsplit(input$aceReference, "\n"))
+    }
+
+    refThetas <- refCode[grep(';--th', refCode)]
+
     for (iFile in 1:length(univariateModels())){
+
       model <- unlist(strsplit(univariateModels()[[iFile]], "\n"))
-      hit <- grep(
-        glue::glue("^\\s*COV{input$stepUnivariateInput}\\s*="),
-        model
-      )
-      tmp <- c(
-        tmp,
-        glue::glue(
-          "\n{name}: {result}",
-          name = names(univariateModels())[iFile],
-          result = ifelse(
-            length(hit) == 0,
-            "Covariate definition was not found!",
-            gsub("\n", "", model[hit])
+      modelThetas <- model[grep(';--th', model)]
+      # Find ;--th lines that differ in the univariate model compared to the reference model
+      hit1 <- modelThetas[ !(modelThetas %in% refThetas) ]
+
+      if ( input$fsbeUnivariateInput == "Forward selection" ){
+        # Find lines using COVx
+        hit2 <- grep(
+          glue::glue("^\\s*COV{input$stepUnivariateInput}\\s*="),
+          model
+        )
+        hit3 <- grep(
+          glue::glue("[+*-]\\s*COV{input$stepUnivariateInput}"),
+          model
+        )
+
+        if ( length(hit1) == 0 & length(hit2) == 0 & length(hit2) == 0 ){
+          results <- "Covariate definition was not found!"
+        } else {
+          results <- paste0(
+            '\n',
+            glue::glue("  {gsub('\n', '', hit1)}"),
+            '\n',
+            glue::glue("  {gsub('\n', '', model[hit2])}"),
+            '\n',
+            glue::glue("  {gsub('\n', '', model[hit3])}")
+          )
+        }
+
+        tmp <- c(
+          tmp,
+          glue::glue(
+            "\n{name}: {results}",
+            name = names(univariateModels())[iFile]
           )
         )
-      )
+
+      } else {
+
+        tmp <- c(
+          tmp,
+          glue::glue(
+            "\n{name}: {result}",
+            name = names(univariateModels())[iFile],
+            result = paste0(
+              '\n',
+              glue::glue("  {gsub('\n', '', hit1)}")
+            )
+          )
+        )
+      }
+
     }
 
     return( paste(tmp, collapse = "\n") )
