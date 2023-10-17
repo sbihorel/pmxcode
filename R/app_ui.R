@@ -63,6 +63,9 @@ app_ui <- function(request) {
                 ".inline2 .form-group {",
                 "  display: table-row;",
                 "}",
+                ".tooltip {",
+                "  text-transform: none !important;",
+                "}",
                 sep = "\n"
               )
             )
