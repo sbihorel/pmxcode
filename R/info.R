@@ -4,7 +4,7 @@ help_ui <- function()
     title = "Info",
     icon = icon("question", verify_fa = FALSE),
     value = "info",
-    includeMarkdown(system.file('resources/info.md', package = 'pmxcode'))
+    includeMarkdown(system.file("resources/info.md", package = "pmxcode"))
   )
 }
 

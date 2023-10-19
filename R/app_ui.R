@@ -18,7 +18,6 @@ app_ui <- function(request) {
           base_font = bslib::font_collection("Helvetica Neue", "Arial", "sans-serif"),
           font_scale = 0.85
         ),
-        # theme = bslib::bs_theme(bootswatch = "sandstone", version = 5),
         bg = "#3e3f3a",
         htmltools::tags$head(
           htmltools::tags$style(
