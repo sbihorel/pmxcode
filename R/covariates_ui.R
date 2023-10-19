@@ -49,6 +49,15 @@ covariates_ui <- function()
             uiOutput("univariateCreateUI")
           )
         )
+      ),
+      #---- Help ====
+      bslib::nav_panel(
+        title = "Instructions",
+        fluidRow(
+          col_12(
+            uiOutput("univariateHelpUI")
+          )
+        )
       )
     )
   )

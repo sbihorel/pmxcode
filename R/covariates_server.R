@@ -403,8 +403,7 @@ covariates_server <- function(session, input, output, resources ){
             img(
               src = "www/duplicate.svg",
               padding = '3px'
-            ),
-            style = "margin-right: 10px;"
+            )
           ),
           "Copy data to next step",
           options = list(delay = list(show = 800, hide = 100), trigger = "hover")
@@ -500,16 +499,6 @@ covariates_server <- function(session, input, output, resources ){
         div(
           uiOutput("extractBtnUI"),
           style = "display: inline-block;"
-        ),
-        bslib::tooltip(
-          actionButton(
-            inputId = "covariateHelpBtn",
-            label = NULL,
-            icon = icon("question"),
-            width = "39px"
-          ),
-          "Help",
-          options = list(delay = list(show = 800, hide = 100), trigger = "hover")
         )
       ),
       col_3(
@@ -561,21 +550,6 @@ covariates_server <- function(session, input, output, resources ){
   # Current stage and step
   currentStage <- reactiveVal("Forward")
   currentStep <- reactiveVal(1)
-
-  # Help modal
-  observeEvent(
-    input$covariateHelpBtn,
-    {
-      showModal(
-        modalDialog(
-          title = "Instructions",
-          includeHTML('/home/sebastien/git/pmxcode/inst/resources/covariate_help.html'),
-          easyClose = TRUE,
-          size = "xl"
-        )
-      )
-    }
-  )
 
   # * Extract and check uploaded covariate definition file ----
   covariateFile <- reactive({
@@ -1974,5 +1948,13 @@ covariates_server <- function(session, input, output, resources ){
     },
     contentType = "application/zip"
   )
+
+  # Help ----
+
+  output$univariateHelpUI <- renderUI({
+    wellPanel(
+      includeMarkdown('/home/sebastien/git/pmxcode/inst/resources/covariate_help.md')
+    )
+  })
 
 }
