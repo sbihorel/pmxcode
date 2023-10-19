@@ -83,7 +83,7 @@ covariates_server <- function(session, input, output, resources ){
   # * Detect reference model style ----
   referenceFileStyle <- reactive({
     if ( file_exists(referenceFileReactive()) ){
-      ifelse( tools::file_ext(referenceFileReactive()) == 'mod', 'PsN', 'Standard')
+      ifelse( tools::file_ext(referenceFileReactive()) == "mod", "PsN", "Standard")
     }
   })
 
@@ -111,29 +111,29 @@ covariates_server <- function(session, input, output, resources ){
 
     headerCheck <- TRUE
 
-    code <- unlist( strsplit( input$aceReference, split = '\n') )
+    code <- unlist( strsplit( input$aceReference, split = "\n") )
 
     # Header must contain at least 2 rows of separator hyphens
-    if ( sum(which(grepl('^;;--[-]+', code))) < 2){
+    if ( sum(which(grepl("^;;--[-]+", code))) < 2){
       headerCheck <- "Missing separator lines"
     }
 
     # Header must contain a row starting with ;; Name:
-    if ( isTRUE(headerCheck) & !any(grepl('^;; Name:', code)) ){
+    if ( isTRUE(headerCheck) & !any(grepl("^;; Name:", code)) ){
       headerCheck <- "Missing \";; Name:...\" line"
     }
 
     # Header must contain a row starting with ;; Created on
     if (
-      isTRUE(headerCheck) & !any(grepl('^;; Created on', code)) ){
+      isTRUE(headerCheck) & !any(grepl("^;; Created on", code)) ){
       headerCheck <- "Missing \";; Created on ...\" line"
     }
 
     # If standard style, header must contain a row starting with ;; PRUPOSE:
     if (
       isTRUE(headerCheck) &
-      referenceFileStyle() == 'Standard' &
-      !any(grepl('^;; PURPOSE:', code))
+      referenceFileStyle() == "Standard" &
+      !any(grepl("^;; PURPOSE:", code))
     ){
       headerCheck <- "Missing \";; PURPOSE: ...\" line"
     }
@@ -144,29 +144,29 @@ covariates_server <- function(session, input, output, resources ){
     # ;; 5. Covariate model
     if (
       isTRUE(headerCheck) &
-      referenceFileStyle() == 'PsN' &
-      !any(grepl('^;; 1. Based on', code))
+      referenceFileStyle() == "PsN" &
+      !any(grepl("^;; 1. Based on", code))
     ){
       headerCheck <- "Missing \";; 1. Based on:...\" line"
     }
     if (
       isTRUE(headerCheck) &
-      referenceFileStyle() == 'PsN' &
-      !any(grepl('^;; 6. Interindividual variability', code))
+      referenceFileStyle() == "PsN" &
+      !any(grepl("^;; 6. Interindividual variability", code))
     ){
       headerCheck <- "Missing \";; 6. Interindividual variability\" line"
     }
    if (
      isTRUE(headerCheck) &
-     referenceFileStyle() == 'PsN' &
-     !any(grepl('^;; 5. Covariate model', code))
+     referenceFileStyle() == "PsN" &
+     !any(grepl("^;; 5. Covariate model", code))
    ){
      headerCheck <- "Missing \";; 5. Covariate model\" line"
    }
 
    if (
      isTRUE(headerCheck) &
-     !any( grepl(glue::glue(';; Name: {referenceFileReactive()}'), code) )
+     !any( grepl(glue::glue(";; Name: {referenceFileReactive()}"), code) )
    ){
      headerCheck <- "Path and filename in header is inconsistent with file location"
    }
@@ -174,7 +174,7 @@ covariates_server <- function(session, input, output, resources ){
    if ( !isTRUE(headerCheck) ){
       return(
         paste(
-          'Invalid or missing descriptive header section (see Library for examples)',
+          "Invalid or missing descriptive header section (see Library for examples)",
           headerCheck,
           sep = "\n"
         )
@@ -185,18 +185,18 @@ covariates_server <- function(session, input, output, resources ){
     code <- get_nonmem_blocks( input$aceReference )
 
     if ( !any( grepl("^[$]PRO", code) ) ){
-      return( 'No $PROBELM block present in NONMEM control stream' )
+      return( "No $PROBLEM block present in NONMEM control stream" )
     }
 
     predpk_index <- which( grepl("^[$]PRED|^[$]PK", code) )
     if ( length(predpk_index) == 0 ){
-      return( 'No $PK or $PRED block present in NONMEM control stream' )
+      return( "No $PK or $PRED block present in NONMEM control stream" )
     }
     if ( length(predpk_index) > 1 ){
-      return( 'More than 1 $PK or $PRED block present in NONMEM control stream' )
+      return( "More than 1 $PK or $PRED block present in NONMEM control stream" )
     }
     if ( !any( grepl("^[$]THE", code) ) ){
-      return( 'No $THETA block present in NONMEM control stream' )
+      return( "No $THETA block present in NONMEM control stream" )
     }
 
     headerCheck
@@ -388,7 +388,7 @@ covariates_server <- function(session, input, output, resources ){
             icon = NULL,
             img(
               src = "www/extract.svg",
-              padding = '3px'
+              padding = "3px"
             )
           ),
           "Extract from reference model",
@@ -402,7 +402,7 @@ covariates_server <- function(session, input, output, resources ){
             icon = NULL,
             img(
               src = "www/duplicate.svg",
-              padding = '3px'
+              padding = "3px"
             )
           ),
           "Copy data to next step",
@@ -418,7 +418,7 @@ covariates_server <- function(session, input, output, resources ){
           icon = NULL,
           img(
             src = "www/duplicate.svg",
-            padding = '3px'
+            padding = "3px"
           ),
           style = "margin-right: 10px;"
         ),
@@ -636,7 +636,7 @@ covariates_server <- function(session, input, output, resources ){
     )
   )
   covariateCopyData <- reactiveVal(NULL)
-  covariateInvalidData <- reactiveVal('Valid')
+  covariateInvalidData <- reactiveVal("Valid")
 
   # * Update covariate data based upon reactivity ----
   # Deselect of handsontable
@@ -712,6 +712,7 @@ covariates_server <- function(session, input, output, resources ){
     input$fsbeInput,
     {
       stage <- sub("(^\\w+)\\s.+", "\\1", input$fsbeInput)
+
       if ( currentStage() != stage ) {
         # Save content of table for previous step
         data <- covariateData()
@@ -740,21 +741,24 @@ covariates_server <- function(session, input, output, resources ){
   observeEvent(
     input$stepInput,
     {
+
       if ( currentStep() != input$stepInput) {
         # Save content of table for previous step
         stage <- sub("(^\\w+)\\s.+", "\\1", input$fsbeInput)
         data <- covariateData()
         DF <- hot_to_r_raw( input$covariateTable )
 
-        covariateData(
-          bind_rows(
-            # Remove data for current step from covariate data
-            data  %>% dplyr::filter( !(Stage ==  currentStage() & Step == currentStep() ) ),
-            # Add data for current step from rhandsontable
-            DF
-          ) %>%
-            dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
-        )
+        if ( stage %in% DF$Stage ){ # Update should not happen when current table content is backward elimination and the reference model is updated
+          covariateData(
+            bind_rows(
+              # Remove data for current step from covariate data
+              data  %>% dplyr::filter( !(Stage ==  currentStage() & Step == currentStep() ) ),
+              # Add data for current step from rhandsontable
+              DF
+            ) %>%
+              dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+          )
+        }
         currentStep(input$stepInput)
       }
     }
@@ -935,10 +939,10 @@ covariates_server <- function(session, input, output, resources ){
 
       # Mulltivariable model can only come from reference code
       refCode <- unlist(
-        strsplit(input$aceReference, split = '\n')
+        strsplit(input$aceReference, split = "\n")
       )
 
-      index <- which(grepl('^;--covdef', refCode))
+      index <- which(grepl("^;--covdef", refCode))
 
       # Build backward step 1 table
       if ( length(index) > 0 ){
@@ -957,9 +961,9 @@ covariates_server <- function(session, input, output, resources ){
         )
 
         for ( iEffect in 1:length(index) ){
-          effect <- sub('$;--covef- ', '', refCode[index[iEffect]])
-          effect <- unlist( strsplit(effect, split = ' / ') )
-          flags <- unlist( strsplit(effect[8], ':') )
+          effect <- sub("$;--covef- ", "", refCode[index[iEffect]])
+          effect <- unlist( strsplit(effect, split = " / ") )
+          flags <- unlist( strsplit(effect[8], ":") )
 
           for ( flag in flags ){
             newStep <- dplyr::bind_rows(
@@ -1744,10 +1748,10 @@ covariates_server <- function(session, input, output, resources ){
       stage <- sub("(^\\w+)\\s.+", "\\1", input$fsbeUnivariateInput)
 
       # Get path
-      tmp <- unlist( strsplit(refCode, split = '\n') )
+      tmp <- unlist( strsplit(refCode, split = "\n") )
       index <- which( grepl("^;; Name:",  tmp) )[1]
       path <- dirname(
-        gsub('^;; Name:\\s+|\\s+', '', tmp[index])
+        gsub("^;; Name:\\s+|\\s+", "", tmp[index])
       )
 
       # Call utility function
@@ -1828,12 +1832,12 @@ covariates_server <- function(session, input, output, resources ){
       refCode <- unlist(strsplit(input$aceReference, "\n"))
     }
 
-    refThetas <- refCode[grep(';--th', refCode)]
+    refThetas <- refCode[grep(";--th", refCode)]
 
     for (iFile in 1:length(univariateModels())){
 
       model <- unlist(strsplit(univariateModels()[[iFile]], "\n"))
-      modelThetas <- model[grep(';--th', model)]
+      modelThetas <- model[grep(";--th", model)]
       # Find ;--th lines that differ in the univariate model compared to the reference model
       hit1 <- modelThetas[ !(modelThetas %in% refThetas) ]
 
@@ -1852,12 +1856,12 @@ covariates_server <- function(session, input, output, resources ){
           results <- "Covariate definition was not found!"
         } else {
           results <- paste0(
-            '\n',
-            glue::glue("  {gsub('\n', '', hit1)}"),
-            '\n',
-            glue::glue("  {gsub('\n', '', model[hit2])}"),
-            '\n',
-            glue::glue("  {gsub('\n', '', model[hit3])}")
+            "\n",
+            glue::glue('  {gsub("\n", "", hit1)}'),
+            "\n",
+            glue::glue('  {gsub("\n", "", model[hit2])}'),
+            "\n",
+            glue::glue('  {gsub("\n", "", model[hit3])}')
           )
         }
 
@@ -1877,8 +1881,8 @@ covariates_server <- function(session, input, output, resources ){
             "\n{name}: {result}",
             name = names(univariateModels())[iFile],
             result = paste0(
-              '\n',
-              glue::glue("  {gsub('\n', '', hit1)}")
+              "\n",
+              glue::glue(' {gsub("\n", "", hit1)}')
             )
           )
         )
@@ -1953,7 +1957,7 @@ covariates_server <- function(session, input, output, resources ){
 
   output$univariateHelpUI <- renderUI({
     wellPanel(
-      includeMarkdown('/home/sebastien/git/pmxcode/inst/resources/covariate_help.md')
+      includeMarkdown(system.file("resources/covariate_help.md", package = "pmxcode"))
     )
   })
 
