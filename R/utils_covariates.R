@@ -627,7 +627,7 @@ create_univariate_models <- function(
 
     # Add @COVDEF tag
     index <- which(grepl("^;--covdef-", code))
-    if ( length(index) > 0 ){
+    if ( length(index) > 0 && index != length(code) ){
       index <- index[length(index)]
       code <- c(
         code[1:index],
@@ -635,12 +635,10 @@ create_univariate_models <- function(
         code[(index+1):length(code)]
       )
     } else {
-      index <- which(grepl("^[$]PRO", code))
-      code <- c(
-        code[1:index],
-        ";--covdef- @COVDEF",
-        code[(index+1):length(code)]
-      )
+      if ( length(index) == 0) {
+        code <- c( code, "" )
+      }
+      code <- c( code, ";--covdef- @COVDEF" )
     }
 
     # * Create univariate control streams ----
