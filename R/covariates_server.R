@@ -664,7 +664,7 @@ covariates_server <- function(session, input, output, resources ){
             # Save current step data
             DF
           ) %>%
-            dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+            dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
         )
       }
     }
@@ -679,7 +679,7 @@ covariates_server <- function(session, input, output, resources ){
       req( covariateFile() )
       covariateData(
         covariateFile() %>%
-          dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+          dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
       )
     },
     ignoreInit = TRUE
@@ -691,7 +691,7 @@ covariates_server <- function(session, input, output, resources ){
       paste("covariate-definition-", Sys.Date(), ".csv", sep = "")
     },
     content = function(downloadFile) {
-      write.csv(
+      utils::write.csv(
         covariateData() %>%
           dplyr::filter(
             !(
@@ -699,7 +699,7 @@ covariates_server <- function(session, input, output, resources ){
                 is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
             )
           ) %>%
-          dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function ),
+          dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function ),
         downloadFile,
         row.names = FALSE,
         na = ""
@@ -725,7 +725,7 @@ covariates_server <- function(session, input, output, resources ){
             # Add data for current step from rhandsontable
             DF
           ) %>%
-            dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+            dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
         )
         currentStage(stage)
       }
@@ -756,7 +756,7 @@ covariates_server <- function(session, input, output, resources ){
               # Add data for current step from rhandsontable
               DF
             ) %>%
-              dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+              dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
           )
         }
         currentStep(input$stepInput)
@@ -793,7 +793,7 @@ covariates_server <- function(session, input, output, resources ){
             )
           )
         ) %>%
-          dplyr::arrange( desc(Stage), Step )
+          dplyr::arrange( dplyr::desc(Stage), Step )
       )
     }
   )
@@ -839,7 +839,7 @@ covariates_server <- function(session, input, output, resources ){
           # Add data for current step from rhandsontable
           DF
         ) %>%
-          dplyr::arrange( desc(Stage), Step )
+          dplyr::arrange( dplyr::desc(Stage), Step )
       )
     }
   )
@@ -900,7 +900,7 @@ covariates_server <- function(session, input, output, resources ){
                   is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
               )
             ) %>%
-            dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+            dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
         )
       }
     }
@@ -926,7 +926,7 @@ covariates_server <- function(session, input, output, resources ){
                 is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
             )
           ) %>%
-          dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+          dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
       )
       removeModal()
     }
@@ -1021,7 +1021,7 @@ covariates_server <- function(session, input, output, resources ){
                     is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
                 )
               ) %>%
-              dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+              dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
           )
         }
       }
@@ -1048,7 +1048,7 @@ covariates_server <- function(session, input, output, resources ){
                 is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
             )
           ) %>%
-          dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+          dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
       )
       removeModal()
     }
@@ -1129,7 +1129,7 @@ covariates_server <- function(session, input, output, resources ){
                   is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
                 )
             ) %>%
-            dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+            dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
         )
         currentStep( currentStep() + 1)
         updateNumericInput(
@@ -1169,7 +1169,7 @@ covariates_server <- function(session, input, output, resources ){
                 is.na(Center) & is.na(Flags) & is.na(Initial) & is.na(Action)
             )
           ) %>%
-          dplyr::arrange( desc(Stage), Step, Parameter, Covariate, Function )
+          dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
       )
       currentStep( currentStep() + 1)
       updateNumericInput(
@@ -1399,7 +1399,7 @@ covariates_server <- function(session, input, output, resources ){
             class = "inline2",
             numericInput(
               inputId = "univariateMinRunInput",
-              label = "Run nº start at",
+              label = "Run #'s start at",
               value = runno+1,
               min = runno+1,
               step = 1
@@ -1948,7 +1948,7 @@ covariates_server <- function(session, input, output, resources ){
           file = glue::glue("{tmpdir}/{file}")
         )
       }
-      zip(zipfile = downloadFile, files = files, flags = "-j")
+      utils::zip(zipfile = downloadFile, files = files, flags = "-j")
     },
     contentType = "application/zip"
   )
