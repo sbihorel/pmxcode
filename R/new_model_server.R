@@ -1,7 +1,7 @@
 #' New model module
 #' @name new_model_server
 #'
-#' @param input,output,session Internal parameters for {shiny}.
+#' @param input,output,session Internal parameters for \code{shiny}.
 #' @param resources A list of internal resources
 #'
 #' @import rhandsontable

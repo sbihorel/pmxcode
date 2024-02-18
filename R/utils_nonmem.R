@@ -1,7 +1,7 @@
 
 #' Creation of NONMEM code
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param template Text template
 #' @param vars Reactive object - List of variables in data file
 #' @param advan Reactive object - NONMEM ADVAN value
@@ -340,7 +340,7 @@ get_nonmem_code <- function(
 
 #' Replacement of @PROB1 and @PROB2 tags
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 
 replace_problem <- function(
@@ -377,7 +377,7 @@ replace_problem <- function(
 
 #' Replacement of @INPUT tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param vars Character vector of variable names
 
@@ -421,7 +421,7 @@ replace_input <- function(input, new, vars){
 
 #' Replacement of @DATA tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 
 replace_data <- function(input, new){
@@ -475,7 +475,7 @@ replace_data <- function(input, new){
 
 #' Replacement of @SUBROUTINE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -527,7 +527,7 @@ replace_subroutine <- function(
 
 #' Replace @MODEL tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param model_lib Library for $MODEL replacement
 #' @param isPRED Reactive object - is model coded with $PRED?
@@ -648,7 +648,7 @@ replace_model <- function(
 
 #' Replacement of @ABBREVIATED tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param vars Character vector of variable names
 
@@ -866,7 +866,7 @@ replace_omega <- function(
 #' Replacement of @SIGMA tag
 #'
 #' @param new Text template
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param rvTable Residual variability selection
 #'
 
@@ -994,7 +994,7 @@ replace_sigma <- function(new, input, rvTable){
 #' Replacement of @PRIOR tag
 #'
 #' @param new Text template
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param varianceTable Variability selection
 #' @param estimations Table of estimation tasks
@@ -1224,7 +1224,7 @@ replace_prior <- function(
 
 #' Replace @PK and @PRED tags
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param preamble_code Preamble code
 #' @param parms_code Typical and individual parameter code
@@ -1817,7 +1817,7 @@ replace_pk_pred <- function(
 
 #' Replace @DES tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -2035,7 +2035,7 @@ replace_des <- function(
 
 #' Replace @ERROR tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -2390,7 +2390,7 @@ replace_error <- function(
 
 #' Replace @TASK tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param estimations Table of estimation tasks
 #' @param isODE Reactive object - is model coded with ODEs?
@@ -2569,7 +2569,7 @@ replace_task <- function(
 
 #' Replace @TABLE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param vars Reactive object - List of variables in data file
 
@@ -2814,7 +2814,7 @@ replace_table <- function(
 
 #' Replace $TAGs tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 
 replace_tags <- function(
@@ -2890,7 +2890,7 @@ replace_tags <- function(
 
 #' Get NONMEM model parameter code lines as list
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param varianceTable Variability selection
 #' @param mu A logical indicator for mu transformation

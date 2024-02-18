@@ -1,7 +1,7 @@
 
 #' Creation of mrgsolve code
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param template Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -282,7 +282,7 @@ get_mrgsolve_code <- function(
 
 #' Replacement of @NMEXT tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
@@ -349,7 +349,7 @@ replace_nmext <- function(
 
 #' Replacement of @PLUGIN tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 
 replace_mrg_plugin <- function(
@@ -376,7 +376,7 @@ replace_mrg_plugin <- function(
 
 #' Replacement of @GLOBAL tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -479,7 +479,7 @@ replace_mrg_global <- function(
 
 #' Replacement of @CMT tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param model_lib Library for $MODEL replacement
 #' @param isPRED Reactive object - is model coded with $PRED?
@@ -577,7 +577,7 @@ replace_mrg_cmt <- function(
 
 #' Replacement of @PARAM tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param parms Parameter selection
 #' @param nmextImport A logical indicating whether NONMEM ext file content
@@ -661,7 +661,7 @@ replace_mrg_param <- function(
 
 #' Replacement of @OMEGA tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param parms Parameter selection
 #' @param blocks Variance - covariance matrix
@@ -777,7 +777,7 @@ replace_mrg_omega <- function(
 #' Replacement of @SIGMA tag
 #'
 #' @param new Text template
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param rvTable Residual variability selection
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
@@ -937,7 +937,7 @@ replace_mrg_sigma <- function(
 
 #' Replace @MAIN or @PRED tags
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param preamble_code Preamble code
 #' @param parms_code Typical and individual parameter code
@@ -1302,7 +1302,7 @@ replace_mrg_main_pred <- function(
 
 #' Replacement of @ODE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -1466,7 +1466,7 @@ replace_mrg_ode <- function(
 
 #' Replacement of @TABLE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -1641,7 +1641,7 @@ replace_mrg_table <- function(
 
 #' Replacement of @CAPTURE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param parms Parameter selection
 
@@ -1735,7 +1735,7 @@ replace_mrg_capture <- function(
 
 #' Get mrgsolve model parameter code lines as list
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param mu A logical indicator for mu transformation
 

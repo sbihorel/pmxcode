@@ -1,7 +1,7 @@
 
 #' Replacement of @PURPOSE tag
 #'
-#' @param input Internal parameter for {shiny}.
+#' @param input Internal parameter for \code{shiny}.
 #' @param new Text template
 #' @param varianceTable Variance- table
 
@@ -301,7 +301,7 @@ replace_purpose <- function(
 
 #' Replacement of @PATH tag
 #'
-#' @param input Internal parameter for {shiny}.
+#' @param input Internal parameter for \code{shiny}.
 #' @param new Text template
 
 replace_path <- function(input, new ){
@@ -462,7 +462,7 @@ align_annotations <- function(code){
 #' Get lines of preamble code for transit compartment absorption model and delayed
 #' dosing records
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param vars Character vector of variable names
 
@@ -553,7 +553,7 @@ get_preamble_code <- function(
 
 #' Get code lines for scaling and bioavailability
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param parm_lib Library of parameters
@@ -660,7 +660,7 @@ get_scaling_code <- function(
 
 #' Get lines of code for derived parameters
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param isPRED Reactive object - is model coded with $PRED?
@@ -847,7 +847,7 @@ get_derived_parms_code <- function(
 
 #' Get the number of PK and PD compartments
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param isPRED Reactive object - is model coded with $PRED?
 #' @param isPREDPP Reactive object - is mode coded with $PK?
@@ -911,7 +911,7 @@ get_ncmts <- function(
 
 #' Get compartment intialization block
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param nPKcmts,nPDcmts Number of compartments for PK and PD model components
