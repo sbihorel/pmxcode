@@ -7,7 +7,7 @@
 #' @export
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
-#' @value{ Starts the PMXcode Shiny application }
+#' @return Starts the PMXcode Shiny application
 #' @examples
 #' \dontrun{
 #' if( interactive() ){

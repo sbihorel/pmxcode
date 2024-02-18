@@ -1,3 +1,8 @@
+# pmxcode 0.1.2
+
+* Bug fixes with logit variability model
+* Update UI to bslib
+
 # pmxcode 0.1.1
 
 * Bug fixes in transit compartment absorption model code for NONMEM

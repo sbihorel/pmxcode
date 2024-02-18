@@ -1,7 +1,7 @@
 
 covariates_ui <- function()
 {
-  tabPanel(
+  bslib:: nav_panel(
     title = "Covariates",
     icon = icon("people-group", verify_fa = FALSE),
     value = "cov",

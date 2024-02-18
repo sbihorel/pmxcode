@@ -1,15 +1,15 @@
 new_model_ui <- function(){
-  tabPanel(
+  bslib:: nav_panel(
     title = "Library",
     icon = icon("school", verify_fa = FALSE),
     value = "new",
     fluidRow(
       col_7(
-        navlistPanel(
+        bslib::navset_pill_list(
           id = "new_menu",
           widths = c(2, 10),
           #---- Platform ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Platform",
             wellPanel(
               fluidRow(
@@ -51,7 +51,7 @@ new_model_ui <- function(){
           ),
 
           #---- Files ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Files",
             wellPanel(
               uiOutput('filesUI')
@@ -59,7 +59,7 @@ new_model_ui <- function(){
           ),
 
           #---- Mapping ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Mapping",
             wellPanel(
               fluidRow(
@@ -79,7 +79,7 @@ new_model_ui <- function(){
           ),
 
           #---- PK model structure ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Structure",
             wellPanel(
               h4(strong("Pharmacokinetic model")),
@@ -100,79 +100,15 @@ new_model_ui <- function(){
                   )
                 )
               ),
-              # First row for LINMAT and ODE model
-              conditionalPanel(
-                condition = "input.pkInput == 'linmat' | input.pkInput == 'ode'",
-                fluidRow(
-                  col_4( uiOutput("pknCMTUI") ),
-                  col_4( uiOutput("pkDefaultDoseUI") ),
-                  col_4( uiOutput("pkDefaultObsUI") )
-                )
-              ),
-              # First row
-              fluidRow(
-                conditionalPanel(
-                  condition = "input.pkInput == 'pk'",
-                  col_4(
-                    selectInput(
-                      inputId = "pkCMTInput",
-                      width = "100%",
-                      label = "Disposition",
-                      choices = c(
-                        "1-compartment" = 1,
-                        "2-compartment" = 2,
-                        "3-compartment" = 3
-                      ),
-                      selected = 1
-                    )
-                  )
-                ),
-                uiOutput("ivDosingUI"),
-                uiOutput("poDosingUI")
-              ),
+              # First row: appears only for LINMAT and ODE model
+              uiOutput("pkFirstRowUI"),
               # Second row
-              fluidRow(
-                conditionalPanel(
-                  condition = "input.pkInput == 'pk'",
-                  uiOutput("eliminationUI")
-                ),
-                conditionalPanel(
-                  condition = "input.pkInput == 'pk' | input.pkInput == 'linmat' | input.pkInput == 'ode'",
-                  uiOutput("ivRateUI"),
-                  uiOutput("poRateUI"),
-                  conditionalPanel(
-                    condition = "input.poInput != 'sig'",
-                    uiOutput("alagUI1")
-                  )
-                )
-              ),
+              uiOutput("pkSecondRowUI"),
               # Third row
-              fluidRow(
-                conditionalPanel(
-                  condition = "input.pkInput == 'pk' & (input.eliminationInput == 'mm' | input.eliminationInput == 'mmlin')",
-                  col_4(
-                    selectInput(
-                      inputId = "kmScaleInput",
-                      width = "100%",
-                      label = "KM scale",
-                      choices = c(
-                        "Concentration"= TRUE, "Amount" = FALSE
-                      ),
-                      selected = TRUE
-                    )
-                  )
-                ),
-                conditionalPanel(
-                  condition = "input.pkInput == 'pk' & (input.eliminationInput == 'tmdd' | input.eliminationInput == 'tmddqe' | input.eliminationInput == 'tmddqer' | input.eliminationInput == 'tmddqss' | input.eliminationInput == 'tmddqssr')",
-                  col_8(
-                    uiOutput("tmddUI")
-                  )
-                ),
-                conditionalPanel(
-                  condition = "(input.pkInput == 'pk' | input.pkInput == 'linmat' | input.pkInput == 'ode') & input.poInput == 'sig'",
-                  uiOutput("alagUI2")
-                )
-              ),
+              uiOutput("pkThirdRowUI"),
+              # Fourth row
+              uiOutput("pkFourthRowUI"),
+              #Warnings
               uiOutput("warningDosingUI")
             ),
 
@@ -302,7 +238,7 @@ new_model_ui <- function(){
           ),
 
           #---- Parameters ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Parameters",
             wellPanel(
               uiOutput("parameterWarningUI"),
@@ -313,7 +249,7 @@ new_model_ui <- function(){
           ),
 
           #---- Covariance ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Covariance",
             wellPanel(
               uiOutput("varianceWarningUI"),
@@ -322,7 +258,7 @@ new_model_ui <- function(){
           ),
 
           #---- RV ----
-          tabPanel(
+          bslib::nav_panel(
             title = "RV",
             wellPanel(
               uiOutput('residualWarningUI'),
@@ -334,7 +270,7 @@ new_model_ui <- function(){
           ),
 
           #---- Tasks ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Tasks",
             wellPanel(
               conditionalPanel(
@@ -346,7 +282,7 @@ new_model_ui <- function(){
           ),
 
           #---- Scaling ----
-          tabPanel(
+          bslib::nav_panel(
             title = "Scaling",
             wellPanel(
               uiOutput("scalingUI")

@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom bsicons bs_icon
 #' @importFrom bslib bs_theme
 #' @importFrom config get
 #' @importFrom dplyr bind_cols
