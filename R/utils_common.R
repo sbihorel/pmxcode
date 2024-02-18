@@ -803,7 +803,7 @@ get_derived_parms_code <- function(
     tmp <- c(
       tmp,
       parm_lib %>%
-        dplyr::slice(n = indexModel) %>%
+        dplyr::slice(indexModel) %>%
         dplyr::pull(.data$DERIVED) %>%
         strsplit(split = "[|]" ) %>%
         unlist()
@@ -945,7 +945,7 @@ get_init_code <- function(
         indent,
         parm_lib %>%
           dplyr::slice(
-            n = get_model_lib_index(
+            get_model_lib_index(
               input = input, advan = advan, trans = trans, parm_lib = parm_lib
             )
           ) %>%
@@ -984,7 +984,7 @@ get_init_code <- function(
           ifelse(input$platformInput == "NONMEM", "    ", "  "),
           parm_lib %>%
             dplyr::filter(.data$TYPE == "idr") %>%
-            dplyr::slice(n = 1) %>%
+            dplyr::slice(1) %>%
             dplyr::pull(.data$INITIALIZATION)
         )
       )

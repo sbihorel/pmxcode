@@ -1428,7 +1428,7 @@ new_model_server <- function(session, input, output, resources ){
         parm_lib = parm_lib
       )
       parm_info <- parm_lib %>%
-        dplyr::slice(n = index) %>%
+        dplyr::slice( index ) %>%
         tidyr::separate_rows(
           .data$PARMS, .data$VAR, .data$MIN, .data$INITIAL, .data$MAX,
           sep = "[|]"
@@ -1769,7 +1769,7 @@ new_model_server <- function(session, input, output, resources ){
           .data$PARMS, .data$VAR, .data$MIN, .data$INITIAL, .data$MAX,
           sep = "[|]"
         ) %>%
-        dplyr::slice(n = -1)
+        dplyr::slice( -1 )
 
       parm_info <- parm_info %>%
         dplyr::bind_rows(

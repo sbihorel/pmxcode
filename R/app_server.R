@@ -32,11 +32,4 @@ app_server <- function(input, output, session) {
     resources = resources
   )
 
-  # Covariate module
-  covariates_server(
-    session = session,
-    input = input,
-    output = output,
-    resources = resources
-  )
 }

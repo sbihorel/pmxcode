@@ -16,7 +16,8 @@ replace_pk_pred(
   parms,
   varianceTable,
   parm_lib,
-  rv_lib
+  rv_lib,
+  mu
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ replace_pk_pred(
 \item{parm_lib}{Library of parameters}
 
 \item{rv_lib}{Library for residual variability replacement}
+
+\item{mu}{A logical indicator for mu transformation}
 }
 \description{
 Replace @PK and @PRED tags
