@@ -7,7 +7,7 @@
 replace_model(input, new, model_lib, isPRED, isPREDPP)
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{new}{Text template}
 

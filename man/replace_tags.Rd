@@ -7,7 +7,7 @@
 replace_tags(input, new)
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{new}{Text template}
 }

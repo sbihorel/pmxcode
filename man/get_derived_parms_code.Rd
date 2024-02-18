@@ -16,7 +16,7 @@ get_derived_parms_code(
 )
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{advan}{Reactive object - NONMEM ADVAN value}
 

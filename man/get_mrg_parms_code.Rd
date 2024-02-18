@@ -7,7 +7,7 @@
 get_mrg_parms_code(input, parms, mu)
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{parms}{Parameter selection}
 

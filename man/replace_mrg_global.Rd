@@ -7,7 +7,7 @@
 replace_mrg_global(input, new, advan, trans, nPKcmts, parm_lib)
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{new}{Text template}
 

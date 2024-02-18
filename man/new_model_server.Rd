@@ -7,7 +7,7 @@
 new_model_server(session, input, output, resources)
 }
 \arguments{
-\item{input, output, session}{Internal parameters for {shiny}.}
+\item{input, output, session}{Internal parameters for \code{shiny}.}
 
 \item{resources}{A list of internal resources}
 }

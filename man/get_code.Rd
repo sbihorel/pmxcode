@@ -25,7 +25,7 @@ get_code(
 )
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{template}{Text template}
 

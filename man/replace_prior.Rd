@@ -7,7 +7,7 @@
 replace_prior(input, new, parms, varianceTable, estimations)
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{new}{Text template}
 

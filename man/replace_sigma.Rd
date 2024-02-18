@@ -9,7 +9,7 @@ replace_sigma(new, input, rvTable)
 \arguments{
 \item{new}{Text template}
 
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{rvTable}{Residual variability selection}
 }

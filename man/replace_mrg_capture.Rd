@@ -7,7 +7,7 @@
 replace_mrg_capture(input, new, parms)
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{new}{Text template}
 

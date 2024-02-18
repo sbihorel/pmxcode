@@ -7,7 +7,7 @@
 replace_mrg_omega(input, new, parms, blocks, nmextImport)
 }
 \arguments{
-\item{input}{Internal parameter for {shiny}}
+\item{input}{Internal parameter for \code{shiny}}
 
 \item{new}{Text template}
 
