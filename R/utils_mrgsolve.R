@@ -1345,7 +1345,7 @@ replace_mrg_ode <- function(
         )
       )
 
-      if ( parm_lib[index, "ELIMINATION"] != "lin"){
+      if ( grepl( 'mm', parm_lib[index, "ELIMINATION"]) ){
         value <- ifelse(parm_lib[index, "ABSORPTION"] == "bolus_zero", 1, 2)
         if ( input$kmScaleInput ){
           tmpModel <- gsub(
@@ -1508,7 +1508,7 @@ replace_mrg_table <- function(
         tmp,
         parm_lib %>%
           dplyr::slice(
-            n = get_model_lib_index(
+            get_model_lib_index(
               input = input, advan = advan, trans = trans, parm_lib = parm_lib
             )
           ) %>%

@@ -1863,7 +1863,7 @@ replace_des <- function(
           )
         )
 
-        if ( parm_lib[index, "ELIMINATION"] != "lin"){
+        if ( grepl( 'mm', parm_lib[index, "ELIMINATION"]) ) {
           value <- ifelse(parm_lib[index, "ABSORPTION"] == "bolus_zero", 1, 2)
           if ( input$kmScaleInput ){
             tmpModel <- gsub(

@@ -1960,6 +1960,14 @@ new_model_server <- function(session, input, output, resources ){
 
     DF <- parameterDF()
 
+    # Convert select variable to character (remove the glue class)
+    DF <- DF %>%
+      mutate(
+        Type = as.character(Type),
+        SourceParam = as.character(SourceParam),
+        Parameter = as.character(Parameter)
+      )
+
     tmp <- rhandsontable(
       data = DF,
       rowHeaders = TRUE,
