@@ -2,25 +2,25 @@
   {
     "TYPE": "add",
     "RV_NONMEM": "  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  |  Y = IPRED + EPS(<1>)",
-    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1)|    F_FLAG_= 0|    Y = IPRED + EPS(<1>)|  ELSE|    F_FLAG =1|    Y = PHI((LOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
+    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1) THEN|    F_FLAG_= 0|    Y = IPRED + EPS(<1>)|  ELSE|    F_FLAG =1|    Y = PHI((LLOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
     "RV_MRGSOLVE": "  double <DRIVER>i = <DRIVER> + <ENDPOINT>ADD;"
   },
   {
     "TYPE": "ccv",
     "RV_NONMEM": "  IPRED = <F>|  IRES = <DV> - IPRED|  W = (IPRED + FLAG)*SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  |  Y = IPRED + IPRED*EPS(<1>)",
-    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = <F>|  IRES = <DV> - IPRED|  W = (IPRED + FLAG)*SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1)|    F_FLAG_= 0|    Y = IPRED + IPRED*EPS(<1>)|  ELSE|    F_FLAG =1|    Y = PHI((LOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
+    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = <F>|  IRES = <DV> - IPRED|  W = (IPRED + FLAG)*SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1) THEN|    F_FLAG_= 0|    Y = IPRED + IPRED*EPS(<1>)|  ELSE|    F_FLAG =1|    Y = PHI((LLOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
     "RV_MRGSOLVE": "  double <DRIVER>i = <DRIVER> + <DRIVER>*<ENDPOINT>CCV;"
   },
   {
     "TYPE": "accv",
     "RV_NONMEM": "  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(IPRED**2*SIGMA(<1>,<1>) + SIGMA(<2>,<2>))|  IWRES = IRES/W|  |  Y = IPRED + IPRED*EPS(<1>) + EPS(<2>)",
-    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(IPRED**2*SIGMA(<1>,<1>) + SIGMA(<2>,<2>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1)|    F_FLAG_= 0|    Y = IPRED + IPRED*EPS(<1>) + EPS(<2>)|  ELSE|    F_FLAG =1|    Y = PHI((LOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
+    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = <F>|  IRES = <DV> - IPRED|  W = SQRT(IPRED**2*SIGMA(<1>,<1>) + SIGMA(<2>,<2>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1) THEN|    F_FLAG_= 0|    Y = IPRED + IPRED*EPS(<1>) + EPS(<2>)|  ELSE|    F_FLAG =1|    Y = PHI((LLOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
     "RV_MRGSOLVE": "  double <DRIVER>i = <DRIVER> + <DRIVER>*<ENDPOINT>CCV + <ENDPOINT>ADD;"
   },
   {
     "TYPE": "log",
     "RV_NONMEM": "  IPRED = LOG(<F> + FLAG)|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  |  Y = IPRED + EPS(<1>)",
-    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = LOG(ABS(<F>) + FLAG)|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1)|    F_FLAG_= 0|    Y = IPRED + EPS(<1>)|  ELSE|    F_FLAG =1|    Y = PHI((LOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
+    "RV_NONMEM_M3": "  LLOQ = <Define LLOQ value or variable>|  IPRED = LOG(ABS(<F>) + FLAG)|  IRES = <DV> - IPRED|  W = SQRT(SIGMA(<1>,<1>))|  IWRES = IRES/W|  IF (<BLQ> == 0 .OR. NPDE_MODE == 1) THEN|    F_FLAG_= 0|    Y = IPRED + EPS(<1>)|  ELSE|    F_FLAG =1|    Y = PHI((LLOQ-IPRED)/W)|    MDVRES = 1|  ENDIF",
     "RV_MRGSOLVE": "  double <DRIVER>i = exp(<DRIVER> + <ENDPOINT>ADD);"
   }
 ]
