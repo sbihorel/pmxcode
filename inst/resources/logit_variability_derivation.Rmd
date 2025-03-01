@@ -1,0 +1,169 @@
+---
+title: "Coefficient of variability of a logit model"
+author: "`r Sys.info()[['user']]`"
+date: "`r Sys.time()`"
+output:
+  html_document:
+    toc: yes
+    df_print: paged
+    toc_float: yes
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# General derivation
+
+Let's assume a model that includes a parameter $P$ which needs to be constrained between 0 and 1, while being associated with interindividual variability (IIV). The typical value ($TVP$) of the parameter $P$ can be estimated by $\theta_P$, such that $\theta_P \in ]a, b[$.  
+
+We will show below that the magnitude of variability associated with the individual parameter values $P_i$ can be calculated as a function of $\theta_P$, $a$, $b$, and the standard deviations of the individual variability estimates ($\eta_i\in \mathbb{R}$):
+
+$$
+\begin{array}{lll} 
+\text{ if a > 0 and b > 0}, & \%CV(P_i) & \approx 100 \times \dfrac{ (\theta_P - a) \times (b-\theta_P) }{\theta_P\times(b - a)} \times SD(\eta_i) \\
+\text{ if a = 0 and b > 0}, & \%CV(P_i) & \approx 100 \times ( 1 - \dfrac{\theta_P}{b} ) \times SD(\eta_i)\\
+\text{ if a = 0 and b = 1}, & \%CV(P_i) & \approx 100 \times ( 1 - \theta_P ) \times SD(\eta_i) \\
+\end{array}
+$$
+
+
+The logit-transformed value of $P$ can be defined as follows :
+
+$LP = ln \left(\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}}\right)$
+
+$\forall \: \theta_P \in ]a, b[$, $LP \in \mathbb{R}$.
+
+We can add an IIV term ($\eta_i\in \mathbb{R}$) prior to applying the back-transformation to the linear scale.
+
+$$
+\begin{array}{ll} 
+LP_i &= ln \left(\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}}\right) + \eta_i\\
+\\
+P_i &= a + (b-a) \times \dfrac{e^{LP_i}}{1+e^{LP_i}}
+\end{array}
+$$
+
+The back-transformation enforces that $P \in ]a, b[$ and $P_i \in ]a, b[$.
+
+**Calculation of the magnitude of IIV**
+
+$$
+\begin{array}{ll} 
+P_i &= a + (b -a) \times \dfrac{e^{ln \left(\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}}\right) + \eta_i}}{1+e^{ln \left(\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}}\right) + \eta_i}}\\
+&= a + (b -a) \times \dfrac{e^{ln \left(\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}}\right)} \times e^{\eta_i}}{1+e^{ln \left(\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}}\right)} \times e^{\eta_i}}\\
+&= a + (b -a) \times \dfrac{\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}} \times e^{\eta_i}}{1+\dfrac{\frac{\theta_P - a}{b-a}}{1-\frac{\theta_P - a}{b-a}} \times e^{\eta_i}}\\
+&= a + (b -a) \times \dfrac{ \frac{\theta_P - a}{b-a} \times e^{\eta_i}}{1-\frac{\theta_P - a}{b-a} + \frac{\theta_P - a}{b-a} \times e^{\eta_i}}\\
+&= a + (b -a) \times \dfrac{ (\theta_P - a) \times e^{\eta_i}}{(b-a)-(\theta_P - a) + (\theta_P - a) \times e^{\eta_i}}\\
+&= a + (b -a) \times \dfrac{ (\theta_P - a) \times e^{\eta_i}}{(b-\theta_P) + (\theta_P - a) \times e^{\eta_i}}\\
+\end{array}
+$$
+
+The magnitude of variability is expressed as the \% coefficient of variation: $\%CV(P_i) = 100 \times \dfrac{SD(P_i)}{mean(P_i)}$
+
+The mean of $P_i$ is the typical value of $P$, thus $mean(P_i) = \theta_p$
+
+We calculate the variance of $P_i$ which is the square of the standard deviation of $P_i$:
+
+$$
+\begin{array}{ll} 
+var(P_i) &= var \left( a + (b -a) \times \dfrac{ (\theta_P - a) \times e^{\eta_i}}{(b-\theta_P) + (\theta_P - a) \times e^{\eta_i}} \right)\\
+ &= (b - a)^2 \times (\theta_P - a)^2 \times var \left( \dfrac{ e^{\eta_i}}{(b-\theta_P) + (\theta_P - a) \times e^{\eta_i}} \right)
+\end{array}
+$$
+
+We use the first-order Taylor series expansion to approximate the variance of $P_i$.
+
+$$
+\begin{array}{ll}
+var(P_i) & \approx (b - a)^2 \times (\theta_P - a)^2 \times var \left( \dfrac{ e^{\eta_i}}{(b-\theta_P) + (\theta_P - a) \times e^{\eta_i}}\Big\rvert_{\eta_i=0} + \dfrac{ e^{\eta_i} \times \left( (b-\theta_P) + (\theta_P - a) \times e^{\eta_i} \right) - e^{\eta_i} \times \left( (\theta_P - a) \times e^{\eta_i} \right)  }{\left( (b-\theta_P) + (\theta_P - a) \times e^{\eta_i}\right)^2}\Big\rvert_{\eta_i=0} \times \eta_i \right)\\
+& \approx (b - a)^2 \times (\theta_P - a)^2 \times var \left( \dfrac{1}{b-\theta_P + \theta_P - a} + \dfrac{ b-\theta_P + \theta_P - a  - \theta_P + a }{(b-\theta_P + \theta_P - a)^2} \times \eta_i \right)\\
+& \approx (b - a)^2 \times (\theta_P - a)^2 \times var \left( \dfrac{1}{b - a} \right) \times var \left( \dfrac{ b-\theta_P }{(b - a)^2} \times \eta_i \right)\\
+& \approx (b - a)^2 \times (\theta_P - a)^2 \times \dfrac{ (b-\theta_P)^2 }{(b - a)^4} \times var(\eta_i)\\
+& \approx \dfrac{ (\theta_P - a)^2 \times (b-\theta_P)^2 }{(b - a)^2} \times var(\eta_i)\\
+\text{Therefore:}&\\
+SD(P_i) & \approx \dfrac{ (\theta_P - a) \times (b-\theta_P) }{b - a} \times SD(\eta_i)
+\end{array}\\
+$$
+
+Therefore:
+
+$$
+\%CV(P_i) \approx 100 \times \dfrac{ (\theta_P - a) \times (b-\theta_P) }{\theta_P\times(b - a)} \times SD(\eta_i)
+$$
+
+Special cases:
+
+* a = 0: $\%CV(P_i) \approx 100 \times ( 1 - \frac{\theta_P}{b} ) \times SD(\eta_i)$
+* a = 0 and b = 1: $\%CV(P_i) \approx 100 \times ( 1 - \theta_P ) \times SD(\eta_i)$
+
+
+# Alternative derivations for parameters bound between 0 and 1
+
+Let's assume a model that includes a parameter $P$ which needs to be constrained between 0 and 1, while being associated with IIV and covariate effects. The typical value ($TVP$) of the parameter $P$ can be estimated by $\theta_P$, such that $\theta_P \in ]0, 1[$.  
+
+The logit-transformed value of $P$ can be defined as follows : 
+
+$LP = ln \left(\dfrac{\theta_P}{1-\theta_P}\right)$
+
+$\forall \: \theta_P \in ]0, 1[$, $LP \in \mathbb{R}$.
+
+We can add an IIV term ($\eta_i\in \mathbb{R}$) prior to applying the back-transformation to the linear scale.
+
+$$
+\begin{array}{ll} 
+LP_i &= ln \left(\dfrac{\theta_P}{1-\theta_P}\right) + \eta_i\\
+\\
+P_i &= \dfrac{e^{LP_i}}{1+e^{LP_i}}
+\end{array}
+$$
+
+The back-transformation enforces that $P \in ]0, 1[$ and $P_i \in ]0, 1[$.
+
+**Calculation of the magnitude of IIV**
+
+To calculate the magnitude of variability in $P_i$, we re-arrange its expression assuming $\kappa = \dfrac{\theta_P}{1-\theta_P}$: 
+
+$$
+P_i = \dfrac{e^{ln(\kappa) + \eta_i}}{1+e^{ln(\kappa) + \eta_i}}
+$$
+
+The magnitude of variability is expressed as the \% coefficient of variation: $\%CV(P_i) = 100 \times \dfrac{SD(P_i)}{mean(P_i)}$
+
+The mean of $P_i$ is the typical value of $P$, thus $mean(P_i) = \dfrac{\kappa}{1+\kappa}$ ( that simplifies to $\theta_p$)
+
+We calculate the variance of $P_i$ which is the square of the standard deviation of $P_i$:
+
+$$
+\begin{array}{ll} 
+var(P_i) &= var \left( \dfrac{\kappa \times e^{\eta_i}}{1+\kappa \times e^{\eta_i}}\right)\\
+ &= \kappa^2 \times var \left( \dfrac{ e^{\eta_i}}{1+\kappa \times e^{\eta_i}}\right)
+\end{array}
+$$
+
+We use the first-order Taylor series expansion to approximate the variance of $P_i$.
+
+$$
+\begin{array}{ll}
+var(P_i) & \approx \kappa^2 \times var \left( \dfrac{e^{\eta_i}}{1+\kappa \times e^{\eta_i}}\Big\rvert_{\eta_i=0} + \dfrac{ e^{\eta_i} \times \left(1+\kappa \times e^{\eta_i}\right) - e^{\eta_i} \times \left(\kappa \times e^{\eta_i}\right)  }{\left(1+\kappa  \times e^{\eta_i}\right)^2}\Big\rvert_{\eta_i=0} \times \eta_i \right)\\
+& \approx \kappa^2 \times var \left( \dfrac{1}{1+\kappa \times 1} + \dfrac{ 1 \times \left(1+\kappa \times 1\right) - 1 \times \left(\kappa \times 1\right)  }{\left(1+\kappa \times 1\right)^2} \times \eta_i \right) \\
+& \approx \kappa^2 \times var \left( \dfrac{1}{1+\kappa} \right) \times var \left( \dfrac{\eta_i}{\left(1+\kappa \right)^2} \right)\\
+& \approx \kappa^2 \times 1 \times  \dfrac{var \left(\eta_i\right)}{\left(1+\kappa \right)^4} \\
+\text{Therefore:}&\\
+SD(P_i) & \approx \kappa \times \dfrac{SD(\eta_i)}{\left(1+\kappa\right)^2}
+\end{array}\\
+$$
+
+Therefore:
+
+$$
+\begin{array}{ll}
+\%CV(P_i) & \approx 100 \times \kappa \times \dfrac{SD(\eta_i)}{\left(1+\kappa\right)^2} \times \dfrac{1+\kappa}{\kappa}\\
+& \approx 100 \times \dfrac{SD(\eta_i)}{1+\kappa}\\
+& \approx 100 \times \dfrac{SD(\eta_i)}{1+\dfrac{\theta_P}{1-\theta_P}}\\
+& \approx 100 \times \dfrac{SD(\eta_i)}{\dfrac{1-\theta_P + \theta_P}{1-\theta_P}}\\
+& \approx 100 \times (1-\theta_P) \times SD(\eta_i)\\
+\end{array}
+$$
+
