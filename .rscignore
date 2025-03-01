@@ -2,9 +2,12 @@
 ^\.Rproj\.user$
 ^app\.R$
 ^rsconnect$
-^.rsignore
+^.rscsignore
 ^.gitignore
 ^.Rbuildignore
 ^doc$
 ^Meta$
-^builds
+builds
+builds/.*.gz
+dev
+dev/*.R
