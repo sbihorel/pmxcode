@@ -720,21 +720,26 @@ replace_theta <- function(
       1:nrow(parms),
       function(x, parms){
         glue::glue(
-          "  ({min}, {init}, {max})  {fix};--th{x}- {parm}: {label}{unit}",
-          min = parms$Min[x],
-          init = parms$Initial[x],
-          max = parms$Max[x],
-          fix = ifelse(parms$Fixed[x] == "Yes", "FIXED", ""),
+          "  ({min}, {init}, {max})  {fix};--th{x}- {parm}: {label}{unit}{transform}",
+          min = scale_value( parms$Min[x], parms$Min[x], parms$Max[x], parms$Scale[x] ),
+          init = scale_value( parms$Min[x], parms$Initial[x], parms$Max[x], parms$Scale[x] ),
+          max = scale_value( parms$Min[x], parms$Max[x], parms$Max[x], parms$Scale[x] ),
+          fix = ifelse(parms$Fixed[x] == "Yes", "FIXED ", ""),
           parm = parms$Parameter[x],
           label = ifelse(
             parms$Label[x] == "",
             glue::glue("Label for THETA{x}"),
-            parms$Label[x]
+            sub("\\s+[(]logit[)]", "", parms$Label[x])
           ),
           unit = ifelse(
             parms$Unit[x] == "",
             " (unitless)",
             glue::glue(" ({parms$Unit[x]})")
+          ),
+          transform = dplyr::case_when(
+            grepl("[(]logit[)]", parms$Label[x]) ~ " [logit]",
+            parms$Scale[x] == "Linear" ~ "",
+            TRUE ~ glue::glue(" [{tolower(parms$Scale[x])}]")
           )
         )
       },
@@ -803,6 +808,11 @@ replace_omega <- function(
       for ( i in 1:nrow(omega) ){
         ieta <- ieta + 1
         index <- which(parms$Parameter == rownames(omega)[i])
+        variability <- varianceTable$Variability[index]
+        scale <- parms$Scale[index]
+        parm_min <- parms$Min[index]
+        parm_max <- parms$Max[index]
+        theta <- paste0('theta', parms$TH[index])
         tmp <- c(
           tmp,
           glue::glue(
@@ -824,22 +834,27 @@ replace_omega <- function(
               )
             ),
             label = parms$Parameter[index],
-            model = switch(
-              levels(varianceTable$Variability)[varianceTable$Variability[index]],
-              "Additive" = "add",
-              "Exponential" = "exp",
-              "Logit" = if (parms$Min[index] == 0 & parms$Max[index] == 1){
-                glue::glue("cv=100*(1-th{parms$TH[index]})*eta{ieta}")
-              } else if (parms$Min[index] == 0 & parms$Max[index] != 1){
-                glue::glue("cv=100*{parms$Max[index]}*(1-th{parms$TH[index]})*eta{ieta}")
-              } else {
-                glue::glue(
-                  "cv=100*((th{th}-{lo})*({hi}-th{th})/(th{th}*({hi}-{lo})))*eta{ieta}",
-                  th = parms$TH[index],
-                  lo = parms$Min[index],
-                  hi = parms$Max[index]
-                )
-              }
+            model = dplyr::case_when(
+              variability == "Additive" ~ "add",
+              variability == "Exponential" ~ "exp",
+              scale == "Linear" & variability == "Logit" & parm_min == 0 & parm_max == 1 ~
+                # Parameter between 0 and 1
+                glue::glue("cv=100*(1-{theta})*sqrt(eta{ieta})"),
+              scale == "Linear" & variability == "Logit" & parm_min == 0 & parm_max != 1 ~
+                # Parameter between 0 and max > min
+                glue::glue("cv=100*(1-{theta}/{parm_max})*sqrt(eta{ieta})"),
+              scale == "Linear" & variability == "Logit" & parm_min != 0  ~
+                # Parameter between min > 0 and max > min
+                glue::glue("cv=100*(({theta}-{parm_min})*({parm_max}-{theta}))/({theta}*({parm_max}-{parm_min}))*sqrt(eta{ieta})"),
+              scale == "Logit" & variability == "Logit" & parm_min == 0 & parm_max == 1 ~
+                # Parameter between 0 and 1
+                glue::glue("cv=100*(1-inv_logit({theta}))*sqrt(eta{ieta})"),
+              scale == "Logit" & variability == "Logit" & parm_min == 0 & parm_max != 1 ~
+                # Parameter between 0 and max > min
+                glue::glue("cv=100*(1-inv_logit({theta},0,{parm_max})/{parm_max})*sqrt(eta{ieta})"),
+              scale == "Logit" & variability == "Logit" & parm_min != 0  ~
+                # Parameter between min > 0 and max > min
+                glue::glue("cv=100*((inv_logit({theta},{parm_min},{parm_max})-{parm_min})*({parm_max}-inv_logit({theta},{parm_min},{parm_max})))/(inv_logit({theta},{parm_min},{parm_max})*({parm_max}-{parm_min}))*sqrt(eta{ieta})")
             )
           )
         )
@@ -1276,13 +1291,15 @@ replace_pk_pred <- function(
 
       if ( length(bio) > 0 ){
         f_row <- which(
-          grepl( glue::glue("^\\s+{bio}\\s+=.*TV{bio}"), parms_code$PK )
+          grepl( glue::glue("^\\s+{bio}\\s+=.*TV{bio}"), parms_code$PK )  |
+            grepl( glue::glue("^\\s+{bio}\\s+=.*L{bio}"), parms_code$PK )
         )
         if ( mu & length(f_row) == 0 ){
           f_row <- which(
             grepl( glue::glue("^\\s+{bio}\\s+=.*MU_"), parms_code$PK )
           )
         }
+        f_row <- f_row[1]
         f_line <- parms_code$PK[f_row]
         parms_code$PK <- parms_code$PK[-f_row]
 
@@ -1650,7 +1667,7 @@ replace_pk_pred <- function(
             )
             proba <- c(
               proba,
-              glue::glue("  P{i} = EXP(LG{i})/(1 + EXP(LG{i}))  ; P(Y<={i}|X)")
+              glue::glue("  P{i} = 1/(1 + EXP(-LG{i}))  ; P(Y<={i}|X)")
             )
           }
           yn <- c(
@@ -2914,25 +2931,51 @@ get_parms_code <- function(input, parms, varianceTable, mu){
       individual <- ""
       # Include only parameters of the current type
       for ( iparm in which( parms$Type == type ) ){
+        parm <- parms$Parameter[iparm]
+        scale <- parms$Scale[iparm]
+        variability <- varianceTable$Variability[iparm]
+        parm_min <- parms$Min[iparm]
+        parm_max <- parms$Max[iparm]
         typical <- c(
           typical,
-          glue::glue("  TV{parms$Parameter[iparm]} = THETA({iparm})")
+          glue::glue(
+            dplyr::case_when(
+              scale == "Linear" ~ "  TV{parm} = THETA({iparm})",
+              scale == "Log" ~ "  TV{parm} = EXP(THETA({iparm}))",
+              scale == "Logit" & parm_min == "0" & parm_max == "1" ~ "  TV{parm} = 1 / (1 + EXP(-THETA({iparm})) )",
+              scale == "Logit" & parm_min == "0" & parm_max != "1" ~ "  TV{parm} = {parm_max} / (1 + EXP(-THETA({iparm})) )",
+              TRUE ~ "  TV{parm} = {parm_min} + ({parm_max} - {parm_min}) / (1 + EXP(-THETA({iparm})) )"
+            )
+          )
         )
         if ( mu ){
           # Increment ieta if necessary
           if ( varianceTable$Variability[iparm] != "None" ){
             ieta <- ieta + 1
-            if ( varianceTable$Variability[iparm] != "Exponential" ){
-              typical <- c(
-                typical,
-                glue::glue("  MU_{ieta} = TV{parms$Parameter[iparm]}")
+            typical <- c(
+              typical,
+              glue::glue(
+                dplyr::case_when(
+                  # Linear scale
+                  scale == "Linear" & variability == "Additive" ~ "  MU_{ieta} = TV{parms$Parameter[iparm]}",
+                  scale == "Linear" & variability == "Exponential" ~ "  MU_{ieta} = LOG(TV{parms$Parameter[iparm]})",
+                  scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~
+                    # Individual parameter within 0 and 1
+                    "  MU_{ieta} = LOG(TV{parm}/(1 - TV{parm}))",
+                  scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~
+                    # Individual parameter between 0 and a positive value different from 1
+                    "  MU_{ieta} = LOG(TV{parm}/{parm_max}/(1 - TV{parm}/{parm_max}))",
+                  scale == "Linear" & variability == "Logit" & parm_min != "0" ~
+                    # Individual parameter boundaries different from 0 and 1
+                    "  MU_{ieta} = LOG((TV{parm} - {parm_min})/({parm_max} - {parm_min})/(1 - (TV{parm} - {parm_min})/({parm_max} - {parm_min})))",
+                  # Log scale (logit variability is not possible with log scale)
+                  scale == "Log" & variability == "Additive" ~ "  MU_{ieta} = TV{parms$Parameter[iparm]}",
+                  scale == "Log" & variability == "Exponential" ~ "  MU_{ieta} = THETA({iparm})",
+                  # Logit scale (additive and exponential variability are not possible with logit scale)
+                  scale == "Logit" ~ "  MU_{ieta} = THETA({iparm})"
+                )
               )
-            } else {
-              typical <- c(
-                typical,
-                glue::glue("  MU_{ieta} = LOG(TV{parms$Parameter[iparm]})")
-              )
-            }
+            )
           }
         }
       }
@@ -3008,7 +3051,7 @@ get_parms_code <- function(input, parms, varianceTable, mu){
 
   split_line <- function(s){
     if ( length(s) > 0 & is.character(s)){
-      unlist(strsplit(s, '\n'))
+      unlist(strsplit(s, "\n"))
     } else {
       s
     }
@@ -3037,51 +3080,43 @@ get_parms_code <- function(input, parms, varianceTable, mu){
 get_individual_parm_code <- function(parms, varianceTable, iparm, ieta, mu){
 
   parm <- parms$Parameter[iparm]
+  scale <- parms$Scale[iparm]
+  variability <- varianceTable$Variability[iparm]
+  parm_min <- parms$Min[iparm]
+  parm_max <- parms$Max[iparm]
 
   if ( mu ){
-    switch(
-      levels(varianceTable$Variability)[varianceTable$Variability[iparm]],
-      "None" = glue::glue("  {parm} = TV{parm}"),
-      "Additive" = glue::glue("  {parm} = MU_{ieta} + ETA({ieta})"),
-      "Exponential" = glue::glue("  {parm} = EXP(MU_{ieta}+ETA({ieta}))"),
-      "Logit" =
-        if ( parms$Min[iparm] == 0 & parms$Max[iparm] == 1 ){
+    glue::glue(
+      dplyr::case_when(
+        scale == "Linear" & variability == "None" ~ "  {parm} = TV{parm}",
+        scale == "Linear" & variability == "Additive" ~ "  {parm} = MU_{ieta} + ETA({ieta})",
+        scale == "Linear" & variability == "Exponential" ~ "  {parm} = EXP(MU_{ieta} + ETA({ieta}))",
+        scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~
           # Individual parameter within 0 and 1
-          glue::glue(
-            paste(
-              "  L{parm} = LOG(TV{parm}/(1 - TV{parm}))",
-              "  MU_{ieta} = L{parm} + ETA({ieta})",
-              "  {parm} = EXP(MU_{ieta})/(1 + EXP(MU_{ieta}))",
-              sep = "\n"
-            ),
-            .trim = FALSE
-          )
-        } else if ( parms$Min[iparm] == 0 & parms$Max[iparm] != 1 ){
+          "  {parm} = 1 / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
+        scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~
           # Individual parameter between 0 and a positive value different from 1
-          glue::glue(
-            paste(
-              "  L{parm} = LOG(TV{parm}/{hi}/(1 - TV{parm}/{hi}))",
-              "  MU_{ieta} = L{parm} + ETA(%d)",
-              "  {parm} = {hi}*EXP(MU_{ieta})/(1 + EXP(MU_{ieta}))",
-              sep = "\n"
-            ),
-            hi = parms$Max[iparm],
-            .trim = FALSE
-          )
-        } else {
+          "  {parm} = {parm_max} / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
+        scale == "Linear" & variability == "Logit" & parm_min != "0" ~
           # Individual parameter boundaries different from 0 and 1
-          glue::glue(
-            paste(
-              "  L{parm} = LOG((TV{parm} - {lo})/({hi} - {lo})/(1 - (TV{parm} - {lo})/({hi} - {lo})))",
-              "  MU_{ieta} = L{parm} + ETA({ieta})",
-              "  {parm} = {lo} + ({hi} - {lo})*EXP(MU_{ieta})/(1 + EXP(MU_{ieta}))",
-              sep = "\n"
-            ),
-            lo = parms$Min[iparm],
-            hi = parms$Max[iparm],
-            .trim = FALSE
-          )
-        }
+          "  {parm} = {parm_min} + ({parm_max} - {parm_min}) / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
+        scale == "Log" & variability == "None" ~ "  {parm} = EXP(TV{parm})",
+        scale == "Log" & variability == "Additive" ~ "  {parm} = MU_{ieta} + ETA({ieta})",
+        scale == "Log" & variability == "Exponential" ~ "  {parm} = EXP(MU_{ieta} + ETA({ieta}))",
+        # Logit variability not allowed with log scale
+        # no variability not allowed with logit scale
+        # Additive variability not allowed with logit scale
+        # Exponential variability not allowed with logit scale
+        scale == "Logit" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~
+          # Individual parameter within 0 and 1
+          "  {parm} = 1 / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
+        scale == "Logit" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~
+          # Individual parameter between 0 and a positive value different from 1
+          "  {parm} = {parm_max} / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
+        scale == "Logit" & variability == "Logit" & parm_min != "0" ~
+          # Individual parameter boundaries different from 0 and 1
+          "  {parm} = {parm_min} + ({parm_max} - {parm_min}) / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )"
+      )
     )
   } else {
     switch(
@@ -3097,15 +3132,25 @@ get_individual_parm_code <- function(parms, varianceTable, iparm, ieta, mu){
         } else if ( parms$Min[iparm] == 0 & parms$Max[iparm] != 1 ){
           # Individual parameter between 0 and a positive value different from 1
           glue::glue(
-            "  {parm} = {hi}/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)",
-            hi = parms$Max[iparm]
+            paste(
+              "  L{parm} = TV{parm}/{hi}",
+              "  {parm} = {hi}/((1/L{parm} - 1)*EXP(-ETA({ieta})) + 1)",
+              sep = "\n"
+            ),
+            hi = parms$Max[iparm],
+            .trim = FALSE
           )
         } else {
           # Individual parameter boundaries different from 0 and 1
           glue::glue(
-            "  {parm} = {lo} + ({hi} - {lo})/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)",
+            paste(
+              "  L{parm} = (TV{parm} - {lo})/({hi} - {lo})",
+              "  {parm} = {lo} + ({hi} - {lo})/((1/L{parm} - 1)*EXP(-ETA({ieta})) + 1)",
+              sep = "\n"
+            ),
             lo = parms$Min[iparm],
-            hi = parms$Max[iparm]
+            hi = parms$Max[iparm],
+            .trim = FALSE
           )
         }
     )
