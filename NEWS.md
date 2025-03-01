@@ -1,3 +1,10 @@
+# pmxcode 0.2.0
+
+* Allow users to define parameter on linear, log, or logit scale
+* For mrgsolve models, allow users to switch between random variability and posthoc estimates of variability
+* UI refactoring using bslib
+* Fixes typos in M3 method code
+
 # pmxcode 0.1.4
 
 * Bug fixes in M3 method coding and app crash with certain model combination.
