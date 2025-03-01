@@ -1065,3 +1065,31 @@ file_exists <- function( file ){
   )
 
 }
+
+#' Prepare initial estimate, min, and max for $THETA
+#'
+#' @param min_value the minimum value entered in the UI
+#' @param value the value entered in the UI
+#' @param max_value the maximum value entered in the UI
+#' @param scale the scale entered in the UI
+
+scale_value <- function( min_value, value, max_value, scale ){
+
+  val <- suppressWarnings( as.numeric(value) )
+  min <- suppressWarnings( as.numeric(min_value) )
+  max <- suppressWarnings( as.numeric(max_value) )
+
+  scale_val <- suppressWarnings( (val - min)/(max - min) )
+
+  dplyr::case_when(
+    tolower(value) == '-inf' ~ '-INF',
+    tolower(value) == '+inf' ~ '+INF',
+    scale == "Log" & val <= 0 ~ '-INF',
+    scale == "Log" ~ as.character( signif( suppressWarnings( log(val) ), 6 ) ),
+    scale == "Logit" & scale_val <= 0 ~ '-INF',
+    scale == "Logit" & scale_val >= 1 ~ '+INF',
+    scale == "Logit" ~ as.character( signif( suppressWarnings( log(scale_val/(1-scale_val) ) ), 6 ) ),
+    TRUE ~ toupper(value)
+  )
+
+}
