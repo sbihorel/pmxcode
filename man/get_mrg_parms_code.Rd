@@ -4,7 +4,7 @@
 \alias{get_mrg_parms_code}
 \title{Get mrgsolve model parameter code lines as list}
 \usage{
-get_mrg_parms_code(input, parms, mu)
+get_mrg_parms_code(input, parms, mu, posthoc)
 }
 \arguments{
 \item{input}{Internal parameter for \code{shiny}}
@@ -12,6 +12,8 @@ get_mrg_parms_code(input, parms, mu)
 \item{parms}{Parameter selection}
 
 \item{mu}{A logical indicator for mu transformation}
+
+\item{posthoc}{A logical indicating whether posthoc estimates should be used}
 }
 \description{
 Get mrgsolve model parameter code lines as list

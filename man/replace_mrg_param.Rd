@@ -4,7 +4,7 @@
 \alias{replace_mrg_param}
 \title{Replacement of @PARAM tag}
 \usage{
-replace_mrg_param(input, new, parms, nmextImport)
+replace_mrg_param(input, new, parms, nmextImport, posthoc)
 }
 \arguments{
 \item{input}{Internal parameter for \code{shiny}}
@@ -15,6 +15,8 @@ replace_mrg_param(input, new, parms, nmextImport)
 
 \item{nmextImport}{A logical indicating whether NONMEM ext file content
 should be imported}
+
+\item{posthoc}{A logical indicating whether posthoc estimates should be used}
 }
 \description{
 Replacement of @PARAM tag
