@@ -128,14 +128,26 @@ HTML_info <- function(info){
   )
 }
 
-danger_box <- function(value, width_left){
-  bslib::value_box(
-    title = NULL,
-    theme_color = "danger",
-    value = value,
-    showcase = bsicons::bs_icon("info-circle", size = "0.25em"),
-    showcase_layout = bslib::showcase_left_center( width = width_left ),
-    fill = TRUE,
-    height = "46px",
+message_box <- function( text, icon, theme ){
+
+  tagText <- tagList()
+  for ( itext in seq_along(text) ){
+    tagText <- c(
+      tagText,
+      tagList(
+        strong(text[itext]),
+        br()
+      )
+    )
+  }
+
+  bslib::card(
+    class = paste("bg", theme, sep = "-"),
+    p(
+      bsicons::bs_icon( icon ),
+      HTML( "&nbsp;" ),
+      tagText
+    )
   )
+
 }
