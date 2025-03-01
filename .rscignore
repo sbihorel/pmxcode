@@ -2,6 +2,9 @@
 ^\.Rproj\.user$
 ^app\.R$
 ^rsconnect$
-^.rscignore
+^.rsignore
+^.gitignore
+^.Rbuildignore
 ^doc$
 ^Meta$
+^builds
