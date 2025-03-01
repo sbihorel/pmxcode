@@ -425,7 +425,7 @@
   },
   {
     "PARM": "LGI1",
-    "LABEL": "Intercept for DV=1 (logit)",
+    "LABEL": "Shift in intercept for DV=1 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -433,7 +433,7 @@
   },
   {
     "PARM": "LGI2",
-    "LABEL": "Intercept for DV=2 (logit)",
+    "LABEL": "Shift in intercept for DV=2 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -441,7 +441,7 @@
   },
   {
     "PARM": "LGI3",
-    "LABEL": "Intercept for DV=3 (logit)",
+    "LABEL": "Shift in intercept for DV=3 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -449,7 +449,7 @@
   },
   {
     "PARM": "LGI4",
-    "LABEL": "Intercept for DV=4 (logit)",
+    "LABEL": "Shift in intercept for DV=4 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -457,7 +457,7 @@
   },
   {
     "PARM": "LGI5",
-    "LABEL": "Intercept for DV=5 (logit)",
+    "LABEL": "Shift in intercept for DV=5 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -465,7 +465,7 @@
   },
   {
     "PARM": "LGI6",
-    "LABEL": "Intercept for DV=6 (logit)",
+    "LABEL": "Shift in intercept for DV=6 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -473,7 +473,7 @@
   },
   {
     "PARM": "LGI7",
-    "LABEL": "Intercept for DV=7 (logit)",
+    "LABEL": "Shift in intercept for DV=7 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -481,7 +481,7 @@
   },
   {
     "PARM": "LGI8",
-    "LABEL": "Intercept for DV=8 (logit)",
+    "LABEL": "Shift in intercept for DV=8 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -489,7 +489,7 @@
   },
   {
     "PARM": "LGI9",
-    "LABEL": "Intercept for DV=9 (logit)",
+    "LABEL": "Shift in intercept for DV=9 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
@@ -497,7 +497,7 @@
   },
   {
     "PARM": "LGI10",
-    "LABEL": "Intercept for DV=10 (logit)",
+    "LABEL": "Shift in intercept for DV=10 (logit)",
     "UNIT": "",
     "FORM": "",
     "INCREASE": "NA",
