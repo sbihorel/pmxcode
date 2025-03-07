@@ -4,12 +4,14 @@
 \alias{replace_purpose}
 \title{Replacement of @PURPOSE tag}
 \usage{
-replace_purpose(input, new, varianceTable)
+replace_purpose(input, new, parms, varianceTable)
 }
 \arguments{
 \item{input}{Internal parameter for \code{shiny}.}
 
 \item{new}{Text template}
+
+\item{parms}{Parameter selection}
 
 \item{varianceTable}{Variance- table}
 }

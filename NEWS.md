@@ -1,3 +1,9 @@
+# pmxcode 0.2.1
+
+* Change parameterization of logit model for consistency across scales / mu transformation
+* Add list of parameters in headers
+* Fix description issue in headers for biophase model
+
 # pmxcode 0.2.0
 
 * Allow users to define parameter on linear, log, or logit scale

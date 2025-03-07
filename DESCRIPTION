@@ -1,6 +1,6 @@
 Package: pmxcode
 Title: Create Pharmacometric Models
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person("Sebastien", "Bihorel", , "sb.pmlab@gmail.com", role = c("cre", "aut"))
 Description: Provides a user interface to create or modify pharmacometric
