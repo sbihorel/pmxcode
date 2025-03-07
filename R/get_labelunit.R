@@ -41,7 +41,7 @@ get_labelunit <- function(
   }
 
   # Replace <DRIVER>
-  if (input$pdInput %in% c("direct", "link", "idr")){
+  if (input$pdInput %in% c("direct", "biophase", "idr")){
     labels <- gsub(
       "<DRIVER>",
       ifelse(input$effectCpDriverInput, "Concentration", "Amount"),

@@ -47,6 +47,22 @@ get_mrgsolve_code <- function(
   user <- Sys.info()["user"]
   date <- format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
 
+  # Extract tables content
+  if ( areTruthy(input$parameterTable, input$varianceTable) ){
+    parms <- hot_to_r(input$parameterTable)
+    variance <- hot_to_r(input$varianceTable)
+
+    req( identical(parms$Parameter, variance$Parameter) )
+
+    parms <- dplyr::bind_cols(
+      parms %>% dplyr::select(-.data$Variability),
+      variance %>% dplyr::select(.data$Variability)
+    )
+  } else {
+    parms <- NULL
+  }
+  estimations <- hot_to_r(input$estimationTable)
+
   # Replace @TIMESTAMP
   new <- sub("@TIMESTAMP", date, new)
 
@@ -58,7 +74,7 @@ get_mrgsolve_code <- function(
 
   # Replace @PURPOSE
   if ( areTruthy(input$pkInput, input$pdInput) ){
-    new <- replace_purpose(input = input, new = new, varianceTable = varianceTable)
+    new <- replace_purpose(input = input, new = new, parms = parms, varianceTable = varianceTable)
   }
 
   # Replace @PATH
@@ -120,22 +136,6 @@ get_mrgsolve_code <- function(
       isPRED = isPRED
     )
   }
-
-  # Extract tables content
-  if ( areTruthy(input$parameterTable, input$varianceTable) ){
-    parms <- hot_to_r(input$parameterTable)
-    variance <- hot_to_r(input$varianceTable)
-
-    req( identical(parms$Parameter, variance$Parameter) )
-
-    parms <- dplyr::bind_cols(
-      parms %>% dplyr::select(-.data$Variability),
-      variance %>% dplyr::select(.data$Variability)
-    )
-  } else {
-    parms <- NULL
-  }
-  estimations <- hot_to_r(input$estimationTable)
 
   # Use posthocs?
   if ( isTruthy(input$posthocInput) && input$posthocInput == "Yes" ){

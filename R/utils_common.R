@@ -3,11 +3,13 @@
 #'
 #' @param input Internal parameter for \code{shiny}.
 #' @param new Text template
+#' @param parms Parameter selection
 #' @param varianceTable Variance- table
 
 replace_purpose <- function(
     input,
     new,
+    parms,
     varianceTable
 ) {
 
@@ -93,13 +95,13 @@ replace_purpose <- function(
         switch(
           input$pdInput,
           "direct" = "Direct effect model",
-          "link" = "Biophase model",
+          "biophase" = "Biophase model",
           "idr" = "Indirect response model",
           "ode" = "Model defined by custom ODEs",
           "logistic" = "Logistic regression model",
           "ordcat" = "Logistic regression model for ordered categorical data"
         ),
-        if ( input$pdInput %in% c("direct", "link") && isTruthy(input$effectFormInput) ){
+        if ( input$pdInput %in% c("direct", "biophase") && isTruthy(input$effectFormInput) ){
           paste0(
             " - ",
             switch(
@@ -179,6 +181,38 @@ replace_purpose <- function(
       ""
     )
   )
+
+  # List parameters and scales
+  replacement <- paste0(
+    replacement,
+    glue::glue(
+      "\n{commentChar}    Parameters{mu}: ",
+      mu = ifelse(
+        # Need to check for length of muInput for mrgsolve models
+        length(input$muInput) > 0 && any(input$muInput == "TRUE"),
+        " (mu)",
+        ""
+      ),
+      .trim = FALSE
+    ),
+    parms %>%
+      # Merge variability from varianceTable
+      dplyr::select(-Variability) %>%
+      dplyr::left_join( varianceTable, by = "Parameter" ) %>%
+      dplyr::mutate(
+        tag = glue::glue(
+          "{Parameter}{open}{scale}{sep}{iiv}{close}",
+          open = ifelse( Scale != "Linear" | Variability != "None", " (", "" ),
+          scale = ifelse( Scale != "Linear", tolower(Scale), "" ),
+          sep = ifelse( Scale != "Linear" & Variability != "None", ",", "" ),
+          iiv = ifelse( Variability != "None", "iiv", "" ),
+          close = ifelse( Scale != "Linear" | Variability != "None", ")", "" )
+        )
+      ) %>%
+      pull( tag ) %>%
+      paste( collapse = ", " )
+  )
+
 
   if ( input$platformInput == "NONMEM" & input$nmFlavorInput == "PsN/Xpose style" ){
     purpose <- c(
@@ -727,7 +761,7 @@ get_derived_parms_code <- function(
   }
 
   # Cases when LINMAT PK model is associated with link PD model
-  if ( isLINMAT() & !isODE() & input$pdInput == "link" ){
+  if ( isLINMAT() & !isODE() & input$pdInput == "biophase" ){
     tmp <- c(
       tmp,
       glue::glue("  K{input$pkDefaultObsInput}{input$pknCMTInput+1} = KE0"),
@@ -896,7 +930,7 @@ get_ncmts <- function(
     }
 
     # PD compartments
-    if ( input$pdInput %in% c("link", "idr") ){
+    if ( input$pdInput %in% c("biophase", "idr") ){
       nPDcmts <- 1
     } else if ( input$pdInput == "ode" ){
       nPDcmts <- input$pdnCMTInput

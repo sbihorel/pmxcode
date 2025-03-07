@@ -3568,7 +3568,7 @@ new_model_server <- function(session, input, output, resources ){
           downloadButton(
             outputId = "downloadButton",
             label = NULL,#"Download",
-            icon = icon("download")
+            icon = icon("upload")
           ),
           "Download",
           options = list(delay =list(show=800, hide=100))
@@ -3683,6 +3683,10 @@ new_model_server <- function(session, input, output, resources ){
         length(varianceTable) > 0,
         length(covarianceTable) > 0
       )
+
+      if ( input$platformInput == "NONMEM" ){
+        req( input$muInput )
+      }
 
       if ( isTruthy(parameterWarnings()) ){
         return("Invalid parameter definition prevents the code generation.")
