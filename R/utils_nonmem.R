@@ -51,8 +51,12 @@ get_nonmem_code <- function(
   user <- Sys.info()["user"]
   date <- format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
 
-  # Replace @TIMESTAMP
 
+  # Extract tables content
+  parms <- hot_to_r(input$parameterTable)
+  estimations <- hot_to_r(input$estimationTable)
+
+  # Replace @TIMESTAMP
   new <- sub("@TIMESTAMP", date, new)
 
   # Replace @USER
@@ -69,8 +73,8 @@ get_nonmem_code <- function(
 
   # Replace @PURPOSE
   if ( areTruthy(input$pkInput, input$pdInput) ){
-    if ( debug ) message("PRUPOSE")
-    new <- replace_purpose(input = input, new = new, varianceTable = varianceTable)
+    if ( debug ) message("PURPOSE")
+    new <- replace_purpose(input = input, new = new, parms = parms, varianceTable = varianceTable)
   }
 
   # Replace @PATH
@@ -116,10 +120,6 @@ get_nonmem_code <- function(
     if ( debug ) message("ABBREVIATED")
     new <- replace_abbreviated(input = input, new = new, vars = vars)
   }
-
-  # Extract tables content
-  parms <- hot_to_r(input$parameterTable)
-  estimations <- hot_to_r(input$estimationTable)
 
   # Replace @THETA
   if (isTruthy(parms) ){
@@ -2917,6 +2917,7 @@ get_parms_code <- function(input, parms, varianceTable, mu){
   tvPK <- tvPD <- tvOT <- PK <- PD <- OT <- NULL
   multipleType <- FALSE
   neta <- 0
+
   for ( type in unique(parms$Type) ){
     typical <- glue::glue(
       "  {pre}; {type} parameters",
@@ -2940,12 +2941,46 @@ get_parms_code <- function(input, parms, varianceTable, mu){
           typical,
           glue::glue(
             dplyr::case_when(
-              scale == "Linear" ~ "  TV{parm} = THETA({iparm})",
+              scale == "Linear" & variability != "Logit" ~ "  TV{parm} = THETA({iparm})",
+              scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~ paste(
+                # Individual parameter within 0 and 1
+                "  L{parm} = LOG(THETA({iparm}) / (1 - THETA({iparm}) ) )",
+                "  TV{parm} = 1 / (1 + EXP(-L({parm})) )",
+                sep = "\n"
+              ),
+              scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~ paste(
+                # Individual parameter between 0 and a positive value different from 1
+                "  L{parm} = LOG(THETA({iparm})/{parm_max} / (1 - THETA({iparm})/{parm_max} ) )",
+                "  TV{parm} = {parm_max} / (1 + EXP(-L({parm})) )",
+                sep = "\n"
+              ),
+              scale == "Linear" & variability == "Logit" & parm_min != "0" ~ paste(
+                # Individual parameter boundaries different from 0 and 1
+                "  L{parm} = LOG((TV{parm} - {parm_min})/({parm_max} - {parm_min})/(1 - (TV{parm} - {parm_min})/({parm_max} - {parm_min})))",
+                "  TV{parm} = {parm_max} / (1 + EXP(-L({parm})) )",
+                sep = "\n"
+              ),
               scale == "Log" ~ "  TV{parm} = EXP(THETA({iparm}))",
-              scale == "Logit" & parm_min == "0" & parm_max == "1" ~ "  TV{parm} = 1 / (1 + EXP(-THETA({iparm})) )",
-              scale == "Logit" & parm_min == "0" & parm_max != "1" ~ "  TV{parm} = {parm_max} / (1 + EXP(-THETA({iparm})) )",
-              TRUE ~ "  TV{parm} = {parm_min} + ({parm_max} - {parm_min}) / (1 + EXP(-THETA({iparm})) )"
-            )
+              scale == "Logit" & parm_min == "0" & parm_max == "1" ~ paste(
+                # Individual parameter within 0 and 1
+                "  L{parm} = THETA({iparm})",
+                "  TV{parm} = 1 / (1 + EXP(-L({parm})) )",
+                sep = "\n"
+              ),
+              scale == "Logit" & parm_min == "0" & parm_max != "1" ~ paste(
+                # Individual parameter between 0 and a positive value different from 1
+                "  L{parm} = THETA({iparm})",
+                "  TV{parm} = {parm_max} / (1 + EXP(-L({parm})) )",
+                sep = "\n"
+              ),
+              TRUE ~ paste(
+                # Individual parameter boundaries different from 0 and 1
+                "  L{parm} = THETA({iparm})",
+                "  TV{parm} = {parm_min} + ({parm_max} - {parm_min}) / (1 + EXP(-L({parm})) )",
+                sep = "\n"
+              )
+            ),
+            .trim = FALSE
           )
         )
         if ( mu ){
@@ -2959,20 +2994,10 @@ get_parms_code <- function(input, parms, varianceTable, mu){
                   # Linear scale
                   scale == "Linear" & variability == "Additive" ~ "  MU_{ieta} = TV{parms$Parameter[iparm]}",
                   scale == "Linear" & variability == "Exponential" ~ "  MU_{ieta} = LOG(TV{parms$Parameter[iparm]})",
-                  scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~
-                    # Individual parameter within 0 and 1
-                    "  MU_{ieta} = LOG(TV{parm}/(1 - TV{parm}))",
-                  scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~
-                    # Individual parameter between 0 and a positive value different from 1
-                    "  MU_{ieta} = LOG(TV{parm}/{parm_max}/(1 - TV{parm}/{parm_max}))",
-                  scale == "Linear" & variability == "Logit" & parm_min != "0" ~
-                    # Individual parameter boundaries different from 0 and 1
-                    "  MU_{ieta} = LOG((TV{parm} - {parm_min})/({parm_max} - {parm_min})/(1 - (TV{parm} - {parm_min})/({parm_max} - {parm_min})))",
-                  # Log scale (logit variability is not possible with log scale)
                   scale == "Log" & variability == "Additive" ~ "  MU_{ieta} = TV{parms$Parameter[iparm]}",
                   scale == "Log" & variability == "Exponential" ~ "  MU_{ieta} = THETA({iparm})",
                   # Logit scale (additive and exponential variability are not possible with logit scale)
-                  scale == "Logit" ~ "  MU_{ieta} = THETA({iparm})"
+                  variability == "Logit" ~ "  MU_{ieta} = L{parm}"
                 )
               )
             )
@@ -3091,15 +3116,6 @@ get_individual_parm_code <- function(parms, varianceTable, iparm, ieta, mu){
         scale == "Linear" & variability == "None" ~ "  {parm} = TV{parm}",
         scale == "Linear" & variability == "Additive" ~ "  {parm} = MU_{ieta} + ETA({ieta})",
         scale == "Linear" & variability == "Exponential" ~ "  {parm} = EXP(MU_{ieta} + ETA({ieta}))",
-        scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~
-          # Individual parameter within 0 and 1
-          "  {parm} = 1 / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
-        scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~
-          # Individual parameter between 0 and a positive value different from 1
-          "  {parm} = {parm_max} / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
-        scale == "Linear" & variability == "Logit" & parm_min != "0" ~
-          # Individual parameter boundaries different from 0 and 1
-          "  {parm} = {parm_min} + ({parm_max} - {parm_min}) / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
         scale == "Log" & variability == "None" ~ "  {parm} = EXP(TV{parm})",
         scale == "Log" & variability == "Additive" ~ "  {parm} = MU_{ieta} + ETA({ieta})",
         scale == "Log" & variability == "Exponential" ~ "  {parm} = EXP(MU_{ieta} + ETA({ieta}))",
@@ -3107,52 +3123,33 @@ get_individual_parm_code <- function(parms, varianceTable, iparm, ieta, mu){
         # no variability not allowed with logit scale
         # Additive variability not allowed with logit scale
         # Exponential variability not allowed with logit scale
-        scale == "Logit" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~
+        variability == "Logit" & parm_min == "0" & parm_max == "1" ~
           # Individual parameter within 0 and 1
           "  {parm} = 1 / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
-        scale == "Logit" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~
+        variability == "Logit" & parm_min == "0" & parm_max != "1" ~
           # Individual parameter between 0 and a positive value different from 1
           "  {parm} = {parm_max} / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
-        scale == "Logit" & variability == "Logit" & parm_min != "0" ~
+        variability == "Logit" & parm_min != "0" ~
           # Individual parameter boundaries different from 0 and 1
           "  {parm} = {parm_min} + ({parm_max} - {parm_min}) / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )"
       )
     )
   } else {
-    switch(
-      levels(varianceTable$Variability)[varianceTable$Variability[iparm]],
-      "None" = glue::glue("  {parm} = TV{parm}"),
-      "Additive" = glue::glue("  {parm} = TV{parm} + ETA({ieta})"),
-      "Exponential" = glue::glue("  {parm} = TV{parm}*EXP(ETA({ieta}))"),
-      "Logit" =
-        # Numerically stable of logit transform
-        if ( parms$Min[iparm] == 0 & parms$Max[iparm] == 1 ){
+    glue::glue(
+      dplyr::case_when(
+        variability == "None" ~ glue::glue("  {parm} = TV{parm}"),
+        variability == "Additive" ~ glue::glue("  {parm} = TV{parm} + ETA({ieta})"),
+        variability == "Exponential" ~ glue::glue("  {parm} = TV{parm}*EXP(ETA({ieta}))"),
+        variability == "Logit" & parm_min == "0" & parm_max == "1" ~
           # Individual parameter within 0 and 1
-          glue::glue("  {parm} = 1/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)")
-        } else if ( parms$Min[iparm] == 0 & parms$Max[iparm] != 1 ){
+          "  {parm} = 1 / ( 1 + EXP( - (L{parm} + ETA({ieta}) ) ) )",
+        variability == "Logit" & parm_min == "0" & parm_max != "1" ~
           # Individual parameter between 0 and a positive value different from 1
-          glue::glue(
-            paste(
-              "  L{parm} = TV{parm}/{hi}",
-              "  {parm} = {hi}/((1/L{parm} - 1)*EXP(-ETA({ieta})) + 1)",
-              sep = "\n"
-            ),
-            hi = parms$Max[iparm],
-            .trim = FALSE
-          )
-        } else {
+          "  {parm} = {parm_max} / ( 1 + EXP( - (L{parm} + ETA({ieta}) ) ) )",
+        variability == "Logit" & parm_min != "0" ~
           # Individual parameter boundaries different from 0 and 1
-          glue::glue(
-            paste(
-              "  L{parm} = (TV{parm} - {lo})/({hi} - {lo})",
-              "  {parm} = {lo} + ({hi} - {lo})/((1/L{parm} - 1)*EXP(-ETA({ieta})) + 1)",
-              sep = "\n"
-            ),
-            lo = parms$Min[iparm],
-            hi = parms$Max[iparm],
-            .trim = FALSE
-          )
-        }
+          "  {parm} = {parm_min} + ({parm_max} - {parm_min}) / ( 1 + EXP( - (L{parm} + ETA({ieta}) ) ) )"
+      )
     )
   }
 }
