@@ -12,7 +12,7 @@ app_ui <- function(request) {
     # Your application UI logic
     suppressWarnings(
       bslib::page_navbar(
-        title = "pmxCode",
+        title = "PMXcode",
         theme = bslib::bs_theme_update(
           theme = bslib::bs_theme(bootswatch = "sandstone", version = 5),
           base_font = bslib::font_collection("Helvetica Neue", "Arial", "sans-serif"),
