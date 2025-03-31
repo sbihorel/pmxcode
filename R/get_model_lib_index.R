@@ -1,3 +1,12 @@
+#' Get model index in code library
+#'
+#' @param input Internal parameter for \code{shiny}
+#' @param advan Reactive object - NONMEM ADVAN value
+#' @param trans Reactive object - NONMEM TRANS value
+#' @param parm_lib Library of parameters
+#'
+#' @noRd
+
 get_model_lib_index <- function(
     input,
     advan,
