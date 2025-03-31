@@ -5,6 +5,7 @@
 #' @param new Text template
 #' @param parms Parameter selection
 #' @param varianceTable Variance- table
+#' @noRd
 
 replace_purpose <- function(
     input,
@@ -204,8 +205,8 @@ replace_purpose <- function(
           "{Parameter}{open}{scale}{sep}{iiv}{close}",
           open = ifelse( Scale != "Linear" | Variability != "None", " (", "" ),
           scale = ifelse( Scale != "Linear", tolower(Scale), "" ),
-          sep = ifelse( Scale != "Linear" & Variability != "None", ",", "" ),
-          iiv = ifelse( Variability != "None", "iiv", "" ),
+          sep = ifelse( Scale != "Linear" | Variability != "None", "|", ""),
+          iiv = c("", "add", "exp", "logit")[as.numeric(Variability)],
           close = ifelse( Scale != "Linear" | Variability != "None", ")", "" )
         )
       ) %>%
@@ -337,6 +338,7 @@ replace_purpose <- function(
 #'
 #' @param input Internal parameter for \code{shiny}.
 #' @param new Text template
+#' @noRd
 
 replace_path <- function(input, new ){
 
@@ -406,6 +408,7 @@ replace_path <- function(input, new ){
 #'
 #' @param code Code lines containing comments to align across
 #'
+#' @noRd
 
 align_tags <- function(code ){
 
@@ -438,6 +441,7 @@ align_tags <- function(code ){
 #'
 #' @param code Code lines containing comments to align across
 #'
+#' @noRd
 
 align_annotations <- function(code){
 
@@ -499,6 +503,7 @@ align_annotations <- function(code){
 #' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param vars Character vector of variable names
+#' @noRd
 
 get_preamble_code <- function(
     input,
@@ -592,6 +597,7 @@ get_preamble_code <- function(
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param parm_lib Library of parameters
 #' @param scaling  Library for scaling
+#' @noRd
 
 
 get_scaling_code <- function(
@@ -702,6 +708,7 @@ get_scaling_code <- function(
 #' @param isLINMAT Reactive object - is model coded as linear matrix?
 #' @param parms Parameter selection
 #' @param parm_lib Library of parameters
+#' @noRd
 #'
 
 get_derived_parms_code <- function(
@@ -886,6 +893,7 @@ get_derived_parms_code <- function(
 #' @param isPRED Reactive object - is model coded with $PRED?
 #' @param isPREDPP Reactive object - is mode coded with $PK?
 #' @param model_lib Library for $MODEL replacement
+#' @noRd
 
 get_ncmts <- function(
     input,
@@ -950,6 +958,7 @@ get_ncmts <- function(
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param nPKcmts,nPDcmts Number of compartments for PK and PD model components
 #' @param parm_lib Library of parameters
+#' @noRd
 
 get_init_code <- function(
     input,
@@ -1068,6 +1077,7 @@ get_init_code <- function(
 #' Format variables by lines of 10.
 #'
 #' @param x  Character vectors of variables
+#' @noRd
 
 tenvars <- function( x ){
   varsBy10 <- NULL
@@ -1087,6 +1097,7 @@ tenvars <- function( x ){
 #' Determines if a file path exists
 #'
 #' @param file a path to a file
+#' @noRd
 
 
 file_exists <- function( file ){
@@ -1106,6 +1117,7 @@ file_exists <- function( file ){
 #' @param value the value entered in the UI
 #' @param max_value the maximum value entered in the UI
 #' @param scale the scale entered in the UI
+#' @noRd
 
 scale_value <- function( min_value, value, max_value, scale ){
 
