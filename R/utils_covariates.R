@@ -5,7 +5,7 @@
 #' character vector in which each element contain a particular $ block
 #'
 #' @param code A character string containing the control stream
-#'
+#' @noRd
 
 get_nonmem_blocks <- function( code ){
 
@@ -38,6 +38,7 @@ get_nonmem_blocks <- function( code ){
 #' Get number of THETA parameters
 #'
 #' @param code A character string containing the control stream
+#' @noRd
 
 get_theta_number <- function( code ){
 
@@ -94,6 +95,7 @@ get_theta_number <- function( code ){
 #' Convert reference code for univariate model creation
 #'
 #' @param code A character string containing NONMEM code
+#' @noRd
 
 
 convert_reference_code <- function(code){
@@ -209,6 +211,7 @@ convert_reference_code <- function(code){
 #'
 #' @param table a data.frame with expected columns
 #' @param check_step a logical indicator to check content of Step column or not
+#' @noRd
 
 
 check_covariate_table <- function(
@@ -371,6 +374,7 @@ check_covariate_table <- function(
 #' Check if covariate definition table contains rows with incomplete data
 #'
 #' @param table a data.frame with expected columns
+#' @noRd
 
 
 check_incomplete_covariate_table <- function(table){
@@ -416,6 +420,7 @@ check_incomplete_covariate_table <- function(table){
 #' Convert covariate handsontable data to R data.frame without factor
 #'
 #' @param ... passed to rhandsontable::hot_to_r
+#' @noRd
 
 hot_to_r_raw <- function(...){
 
@@ -456,6 +461,7 @@ hot_to_r_raw <- function(...){
 #' model file with
 #' @param startNumber If PsN style, the number to start univariate model run files
 #' @param path The directory in which the univariate models will be saved and run
+#' @noRd
 
 create_univariate_models <- function(
     code,

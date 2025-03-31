@@ -17,6 +17,7 @@
 #' @param rv_lib  Library for residual variability replacement
 #' @param scaling  Library for scaling
 #' @param replacement Logical value indicating with replacement is required
+#' @noRd
 #'
 
 get_mrgsolve_code <- function(
@@ -302,6 +303,7 @@ get_mrgsolve_code <- function(
 #' @param new Text template
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
+#' @noRd
 
 replace_nmext <- function(
     input,
@@ -369,6 +371,7 @@ replace_nmext <- function(
 #'
 #' @param input Internal parameter for \code{shiny}
 #' @param new Text template
+#' @noRd
 
 replace_mrg_plugin <- function(
     input,
@@ -400,6 +403,7 @@ replace_mrg_plugin <- function(
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param nPKcmts Number of compartments for PK
 #' @param parm_lib Library of parameters
+#' @noRd
 #'
 
 replace_mrg_global <- function(
@@ -501,6 +505,7 @@ replace_mrg_global <- function(
 #' @param new Text template
 #' @param model_lib Library for $MODEL replacement
 #' @param isPRED Reactive object - is model coded with $PRED?
+#' @noRd
 
 replace_mrg_cmt <- function(
     input,
@@ -601,6 +606,7 @@ replace_mrg_cmt <- function(
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
 #' @param posthoc A logical indicating whether posthoc estimates should be used
+#' @noRd
 
 replace_mrg_param <- function(
     input,
@@ -701,6 +707,7 @@ replace_mrg_param <- function(
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
 #' @param posthoc A logical indicating whether posthoc estimates should be used
+#' @noRd
 
 replace_mrg_omega <- function(
     input,
@@ -817,6 +824,7 @@ replace_mrg_omega <- function(
 #' @param rvTable Residual variability selection
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
+#' @noRd
 
 replace_mrg_sigma <- function(
     input,
@@ -984,6 +992,7 @@ replace_mrg_sigma <- function(
 #' @param parms Parameter selection
 #' @param parm_lib Library of parameters
 #' @param rv_lib  Library for residual variability replacement
+#' @noRd
 
 replace_mrg_main_pred <- function(
     input,
@@ -1347,6 +1356,7 @@ replace_mrg_main_pred <- function(
 #' @param nPKcmts Number of PK compartments in the model
 #' @param nPDcmts Number of PD compartments in the model
 #' @param parm_lib Library of parameters
+#' @noRd
 
 replace_mrg_ode <- function(
     input,
@@ -1512,6 +1522,7 @@ replace_mrg_ode <- function(
 #' @param nPDcmts Number of PD compartments in the model
 #' @param parm_lib Library of parameters
 #' @param rv_lib  Library for residual variability replacement
+#' @noRd
 
 replace_mrg_table <- function(
     input,
@@ -1681,6 +1692,7 @@ replace_mrg_table <- function(
 #' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param parms Parameter selection
+#' @noRd
 
 replace_mrg_capture <- function(
     input,
@@ -1776,6 +1788,7 @@ replace_mrg_capture <- function(
 #' @param parms Parameter selection
 #' @param mu A logical indicator for mu transformation
 #' @param posthoc A logical indicating whether posthoc estimates should be used
+#' @noRd
 
 get_mrg_parms_code <- function(input, parms, mu, posthoc){
 
@@ -1864,6 +1877,7 @@ get_mrg_parms_code <- function(input, parms, mu, posthoc){
 #' @param parms Parameter selection
 #' @param iparm Index of parameter in parms data frame
 #' @param eparm Parameter associated with IIV in ordered categorical models
+#' @noRd
 
 
 get_mrg_parms_code_minion <- function(parms, iparm, eparm){

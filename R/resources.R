@@ -1,6 +1,7 @@
 #' Load resource files
 #'
 #' @name resources
+#' @noRd
 
 resources <- function(){
 

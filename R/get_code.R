@@ -18,6 +18,7 @@
 #' @param scaling  Library for scaling
 #' @param replacement Logical value indicating with replacement is required
 #'
+#' @noRd
 
 get_code <- function(
     input = NULL,

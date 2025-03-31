@@ -1,3 +1,12 @@
+#' Get parameter label or unit from parameter library
+#'
+#' @param input Internal parameter for \code{shiny}
+#' @param parms A vector of parameters
+#' @param labelunit_lib Library of parameter label and unit
+#' @param what Either "label" or "unit"
+#'
+#' @noRd
+
 get_labelunit <- function(
     input,
     parms,

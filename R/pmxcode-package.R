@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @noRd
 #' @importFrom bsicons bs_icon
 #' @importFrom bslib bs_theme
 #' @importFrom config get
