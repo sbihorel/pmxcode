@@ -1,6 +1,6 @@
 #' Creation of model code
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param template Text template
 #' @param vars Reactive object - List of variables in data file
 #' @param advan Reactive object - NONMEM ADVAN value
@@ -18,6 +18,7 @@
 #' @param scaling  Library for scaling
 #' @param replacement Logical value indicating with replacement is required
 #'
+#' @noRd
 
 get_code <- function(
     input = NULL,

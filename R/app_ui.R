@@ -3,16 +3,19 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#'
 #' @noRd
+
 app_ui <- function(request) {
   tagList(
     rclipboard::rclipboardSetup(),
+    shinyjs::useShinyjs(),
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
     suppressWarnings(
       bslib::page_navbar(
-        title = "pmxCode",
+        title = "PMXcode",
         theme = bslib::bs_theme_update(
           theme = bslib::bs_theme(bootswatch = "sandstone", version = 5),
           base_font = bslib::font_collection("Helvetica Neue", "Arial", "sans-serif"),
@@ -88,7 +91,9 @@ app_ui <- function(request) {
 #' @import shiny
 #' @import markdown
 #' @importFrom golem add_resource_path activate_js favicon bundle_resources
+#'
 #' @noRd
+
 golem_add_external_resources <- function() {
   add_resource_path(
     "www",
