@@ -3,7 +3,7 @@
 #'
 #' @param input,output,session Internal parameters for {shiny}.
 #' @param resources A list of internal resources
-#'
+#' @noRd
 
 covariates_server <- function(session, input, output, resources ){
 
@@ -87,27 +87,78 @@ covariates_server <- function(session, input, output, resources ){
     }
   })
 
-  # observeEvent(
-  #   referenceFileReactive(),
-  #   {
-  #     if ( !is.null(input$aceReference) && input$aceReference == "" ){
-  #       browser()
-  #       shinyAce::updateAceEditor(
-  #         session = session,
-  #         editorId = "aceReference",
-  #         value = referenceCode(),
-  #         mode = "nonmem"
-  #       )
-  #     } else {
-  #       # Do nothing
-  #     }
-  #   }
-  # )
+  # * Get parameters information from reference control stream ----
+  parmsInfo <- reactive({
+
+    req( input$aceReference )
+
+    new_code <- get_nonmem_blocks( input$aceReference  )
+
+    # Find and process parameters info
+    problem_index <- which( grepl("^[$]PRO", new_code ) )
+    problem_code <- unlist(
+      strsplit(new_code[problem_index], split = " @@@")
+    )
+    parms_description <- problem_code[ grepl("^[;]+\\s+Parameters", problem_code) ]
+
+    if ( length(parms_description) > 0 ){
+      mu <- grepl( "[(]mu[)]", parms_description)
+      parms <- data.frame(
+        Parameter = unlist(
+          strsplit(
+            sub( ".*: ", "", parms_description),
+            split = ", "
+          )
+        )
+      ) %>%
+        dplyr::mutate(
+          Scale = dplyr::case_when(
+            grepl( "[(]logit[|][,adexplogit]*[)]", Parameter ) ~ "logit",
+            grepl( "[(]log[|][,adexplogit]*[)]", Parameter ) ~ "log",
+            TRUE ~ "linear"
+          ),
+          Variability = dplyr::case_when(
+            grepl( "[|][)]", Parameter ) ~ "none",
+            grepl( "[|][ael]", Parameter) ~
+              sub( ".*[(].*[|]([adexplogit]*)[)]", "\\1", Parameter ),
+            grepl( "[(]|[)]", Parameter ) ~ "error",
+            TRUE ~ "none"
+          ),
+          Parameter = sub( "\\s*[(][adexplogit|]*[)]", "", Parameter),
+          MU = ifelse(
+            mu == TRUE & Variability != "none",
+            paste0( "MU_", cumsum( Variability != "none" ) ),
+            NA
+          )
+        )
+    } else {
+      parms <- NULL
+    }
+
+  })
+
+  # * Detect time varying covariate ----
+  timeVaryingModelDefinition <- reactive({
+
+    req( input$aceReference, referenceFileStyle() )
+
+    code <- unlist( strsplit( input$aceReference, split = "\n") )
+
+    any( grepl("^[;]+\\s*Time-varying covariates", code ) )
+
+  })
+
+  timeVaryingSwitchValue <- reactiveVal( value = 0 )
+
+  observeEvent(
+    input$aceReference,
+    { timeVaryingSwitchValue( 0 ) }
+  )
 
   # * Check reference model ----
   referenceValid <- reactive({
 
-    req( input$aceReference, referenceFileStyle() )
+    req( input$aceReference, referenceFileStyle(), parmsInfo, timeVaryingModelDefinition )
 
     headerCheck <- TRUE
 
@@ -129,7 +180,7 @@ covariates_server <- function(session, input, output, resources ){
       headerCheck <- "Missing \";; Created on ...\" line"
     }
 
-    # If standard style, header must contain a row starting with ;; PRUPOSE:
+    # If standard style, header must contain a row starting with ;; PURPOSE:
     if (
       isTRUE(headerCheck) &
       referenceFileStyle() == "Standard" &
@@ -173,10 +224,9 @@ covariates_server <- function(session, input, output, resources ){
 
    if ( !isTRUE(headerCheck) ){
       return(
-        paste(
+        c(
           "Invalid or missing descriptive header section (see Library for examples)",
-          headerCheck,
-          sep = "\n"
+          headerCheck
         )
       )
     }
@@ -199,10 +249,71 @@ covariates_server <- function(session, input, output, resources ){
       return( "No $THETA block present in NONMEM control stream" )
     }
 
+    # Check parmsInfo()
+    if ( length( parmsInfo() ) == 0 ){
+      return( "Parameter description is missing in the control stream header" )
+    }
+      # Check Parameter variable
+    invalid <- !grepl( "^[[:alnum:]_]+$", parmsInfo()$Parameter )
+    if ( any(invalid) ){
+      return(
+        glue::glue(
+          "Invalid parameter description in control stream header: {hits}",
+          hits = parmsInfo() %>%
+            dplyr::slice( which(invalid) ) %>%
+            dplyr::pull( Parameter) %>%
+            paste( collapse = ", " )
+        )
+      )
+    }
+      # Check Scale variable
+    invalid <- ! parmsInfo()$Scale %in% c( "linear", "log", "logit" )
+    if ( any(invalid) ){
+      return(
+        glue::glue(
+          "Invalid parameter scale description in control stream header: {hits}",
+          hits = parmsInfo() %>%
+            dplyr::slice( which(invalid) ) %>%
+            dplyr::pull( Parameter) %>%
+            paste( collapse = ", " )
+        )
+      )
+    }
+      # Check Variability variable
+    invalid <- ! parmsInfo()$Variability %in% c( "none", "add", "exp", "logit" )
+    if ( any(invalid) ){
+      return(
+        glue::glue(
+          "Invalid parameter variability description in control stream header: {hits}",
+          hits = parmsInfo() %>%
+            dplyr::slice( which(invalid) ) %>%
+            dplyr::pull( Parameter) %>%
+            paste( collapse = ", " )
+        )
+      )
+    }
+
+    # Check variability model when time varying covariates are used with MU referencing
+    if ( timeVaryingModelDefinition() & !all( is.na( parmsInfo()$MU ) ) ){
+      # Additive variability models are not compatible with log scale
+
+      if (
+        parmsInfo() %>%
+        dplyr::filter( Scale == "log" & Variability == "add" ) %>%
+        nrow() > 0
+      ){
+        return(
+          paste(
+            "Additive variability models are not compatible with log scale when",
+            "time-varying covariates are used with MU referencing"
+          )
+        )
+      }
+    }
+
     headerCheck
 
   })
-
 
   # * UI for conversion button ----
   output$convertBtnUI <- renderUI({
@@ -227,7 +338,7 @@ covariates_server <- function(session, input, output, resources ){
   conversionObject <- eventReactive(
     input$convertBtn,
     {
-      convert_reference_code( input$aceReference )
+      convert_reference_code( code = input$aceReference, parms = parmsInfo() )
     }
   )
   convertedCode <- eventReactive(
@@ -246,14 +357,10 @@ covariates_server <- function(session, input, output, resources ){
 
   output$nthetaBox <- renderUI({
     req( nThetas() )
-    bslib::value_box(
-      title = NULL,
-      theme_color = "info",
-      value = paste(nThetas(), "THETAs"),
-      showcase = bsicons::bs_icon("info-circle", size = "0.25em"),
-      showcase_layout = bslib::showcase_left_center( width = 0.3 ),
-      fill = TRUE,
-      height = "46px",
+    message_box(
+      text = paste(" ", nThetas(), "THETAs"),
+      icon = "info-circle-fill",
+      theme = "info"
     )
   })
 
@@ -261,35 +368,26 @@ covariates_server <- function(session, input, output, resources ){
 
     if ( !isTRUE(referenceValid()) ){
       return(
-        danger_box(
-          value = referenceValid(),
-          width_left = 0.095
+        message_box(
+          text = referenceValid(),
+          icon = "info-circle-fill",
+          theme = "danger"
         )
       )
     }
 
     req( conversionObject() )
 
-    if ( conversionObject()$warnings[[1]] ){
+    if ( !conversionObject()$status %in% c( "success", "info") ){
       return(
-        danger_box(
-          value = "No TV parameter was defined",
-          width_left = 0.095
-        )
-      )
-    }
-
-    if ( conversionObject()$warnings[[2]] ){
-      return(
-        bslib::value_box(
-          title = NULL,
-          theme_color = "warning",
-          value = "The same TV parameter was defined multiple times",
-          showcase = bsicons::bs_icon("exclamation-octagon", size = "0.25em"),
-          showcase_layout = bslib::showcase_left_center( width = 0.095 ),
-          fill = TRUE,
-          height = "48px",
-          width = c("2.5%", "97.5%")
+        message_box(
+          text = conversionObject()$text,
+          icon = dplyr::case_when(
+            conversionObject()$status == "danger" ~ "exclamation-octagon",
+            conversionObject()$status == "warning" ~ "cone-striped",
+            conversionObject()$status == "info" ~ "info-circle-fill"
+          ),
+          theme = conversionObject()$status
         )
       )
     }
@@ -297,18 +395,47 @@ covariates_server <- function(session, input, output, resources ){
   })
 
 
-  output$warning_complex_tvs <- eventReactive(
-    input$aceConverted,
-    {
-      if ( input$aceConverted %in% c("", " ") ){
-        FALSE
-      } else {
-        conversionObject()$warnings[[3]]
-      }
+  # output$warning_complex_tvs <- eventReactive(
+  #   input$aceConverted,
+  #   {
+  #     browser()
+  #     if ( input$aceConverted %in% c("", " ") ){
+  #       FALSE
+  #     } else {
+  #       conversionObject()$warnings[[3]]
+  #     }
+  #   }
+  # )
+  #
+  # outputOptions(output, "warning_complex_tvs", suspendWhenHidden = FALSE)
+
+  # * UI for save button ----
+  output$downloadConvertedBtnUI <- renderUI({
+
+    req( conversionObject() )
+
+    if ( conversionObject()$status != "danger" ){
+      downloadButton(
+        outputId = "downloadConvertedButton",
+        label = "Download",
+        icon = icon("upload")
+      )
+    }
+
+  })
+
+  output$downloadConvertedButton <- downloadHandler(
+    filename = function() {
+      ifelse(
+        referenceFileStyle() == "PsN",
+        sub( ".mod", "-ref.mod", basename(referenceFileReactive()) ),
+        sub( ".ctl", "-ref.ctl", basename(referenceFileReactive()) )
+      )
+    },
+    content = function(file) {
+      write(input$aceConverted, file, sep = '\n')
     }
   )
-
-  outputOptions(output, "warning_complex_tvs", suspendWhenHidden = FALSE)
 
   # * ACE editor for converted control stream ----
   output$aceConvertShown <- renderUI({
@@ -319,15 +446,17 @@ covariates_server <- function(session, input, output, resources ){
 
     req( conversionObject() )
 
-    shinyAce::aceEditor(
-      outputId = "aceConverted",
-      value = convertedCode(),
-      mode = "nonmem",
-      theme = "crimson_editor",
-      height = "646px",
-      fontSize = 14,
-      wordWrap = TRUE
-    )
+    if ( conversionObject()$status != "danger" ){
+      shinyAce::aceEditor(
+        outputId = "aceConverted",
+        value = convertedCode(),
+        mode = "nonmem",
+        theme = "crimson_editor",
+        height = "646px",
+        fontSize = 14,
+        wordWrap = TRUE
+      )
+    }
 
   })
 
@@ -336,40 +465,21 @@ covariates_server <- function(session, input, output, resources ){
 
     req( conversionObject() )
 
-    tmp <- NULL
-
-    if ( conversionObject()$warnings[[1]] | conversionObject()$warnings[[2]] ){
-      tmp <- danger_box(
-        value = "Invalid model",
-        width_left = 0.3*0.25
-      )
-    }
-
-    if ( !conversionObject()$warnings[[1]] & !conversionObject()$warnings[[2]] & !conversionObject()$warnings[[3]] ){
-      tmp <- bslib::value_box(
-        title = NULL,
-        theme_color = "success",
-        value = "Transformation complete",
-        showcase = bsicons::bs_icon("check-lg", size = "0.25em"),
-        showcase_layout = bslib::showcase_left_center( width = 0.3*0.25 ),
-        fill = TRUE,
-        height = "46px"
-      )
-    }
-
-    if ( conversionObject()$warnings[[3]] ){
-      tmp <- bslib::value_box(
-        title = NULL,
-        theme_color = "info",
-        value = "Complex TV parameter definition was used - Code check required",
-        showcase = bsicons::bs_icon("check-lg", size = "0.25em"),
-        showcase_layout = bslib::showcase_left_center( width = 0.3*0.25 ),
-        fill = TRUE,
-        height = "46px"
-      )
-    }
-
-    tmp
+    message_box(
+      text = dplyr::case_when(
+        conversionObject()$status == "danger" ~ "Invalid model",
+        conversionObject()$status == "warning" ~ conversionObject()$text,
+        conversionObject()$status == "info" ~ conversionObject()$text,
+        TRUE ~ "Transformation complete"
+      ),
+      icon = dplyr::case_when(
+        conversionObject()$status == "danger" ~ "exclamation-octagon",
+        conversionObject()$status == "warning" ~ "cone-striped",
+        conversionObject()$status == "info" ~ "info-circle-fill",
+        TRUE ~ "check-lg"
+      ),
+      theme = conversionObject()$status
+    )
 
   })
 
@@ -428,6 +538,20 @@ covariates_server <- function(session, input, output, resources ){
     }
 
   })
+
+  output$timeVaryingSwitchUI <- renderUI({
+
+    req( timeVaryingModelDefinition )
+
+    bslib::input_switch(
+      id = "timeVaryingSwitch",
+      label = "Time-varying covariates",
+      value = timeVaryingModelDefinition()
+    )
+
+  })
+
+  outputOptions(output, "timeVaryingSwitchUI", suspendWhenHidden = FALSE)
 
   output$covariateToolboxUI <- renderUI({
     fluidRow(
@@ -526,9 +650,54 @@ covariates_server <- function(session, input, output, resources ){
             )
           )
         )
+      ),
+      col_4(
+        fluidRow(
+          col_12(
+            uiOutput("timeVaryingSwitchUI")
+          )
+        )
       )
     )
   })
+
+  observeEvent(
+    input$timeVaryingSwitch,
+    {
+      timeVaryingSwitchValue( 1 + as.numeric( input$timeVaryingSwitch ) )
+    }
+  )
+
+  observe(
+    {
+      req( timeVaryingModelDefinition, timeVaryingSwitchValue, "timeVaryingSwitch" %in% names(input) )
+
+      # Update switch upon initial load of the UI
+      if ( timeVaryingSwitchValue() == 0 ) {
+        if ( timeVaryingModelDefinition() ){
+          bslib::update_switch(
+            id = "timeVaryingSwitch",
+            value = TRUE
+          )
+        } else {
+          bslib::update_switch(
+            id = "timeVaryingSwitch",
+            value = FALSE
+          )
+        }
+      }
+      if ( as.numeric(input$stepInput) > 1 ){
+        shinyjs::disable( id = "timeVaryingSwitch" )
+      }
+      if ( as.numeric(input$stepInput) == 1 ){
+        if ( timeVaryingModelDefinition() ) {
+          shinyjs::disable( id = "timeVaryingSwitch" )
+        } else {
+          shinyjs::enable( id = "timeVaryingSwitch" )
+        }
+      }
+    }
+  )
 
   # Covariate file button backend
   shinyFiles::shinyFileChoose(
@@ -554,7 +723,7 @@ covariates_server <- function(session, input, output, resources ){
   # * Extract and check uploaded covariate definition file ----
   covariateFile <- reactive({
 
-    req( covariateLoadReactive() )
+    req( covariateLoadReactive(), parmsInfo() )
 
     tryCatch(
       expr = {
@@ -576,7 +745,12 @@ covariates_server <- function(session, input, output, resources ){
           stop("Invalid column headers")
         }
 
-        check_covariate_table(table = data, check_step = TRUE)
+        check_covariate_table(
+          table = data,
+          parms = parmsInfo(),
+          timevarying = isolate( input$timeVaryingSwitch ),
+          check_step = TRUE
+        )
 
       },
       error = function(e){
@@ -585,7 +759,21 @@ covariates_server <- function(session, input, output, resources ){
       warning = function(e){
         structure(e$message, class = "try-error")
       },
-      finally = {}
+      finally = {
+        data %>%
+          dplyr::mutate(
+            Stage = as.character(Stage),
+            Step = as.numeric(Step),
+            Parameter = as.character(Parameter),
+            Covariate = as.character(Covariate),
+            Type = as.character(Type),
+            Function = as.character(Function),
+            Center= as.numeric(Center),
+            Flags = as.character(Flags),
+            Initial = as.character(Initial),
+            Action = as.character(Action)
+          )
+      }
     )
   })
 
@@ -609,13 +797,13 @@ covariates_server <- function(session, input, output, resources ){
       return(NULL)
     }
 
-    danger_box(
-      value = span(
+    message_box(
+      text = c(
         glue::glue("Covariate effect definition file: {covariateLoadReactive()}"),
-        br(),
-        glue::glue("Error: {covariateFile()}")
+        unlist( strsplit( covariateFile(), split = "@@@" ) )
       ),
-      width_left = 0.05
+      icon = "info-circle-fill",
+      theme = "danger"
     )
 
   })
@@ -677,8 +865,21 @@ covariates_server <- function(session, input, output, resources ){
     input$covariateLoadChoose,
     {
       req( covariateFile() )
+
       covariateData(
         covariateFile() %>%
+          dplyr::mutate(
+            Stage = as.character(Stage),
+            Step = as.numeric(Step),
+            Parameter = as.character(Parameter),
+            Covariate = as.character(Covariate),
+            Type = as.character(Type),
+            Function = as.character(Function),
+            Center= as.numeric(Center),
+            Flags = as.character(Flags),
+            Initial = as.character(Initial),
+            Action = as.character(Action)
+          ) %>%
           dplyr::arrange( dplyr::desc(Stage), Step, Parameter, Covariate, Function )
       )
     },
@@ -802,6 +1003,7 @@ covariates_server <- function(session, input, output, resources ){
   observeEvent(
     input$covariateDeleteBtn,
     {
+
       # Ensure that handsontable was selected at least once
       req( input$covariateTable_select$select$r )
 
@@ -1187,9 +1389,10 @@ covariates_server <- function(session, input, output, resources ){
       return(NULL)
     }
 
-    danger_box(
-      value = "Error: Invalid step",
-      width_left = 0.05
+    message_box(
+      text = "Error: Invalid step",
+      icon = "info-circle-fill",
+      theme = "danger"
     )
 
   })
@@ -1219,6 +1422,7 @@ covariates_server <- function(session, input, output, resources ){
       "Initial estimate",
       "Action"
     )
+
     DF <- DF %>%
       dplyr::mutate(
         Type = factor(
@@ -1292,13 +1496,17 @@ covariates_server <- function(session, input, output, resources ){
   # * Covariate table checks ----
   output$covariateCheckUI <- renderUI({
 
-    req( isCovariateFileValid(), input$covariateTable )
+    req( isCovariateFileValid(), parmsInfo(), input$covariateTable )
 
     DF <- hot_to_r_raw( input$covariateTable )
 
     DF <- tryCatch(
       expr = {
-        check_covariate_table( table =  DF )
+        check_covariate_table(
+          table =  DF,
+          parms = parmsInfo(),
+          timevarying = input$timeVaryingSwitch
+        )
       },
       error = function(e){
         structure(e$message, class = "try-error")
@@ -1313,9 +1521,10 @@ covariates_server <- function(session, input, output, resources ){
       return( NULL )
     }
 
-    danger_box(
-      value = glue::glue("Error: {DF}"),
-      width_left = 0.05
+    message_box(
+      text = unlist( strsplit(DF, split =  "@@@" ) ),
+      icon = "info-circle-fill",
+      theme = "danger"
     )
 
   })
@@ -1323,14 +1532,10 @@ covariates_server <- function(session, input, output, resources ){
   output$covariateCheckUI2 <- renderUI({
 
     if ( covariateInvalidData() != "Valid" ){
-      bslib::value_box(
-        title = NULL,
-        theme_color = "warning",
-        value = covariateInvalidData(),
-        showcase = bsicons::bs_icon("info-circle", size = "0.25em"),
-        showcase_layout = bslib::showcase_left_center( width = 0.05 ),
-        fill = TRUE,
-        height = "46px",
+      message_box(
+        text = covariateInvalidData(),
+        icon = "info-circle-fill",
+        theme = "warning"
       )
     }
 
@@ -1341,10 +1546,25 @@ covariates_server <- function(session, input, output, resources ){
     if ( !file_exists(referenceFileReactive()) ) {
       return(
         wellPanel(
-          col_3(
-            danger_box(
-              value = "No reference model was defined",
-              width_left = 0.12
+          col_4(
+            message_box(
+              text = "No reference model was defined",
+              icon = "info-circle-fill",
+              theme = "info"
+            )
+          )
+        )
+      )
+    }
+
+    if ( !isTRUE(referenceValid()) ){
+      return(
+        wellPanel(
+          col_4(
+            message_box(
+              text = "No valid reference model",
+              icon = "info-circle-fill",
+              theme = "danger"
             )
           )
         )
@@ -1413,7 +1633,7 @@ covariates_server <- function(session, input, output, resources ){
         class = "inline2",
         textInput(
           inputId = "univariatePrefix",
-          label = "FIlename prefix",
+          label = "Filename prefix",
           value = ifelse(input$fsbeUnivariateInput == "Forward selection", "fs", "be")
         )
       )
@@ -1441,9 +1661,10 @@ covariates_server <- function(session, input, output, resources ){
 
   output$emptyDataUI <- renderUI({
     if ( emptyData() ) {
-      danger_box(
-        value = "No covariate definition available for this step",
-        width_left = 0.05
+      message_box(
+        text = "No covariate definition available for this step",
+        icon = "info-circle-fill",
+        theme = "danger"
       )
     }
   })
@@ -1515,9 +1736,10 @@ covariates_server <- function(session, input, output, resources ){
     req( validStepHeader() )
 
     if ( !isTRUE(validStepHeader()) ){
-      danger_box(
-        value = validStepHeader(),
-        width_left = 0.05
+      message_box(
+        text = validStepHeader(),
+        icon = "info-circle-fill",
+        theme = "danger"
       )
     }
 
@@ -1560,10 +1782,11 @@ covariates_server <- function(session, input, output, resources ){
     if ( !file_exists(referenceFileReactive()) ) {
       return(
         wellPanel(
-          col_3(
-            danger_box(
-              value = "No reference model was defined",
-              width_left = 0.12
+          col_4(
+            message_box(
+              text = "No reference model was defined",
+              icon = "info-circle-fill",
+              theme = "info"
             )
           )
         )
@@ -1574,9 +1797,10 @@ covariates_server <- function(session, input, output, resources ){
       return(
         wellPanel(
           col_3(
-            danger_box(
-              value = "No valid reference model",
-              width_left = 0.12
+            message_box(
+              text = "No valid reference model",
+              icon = "info-circle-fill",
+              theme = "danger"
             )
           )
         )
@@ -1587,9 +1811,10 @@ covariates_server <- function(session, input, output, resources ){
       return(
         wellPanel(
           col_3(
-            danger_box(
-              value = "No valid covariate definition",
-              width_left = 0.12
+            message_box(
+              text = "No valid covariate definition",
+              icon = "info-circle-fill",
+              theme = "danger"
             )
           )
         )
@@ -1608,9 +1833,10 @@ covariates_server <- function(session, input, output, resources ){
       return(
         wellPanel(
           col_3(
-            danger_box(
-              value = "No valid covariate definition",
-              width_left = 0.12
+            message_box(
+              text = "No valid covariate definition",
+              icon = "info-circle-fill",
+              theme = "danger"
             )
           )
         )
@@ -1618,15 +1844,26 @@ covariates_server <- function(session, input, output, resources ){
     }
 
     if (
-      inherits( try( check_covariate_table( tmp ), silent = TRUE ), "try-error") |
+      inherits(
+        try(
+          check_covariate_table(
+            table = tmp,
+            parms = parmsInfo(),
+            timevarying = input$timeVaryingSwitch
+          ),
+          silent = TRUE
+        ),
+        "try-error"
+      ) |
       check_incomplete_covariate_table( tmp ) != "Valid"
     ){
       return(
         wellPanel(
           col_3(
-            danger_box(
-              value = "Invalid covariate definition",
-              width_left = 0.12
+            message_box(
+              text = "Invalid covariate definition",
+              icon = "info-circle-fill",
+              theme = "danger"
             )
           )
         )
@@ -1757,12 +1994,14 @@ covariates_server <- function(session, input, output, resources ){
       # Call utility function
       create_univariate_models(
         code = refCode,
+        parms = parmsInfo(),
         referenceName = referenceFileReactive(),
         nThetas = nThetas(),
         table = covariateData() %>%
           dplyr::filter(
             Stage == stage & Step == input$stepUnivariateInput
           ),
+        timeVarying = input$timeVaryingSwitch,
         prefix = ifelse(
           referenceFileStyle() == "PsN",
           ifelse( stage == "Forward", "fs", "be"),
@@ -1783,7 +2022,7 @@ covariates_server <- function(session, input, output, resources ){
     if ( !emptyData() & isTRUE(validStepHeader()) ) {
       bslib::value_box(
         title = "Univariate model created",
-        theme_color = "success",
+        theme = "success",
         value = length(univariateModels()),
         showcase = bsicons::bs_icon("file-earmark-text"),
         showcase_layout = bslib::showcase_left_center( width = 0.2 ),
@@ -1816,7 +2055,7 @@ covariates_server <- function(session, input, output, resources ){
 
   # Cross univariate model checks
   output$crossChecks <- renderText ({
-    req(univariateModels())
+    req( univariateModels() )
     tmp <- c()
 
     # Determine which code to use as reference
@@ -1834,10 +2073,20 @@ covariates_server <- function(session, input, output, resources ){
 
     refThetas <- refCode[grep(";--th", refCode)]
 
+    # Extract the list of univariate relationships based upon data table
+    table <- covariateData() %>%
+      dplyr::filter(
+        Stage == sub("(^\\w+)\\s.+", "\\1", input$fsbeUnivariateInput) &
+          Step == input$stepUnivariateInput
+      )
+
     for (iFile in 1:length(univariateModels())){
 
       model <- unlist(strsplit(univariateModels()[[iFile]], "\n"))
       modelThetas <- model[grep(";--th", model)]
+
+      parm <- table$Parameter[ iFile ]
+
       # Find ;--th lines that differ in the univariate model compared to the reference model
       hit1 <- modelThetas[ !(modelThetas %in% refThetas) ]
 
@@ -1847,21 +2096,31 @@ covariates_server <- function(session, input, output, resources ){
           glue::glue("^\\s*COV{input$stepUnivariateInput}\\s*="),
           model
         )
+        # hit3 <- grep(
+        #   glue::glue("[+*-]\\s*COV{input$stepUnivariateInput}"),
+        #   model
+        # )
+        # Find lines using COV_x
         hit3 <- grep(
-          glue::glue("[+*-]\\s*COV{input$stepUnivariateInput}"),
+          glue::glue("\\s*.*COV_{parm}"),
           model
         )
-
-        if ( length(hit1) == 0 & length(hit2) == 0 & length(hit2) == 0 ){
+        if ( length(hit1) == 0 & length(hit2) == 0 ){
           results <- "Covariate definition was not found!"
         } else {
-          results <- paste0(
-            "\n",
-            glue::glue('  {gsub("\n", "", hit1)}'),
-            "\n",
-            glue::glue('  {gsub("\n", "", model[hit2])}'),
-            "\n",
-            glue::glue('  {gsub("\n", "", model[hit3])}')
+          if ( length(hit1) == 0 | length(hit2) == 0 | length(hit3) == 0 ){
+            results <- "Covariate definition and/or usage was incomplete"
+          } else {
+            results <- ""
+          }
+          results <- paste(
+            c(
+              results,
+              glue::glue('  {gsub("\n", "", hit1)}'),
+              glue::glue('  {gsub("\n", "", model[hit2])}'),
+              glue::glue('  {gsub("\n", "", model[hit3])}')
+            ),
+            collapse = "\n"
           )
         }
 
@@ -1952,13 +2211,5 @@ covariates_server <- function(session, input, output, resources ){
     },
     contentType = "application/zip"
   )
-
-  # Help ----
-
-  output$univariateHelpUI <- renderUI({
-    wellPanel(
-      includeMarkdown(system.file("resources/covariate_help.md", package = "pmxcode"))
-    )
-  })
 
 }

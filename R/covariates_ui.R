@@ -5,6 +5,9 @@ covariates_ui <- function()
     title = "Covariates",
     icon = icon("people-group", verify_fa = FALSE),
     value = "cov",
+    # wellPanel(
+    #   h4( icon('person-digging', verify_fa = FALSE), 'Work in progress')
+    # ),
     bslib::navset_pill_list(
       id = "cov-menu",
       widths = c(2, 10),
@@ -14,7 +17,14 @@ covariates_ui <- function()
         wellPanel(
           fluidRow(
             col_6( uiOutput("referenceFileUI") ),
-            col_6( uiOutput("convertBtnUI") )
+            col_6(
+              fluidRow(
+                col_12(
+                  uiOutput("convertBtnUI", style = 'display: inline-block;'),
+                  uiOutput("downloadConvertedBtnUI", style = 'display: inline-block;')
+                )
+              )
+            )
           ),
           fluidRow(
             col_6(
@@ -47,15 +57,6 @@ covariates_ui <- function()
         fluidRow(
           col_12(
             uiOutput("univariateCreateUI")
-          )
-        )
-      ),
-      #---- Help ====
-      bslib::nav_panel(
-        title = "Instructions",
-        fluidRow(
-          col_12(
-            uiOutput("univariateHelpUI")
           )
         )
       )

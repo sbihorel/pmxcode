@@ -1,7 +1,7 @@
 
 #' Creation of NONMEM code
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param template Text template
 #' @param vars Reactive object - List of variables in data file
 #' @param advan Reactive object - NONMEM ADVAN value
@@ -18,6 +18,7 @@
 #' @param rv_lib  Library for residual variability replacement
 #' @param scaling  Library for scaling
 #' @param replacement Logical value indicating with replacement is required
+#' @noRd
 #'
 
 get_nonmem_code <- function(
@@ -51,8 +52,12 @@ get_nonmem_code <- function(
   user <- Sys.info()["user"]
   date <- format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
 
-  # Replace @TIMESTAMP
 
+  # Extract tables content
+  parms <- hot_to_r(input$parameterTable)
+  estimations <- hot_to_r(input$estimationTable)
+
+  # Replace @TIMESTAMP
   new <- sub("@TIMESTAMP", date, new)
 
   # Replace @USER
@@ -69,8 +74,8 @@ get_nonmem_code <- function(
 
   # Replace @PURPOSE
   if ( areTruthy(input$pkInput, input$pdInput) ){
-    if ( debug ) message("PRUPOSE")
-    new <- replace_purpose(input = input, new = new, varianceTable = varianceTable)
+    if ( debug ) message("PURPOSE")
+    new <- replace_purpose(input = input, new = new, parms = parms, varianceTable = varianceTable)
   }
 
   # Replace @PATH
@@ -116,10 +121,6 @@ get_nonmem_code <- function(
     if ( debug ) message("ABBREVIATED")
     new <- replace_abbreviated(input = input, new = new, vars = vars)
   }
-
-  # Extract tables content
-  parms <- hot_to_r(input$parameterTable)
-  estimations <- hot_to_r(input$estimationTable)
 
   # Replace @THETA
   if (isTruthy(parms) ){
@@ -245,8 +246,20 @@ get_nonmem_code <- function(
       parms = parms,
       varianceTable = varianceTable,
       parm_lib = parm_lib,
-      rv_lib = rv_lib
+      rv_lib = rv_lib,
+      mu = as.logical(input$muInput)
     )
+    if ( as.logical(input$muInput) ){
+      new <- sub(
+        '^[$]PK',
+        paste(
+          '$PK',
+          '  ; Note that MU_ variable definitions should not include time-varying covariates\n',
+          sep = '\n'
+        ),
+        new
+      )
+    }
   }
 
   # Replace @DES
@@ -328,8 +341,9 @@ get_nonmem_code <- function(
 
 #' Replacement of @PROB1 and @PROB2 tags
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
+#' @noRd
 
 replace_problem <- function(
     input,
@@ -365,9 +379,10 @@ replace_problem <- function(
 
 #' Replacement of @INPUT tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param vars Character vector of variable names
+#' @noRd
 
 replace_input <- function(input, new, vars){
 
@@ -409,8 +424,9 @@ replace_input <- function(input, new, vars){
 
 #' Replacement of @DATA tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
+#' @noRd
 
 replace_data <- function(input, new){
 
@@ -463,13 +479,14 @@ replace_data <- function(input, new){
 
 #' Replacement of @SUBROUTINE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param isPRED Reactive object - is model coded with $PRED?
 #' @param isODE Reactive object - is model coded with ODEs?
 #' @param isLINMAT Reactive object - is model coded as linear matrix?
+#' @noRd
 #'
 
 replace_subroutine <- function(
@@ -515,11 +532,12 @@ replace_subroutine <- function(
 
 #' Replace @MODEL tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param model_lib Library for $MODEL replacement
 #' @param isPRED Reactive object - is model coded with $PRED?
 #' @param isPREDPP Reactive object - is mode coded with $PK?
+#' @noRd
 #'
 
 replace_model <- function(
@@ -636,9 +654,10 @@ replace_model <- function(
 
 #' Replacement of @ABBREVIATED tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param vars Character vector of variable names
+#' @noRd
 
 replace_abbreviated <- function(
     input,
@@ -691,6 +710,7 @@ replace_abbreviated <- function(
 #'
 #' @param new Text template
 #' @param parms Parameter selection
+#' @noRd
 
 replace_theta <- function(
     new,
@@ -708,21 +728,26 @@ replace_theta <- function(
       1:nrow(parms),
       function(x, parms){
         glue::glue(
-          "  ({min}, {init}, {max})  {fix};--th{x}- {parm}: {label}{unit}",
-          min = parms$Min[x],
-          init = parms$Initial[x],
-          max = parms$Max[x],
-          fix = ifelse(parms$Fixed[x] == "Yes", "FIXED", ""),
+          "  ({min}, {init}, {max})  {fix};--th{x}- {parm}: {label}{unit}{transform}",
+          min = scale_value( parms$Min[x], parms$Min[x], parms$Max[x], parms$Scale[x] ),
+          init = scale_value( parms$Min[x], parms$Initial[x], parms$Max[x], parms$Scale[x] ),
+          max = scale_value( parms$Min[x], parms$Max[x], parms$Max[x], parms$Scale[x] ),
+          fix = ifelse(parms$Fixed[x] == "Yes", "FIXED ", ""),
           parm = parms$Parameter[x],
           label = ifelse(
             parms$Label[x] == "",
             glue::glue("Label for THETA{x}"),
-            parms$Label[x]
+            sub("\\s+[(]logit[)]", "", parms$Label[x])
           ),
           unit = ifelse(
             parms$Unit[x] == "",
             " (unitless)",
             glue::glue(" ({parms$Unit[x]})")
+          ),
+          transform = dplyr::case_when(
+            grepl("[(]logit[)]", parms$Label[x]) ~ " [logit]",
+            parms$Scale[x] == "Linear" ~ "",
+            TRUE ~ glue::glue(" [{tolower(parms$Scale[x])}]")
           )
         )
       },
@@ -748,6 +773,7 @@ replace_theta <- function(
 #' @param parms Parameter selection
 #' @param varianceTable Variability selection
 #' @param blocks Variance - covariance matrix
+#' @noRd
 #'
 
 replace_omega <- function(
@@ -782,7 +808,13 @@ replace_omega <- function(
       }
       # Add $OMEGA line if necessary
       if ( type != "diagonal" ) {
-        tmp <- c(tmp, glue::glue("$OMEGA BLOCK({nrow(omega)})") )
+        tmp <- c(
+          tmp,
+          glue::glue(
+            "$OMEGA BLOCK({nrow(omega)}){fixed}",
+            fixed = ifelse( blocks[[iomega]]$fixed[1] == "Yes", " FIXED", "")
+          )
+        )
       } else if ( type == "diagonal" & previousType != "diagonal" ){
         tmp <- c(tmp, "$OMEGA")
       }
@@ -791,10 +823,20 @@ replace_omega <- function(
       for ( i in 1:nrow(omega) ){
         ieta <- ieta + 1
         index <- which(parms$Parameter == rownames(omega)[i])
+        variability <- varianceTable$Variability[index]
+        fixed <- ifelse(
+          type != "diagonal",
+          "No",
+          levels(varianceTable$Fixed)[ varianceTable$Fixed[index] ]
+        )
+        scale <- parms$Scale[index]
+        parm_min <- parms$Min[index]
+        parm_max <- parms$Max[index]
+        theta <- paste0('theta', parms$TH[index])
         tmp <- c(
           tmp,
           glue::glue(
-            "  {init};--eta{ieta}- IIV in {label} [{model}]",
+            "  {init}{fixed};--eta{ieta}- IIV in {label} [{model}]",
             init = ifelse(
               type == "diagonal",
               # Variability without correlation
@@ -811,23 +853,29 @@ replace_omega <- function(
                 collapse = ""
               )
             ),
+            fixed = ifelse( fixed == "Yes", "FIXED ", ""),
             label = parms$Parameter[index],
-            model = switch(
-              levels(varianceTable$Variability)[varianceTable$Variability[index]],
-              "Additive" = "add",
-              "Exponential" = "exp",
-              "Logit" = if (parms$Min[index] == 0 & parms$Max[index] == 1){
-                glue::glue("cv=100*(1-th{parms$TH[index]})*eta{ieta}")
-              } else if (parms$Min[index] == 0 & parms$Max[index] != 1){
-                glue::glue("cv=100*{parms$Max[index]}*(1-th{parms$TH[index]})*eta{ieta}")
-              } else {
-                glue::glue(
-                  "cv=100*((th{th}-{lo})*({hi}-th{th})/(th{th}*({hi}-{lo})))*eta{ieta}",
-                  th = parms$TH[index],
-                  lo = parms$Min[index],
-                  hi = parms$Max[index]
-                )
-              }
+            model = dplyr::case_when(
+              variability == "Additive" ~ "add",
+              variability == "Exponential" ~ "exp",
+              scale == "Linear" & variability == "Logit" & parm_min == 0 & parm_max == 1 ~
+                # Parameter between 0 and 1
+                glue::glue("cv=100*(1-{theta})*sqrt(eta{ieta})"),
+              scale == "Linear" & variability == "Logit" & parm_min == 0 & parm_max != 1 ~
+                # Parameter between 0 and max > min
+                glue::glue("cv=100*(1-{theta}/{parm_max})*sqrt(eta{ieta})"),
+              scale == "Linear" & variability == "Logit" & parm_min != 0  ~
+                # Parameter between min > 0 and max > min
+                glue::glue("cv=100*(({theta}-{parm_min})*({parm_max}-{theta}))/({theta}*({parm_max}-{parm_min}))*sqrt(eta{ieta})"),
+              scale == "Logit" & variability == "Logit" & parm_min == 0 & parm_max == 1 ~
+                # Parameter between 0 and 1
+                glue::glue("cv=100*(1-expit({theta}))*sqrt(eta{ieta})"),
+              scale == "Logit" & variability == "Logit" & parm_min == 0 & parm_max != 1 ~
+                # Parameter between 0 and max > min
+                glue::glue("cv=100*(1-expit({theta},0,{parm_max})/{parm_max})*sqrt(eta{ieta})"),
+              scale == "Logit" & variability == "Logit" & parm_min != 0  ~
+                # Parameter between min > 0 and max > min
+                glue::glue("cv=100*((expit({theta},{parm_min},{parm_max})-{parm_min})*({parm_max}-expit({theta},{parm_min},{parm_max})))/(expit({theta},{parm_min},{parm_max})*({parm_max}-{parm_min}))*sqrt(eta{ieta})")
             )
           )
         )
@@ -854,8 +902,9 @@ replace_omega <- function(
 #' Replacement of @SIGMA tag
 #'
 #' @param new Text template
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param rvTable Residual variability selection
+#' @noRd
 #'
 
 replace_sigma <- function(new, input, rvTable){
@@ -982,10 +1031,11 @@ replace_sigma <- function(new, input, rvTable){
 #' Replacement of @PRIOR tag
 #'
 #' @param new Text template
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param varianceTable Variability selection
 #' @param estimations Table of estimation tasks
+#' @noRd
 
 replace_prior <- function(
     input,
@@ -1212,7 +1262,7 @@ replace_prior <- function(
 
 #' Replace @PK and @PRED tags
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param preamble_code Preamble code
 #' @param parms_code Typical and individual parameter code
@@ -1224,6 +1274,8 @@ replace_prior <- function(
 #' @param varianceTable Variability selection
 #' @param parm_lib Library of parameters
 #' @param rv_lib  Library for residual variability replacement
+#' @param mu A logical indicator for mu transformation
+#' @noRd
 
 replace_pk_pred <- function(
     input,
@@ -1237,7 +1289,8 @@ replace_pk_pred <- function(
     parms,
     varianceTable,
     parm_lib,
-    rv_lib
+    rv_lib,
+    mu
 ){
 
   if ( isTruthy(input$mapTable) ){
@@ -1262,8 +1315,15 @@ replace_pk_pred <- function(
 
       if ( length(bio) > 0 ){
         f_row <- which(
-          grepl( glue::glue("^\\s+{bio}\\s+=.*TV{bio}"), parms_code$PK )
+          grepl( glue::glue("^\\s+{bio}\\s+=.*TV{bio}"), parms_code$PK )  |
+            grepl( glue::glue("^\\s+{bio}\\s+=.*L{bio}"), parms_code$PK )
         )
+        if ( mu & length(f_row) == 0 ){
+          f_row <- which(
+            grepl( glue::glue("^\\s+{bio}\\s+=.*MU_"), parms_code$PK )
+          )
+        }
+        f_row <- f_row[1]
         f_line <- parms_code$PK[f_row]
         parms_code$PK <- parms_code$PK[-f_row]
 
@@ -1631,7 +1691,7 @@ replace_pk_pred <- function(
             )
             proba <- c(
               proba,
-              glue::glue("  P{i} = EXP(LG{i})/(1 + EXP(LG{i}))  ; P(Y<={i}|X)")
+              glue::glue("  P{i} = 1/(1 + EXP(-LG{i}))  ; P(Y<={i}|X)")
             )
           }
           yn <- c(
@@ -1798,7 +1858,7 @@ replace_pk_pred <- function(
 
 #' Replace @DES tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -1807,6 +1867,7 @@ replace_pk_pred <- function(
 #' @param nPKcmts Number of PK compartments in the model
 #' @param nPDcmts Number of PD compartments in the model
 #' @param parm_lib Library of parameters
+#' @noRd
 #'
 
 replace_des <- function(
@@ -1844,7 +1905,7 @@ replace_des <- function(
           )
         )
 
-        if ( parm_lib[index, "ELIMINATION"] != "lin"){
+        if ( grepl( 'mm', parm_lib[index, "ELIMINATION"]) ) {
           value <- ifelse(parm_lib[index, "ABSORPTION"] == "bolus_zero", 1, 2)
           if ( input$kmScaleInput ){
             tmpModel <- gsub(
@@ -2016,7 +2077,7 @@ replace_des <- function(
 
 #' Replace @ERROR tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -2025,6 +2086,7 @@ replace_des <- function(
 #' @param nPDcmts Number of PD compartments in the model
 #' @param parm_lib Library of parameters
 #' @param rv_lib  Library for residual variability replacement
+#' @noRd
 #'
 
 replace_error <- function(
@@ -2371,10 +2433,11 @@ replace_error <- function(
 
 #' Replace @TASK tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param estimations Table of estimation tasks
 #' @param isODE Reactive object - is model coded with ODEs?
+#' @noRd
 
 replace_task <- function(
     input,
@@ -2550,9 +2613,10 @@ replace_task <- function(
 
 #' Replace @TABLE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param vars Reactive object - List of variables in data file
+#' @noRd
 
 replace_table <- function(
     input,
@@ -2586,21 +2650,21 @@ replace_table <- function(
     mappingTable <- hot_to_r( input$mapTable )
 
     # Add TIME
-    if ( as.character(mappingTable %>% dplyr::slice(n = 2) %>% dplyr::pull(.data$Variable)) != "" ){
+    if ( as.character(mappingTable %>% dplyr::slice( 2 ) %>% dplyr::pull(.data$Variable)) != "" ){
       tmp <- c(
         tmp,
-        as.character(mappingTable %>% dplyr::slice(n = 2) %>% dplyr::pull(.data$NONMEM))
+        as.character(mappingTable %>% dplyr::slice( 2 ) %>% dplyr::pull(.data$NONMEM))
       )
     }
     # Add TAD
     tmp <- c(
       tmp,
-      as.character(mappingTable %>% dplyr::slice(n = 6) %>% dplyr::pull(.data$Variable))
+      as.character(mappingTable %>% dplyr::slice( 6 ) %>% dplyr::pull(.data$Variable))
     )
     # Add DVID
     tmp <- c(
       tmp,
-      as.character(mappingTable %>% dplyr::slice(n = 5) %>% dplyr::pull(.data$Variable))
+      as.character(mappingTable %>% dplyr::slice( 5 ) %>% dplyr::pull(.data$Variable))
     )
   } else {
     if ( input$pkInput %in% c("pk", "linmat", "ode") |
@@ -2795,8 +2859,9 @@ replace_table <- function(
 
 #' Replace $TAGs tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
+#' @noRd
 
 replace_tags <- function(
     input,
@@ -2871,16 +2936,18 @@ replace_tags <- function(
 
 #' Get NONMEM model parameter code lines as list
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param varianceTable Variability selection
 #' @param mu A logical indicator for mu transformation
+#' @noRd
 
 get_parms_code <- function(input, parms, varianceTable, mu){
 
   tvPK <- tvPD <- tvOT <- PK <- PD <- OT <- NULL
   multipleType <- FALSE
   neta <- 0
+
   for ( type in unique(parms$Type) ){
     typical <- glue::glue(
       "  {pre}; {type} parameters",
@@ -2895,25 +2962,75 @@ get_parms_code <- function(input, parms, varianceTable, mu){
       individual <- ""
       # Include only parameters of the current type
       for ( iparm in which( parms$Type == type ) ){
+        parm <- parms$Parameter[iparm]
+        scale <- parms$Scale[iparm]
+        variability <- varianceTable$Variability[iparm]
+        parm_min <- parms$Min[iparm]
+        parm_max <- parms$Max[iparm]
         typical <- c(
           typical,
-          glue::glue("  TV{parms$Parameter[iparm]} = THETA({iparm})")
+          glue::glue(
+            dplyr::case_when(
+              scale == "Linear" & variability != "Logit" ~ "  TV{parm} = THETA({iparm})",
+              scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max == "1" ~ paste(
+                # Individual parameter within 0 and 1
+                "  L{parm} = LOG(THETA({iparm}) / (1 - THETA({iparm}) ) )",
+                "  TV{parm} = 1 / (1 + EXP(-L{parm}) )",
+                sep = "\n"
+              ),
+              scale == "Linear" & variability == "Logit" & parm_min == "0" & parm_max != "1" ~ paste(
+                # Individual parameter between 0 and a positive value different from 1
+                "  L{parm} = LOG(THETA({iparm})/{parm_max} / (1 - THETA({iparm})/{parm_max} ) )",
+                "  TV{parm} = {parm_max} / (1 + EXP(-L{parm}) )",
+                sep = "\n"
+              ),
+              scale == "Linear" & variability == "Logit" & parm_min != "0" ~ paste(
+                # Individual parameter boundaries different from 0 and 1
+                "  L{parm} = LOG((THETA({iparm}) - {parm_min})/({parm_max} - {parm_min})/(1 - (THETA({iparm}) - {parm_min})/({parm_max} - {parm_min})))",
+                "  TV{parm} = {parm_min} + ({parm_max} - {parm_min}) / (1 + EXP(-L{parm}) )",
+                sep = "\n"
+              ),
+              scale == "Log" ~ "  TV{parm} = EXP(THETA({iparm}))",
+              scale == "Logit" & parm_min == "0" & parm_max == "1" ~ paste(
+                # Individual parameter within 0 and 1
+                "  L{parm} = THETA({iparm})",
+                "  TV{parm} = 1 / (1 + EXP(-L{parm}) )",
+                sep = "\n"
+              ),
+              scale == "Logit" & parm_min == "0" & parm_max != "1" ~ paste(
+                # Individual parameter between 0 and a positive value different from 1
+                "  L{parm} = THETA({iparm})",
+                "  TV{parm} = {parm_max} / (1 + EXP(-L{parm}) )",
+                sep = "\n"
+              ),
+              TRUE ~ paste(
+                # Individual parameter boundaries different from 0 and 1
+                "  L{parm} = THETA({iparm})",
+                "  TV{parm} = {parm_min} + ({parm_max} - {parm_min}) / (1 + EXP(-L{parm}) )",
+                sep = "\n"
+              )
+            ),
+            .trim = FALSE
+          )
         )
         if ( mu ){
           # Increment ieta if necessary
           if ( varianceTable$Variability[iparm] != "None" ){
             ieta <- ieta + 1
-            if ( varianceTable$Variability[iparm] != "Exponential" ){
-              typical <- c(
-                typical,
-                glue::glue("  MU_{ieta} = TV{parms$Parameter[iparm]}")
+            typical <- c(
+              typical,
+              glue::glue(
+                dplyr::case_when(
+                  # Linear scale
+                  scale == "Linear" & variability == "Additive" ~ "  MU_{ieta} = TV{parm}",
+                  scale == "Linear" & variability == "Exponential" ~ "  MU_{ieta} = LOG(TV{parm})",
+                  scale == "Log" & variability == "Additive" ~ "  MU_{ieta} = TV{parm}",
+                  scale == "Log" & variability == "Exponential" ~ "  MU_{ieta} = LOG(TV{parm})",
+                  # Logit scale (additive and exponential variability are not possible with logit scale)
+                  variability == "Logit" ~ "  MU_{ieta} = L{parm}"
+                )
               )
-            } else {
-              typical <- c(
-                typical,
-                glue::glue("  MU_{ieta} = LOG(TV{parms$Parameter[iparm]})")
-              )
-            }
+            )
           }
         }
       }
@@ -2987,7 +3104,37 @@ get_parms_code <- function(input, parms, varianceTable, mu){
 
   }
 
-  list(tvPK = tvPK, PK = PK, tvPD = tvPD, PD = PD, tvOT = tvOT, OT = OT)
+  split_line <- function(s){
+    if ( length(s) > 0 & is.character(s)){
+      code <- unlist(strsplit(s, "\n"))
+    } else {
+      code <- s
+    }
+
+    # Gather all MU referencing at the end of the code block
+    mu_index <- which( grepl( "^\\s*MU_", code ) )
+
+    if ( length(mu_index) > 0 ){
+      mus <- code[mu_index]
+      code <- c(
+        code[-mu_index],
+        "",
+        mus
+      )
+    }
+
+    code
+
+  }
+
+  list(
+    tvPK = split_line(tvPK),
+    PK = c( rep("", as.integer( length(PK) > 0 ) ),  split_line(PK) ),
+    tvPD = split_line(tvPD),
+    PD = c( rep("", as.integer( length(PD) > 0 ) ), split_line(PD) ),
+    tvOT = split_line(tvOT),
+    OT = c( rep("", as.integer( length(OT) > 0 ) ), split_line(OT) )
+  )
 
 }
 
@@ -2998,82 +3145,57 @@ get_parms_code <- function(input, parms, varianceTable, mu){
 #' @param iparm Index of parameter in parms data frame
 #' @param ieta Index of ETA associated with parameter
 #' @param mu A logical indicator for mu transformation
-
+#' @noRd
 
 get_individual_parm_code <- function(parms, varianceTable, iparm, ieta, mu){
 
   parm <- parms$Parameter[iparm]
+  scale <- parms$Scale[iparm]
+  variability <- varianceTable$Variability[iparm]
+  parm_min <- parms$Min[iparm]
+  parm_max <- parms$Max[iparm]
 
   if ( mu ){
-    switch(
-      levels(varianceTable$Variability)[varianceTable$Variability[iparm]],
-      "None" = glue::glue("  {parm} = TV{parm}"),
-      "Additive" = glue::glue("  {parm} = MU_{ieta} + ETA({ieta})"),
-      "Exponential" = glue::glue("  {parm} = EXP(MU_{ieta}+ETA({ieta}))"),
-      "Logit" =
-        if ( parms$Low[iparm] == 0 & parms$High[iparm] == 1 ){
+    glue::glue(
+      dplyr::case_when(
+        scale == "Linear" & variability == "None" ~ "  {parm} = TV{parm}",
+        scale == "Linear" & variability == "Additive" ~ "  {parm} = MU_{ieta} + ETA({ieta})",
+        scale == "Linear" & variability == "Exponential" ~ "  {parm} = EXP(MU_{ieta} + ETA({ieta}))",
+        scale == "Log" & variability == "None" ~ "  {parm} = TV{parm}",
+        scale == "Log" & variability == "Additive" ~ "  {parm} = MU_{ieta} + ETA({ieta})",
+        scale == "Log" & variability == "Exponential" ~ "  {parm} = EXP(MU_{ieta} + ETA({ieta}))",
+        # Logit variability not allowed with log scale
+        # no variability not allowed with logit scale
+        # Additive variability not allowed with logit scale
+        # Exponential variability not allowed with logit scale
+        scale == "Logit" & variability == "None"  ~ "  {parm} = TV{parm}",
+        variability == "Logit" & parm_min == "0" & parm_max == "1" ~
           # Individual parameter within 0 and 1
-          glue::glue(
-            paste(
-              "  L{parm} = LOG(TV{parm}/(1 - TV{parm}))",
-              "  MU_{ieta} = L{parm} + ETA({ieta})",
-              "  {parm} = EXP(MU_{ieta})/(1 + EXP(MU_{ieta}))",
-              sep = "\n"
-            ),
-            .trim = FALSE
-          )
-        } else if ( parms$Low[iparm] == 0 & parms$High[iparm] != 1 ){
+          "  {parm} = 1 / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
+        variability == "Logit" & parm_min == "0" & parm_max != "1" ~
           # Individual parameter between 0 and a positive value different from 1
-          glue::glue(
-            paste(
-              "  L{parm} = LOG(TV{parm}/{hi}/(1 - TV{parm}/{hi}))",
-              "  MU_{ieta} = L{parm} + ETA(%d)",
-              "  {parm} = {hi}*EXP(MU_{ieta})/(1 + EXP(MU_{ieta}))",
-              sep = "\n"
-            ),
-            hi = parms$High[iparm],
-            .trim = FALSE
-          )
-        } else {
+          "  {parm} = {parm_max} / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )",
+        variability == "Logit" & parm_min != "0" ~
           # Individual parameter boundaries different from 0 and 1
-          glue::glue(
-            paste(
-              "  L{parm} = LOG((TV{parm} - {lo})/({hi} - {lo})/(1 - (TV{parm} - {lo})/({hi} - {lo})))",
-              "  MU_{ieta} = L{parm} + ETA({ieta})",
-              "  {parm} = {lo} + ({hi} - {lo})*EXP(MU_{ieta})/(1 + EXP(MU_{ieta}))",
-              sep = "\n"
-            ),
-            lo = parms$Low[iparm],
-            hi = parms$High[iparm],
-            .trim = FALSE
-          )
-        }
+          "  {parm} = {parm_min} + ({parm_max} - {parm_min}) / ( 1 + EXP( - (MU_{ieta} + ETA({ieta}) ) ) )"
+      )
     )
   } else {
-    switch(
-      levels(varianceTable$Variability)[varianceTable$Variability[iparm]],
-      "None" = glue::glue("  {parm} = TV{parm}"),
-      "Additive" = glue::glue("  {parm} = TV{parm} + ETA({ieta})"),
-      "Exponential" = glue::glue("  {parm} = TV{parm}*EXP(ETA({ieta}))"),
-      "Logit" =
-        # Numerically stable of logit transform
-        if ( parms$Min[iparm] == 0 & parms$Max[iparm] == 1 ){
+    glue::glue(
+      dplyr::case_when(
+        variability == "None" ~ glue::glue("  {parm} = TV{parm}"),
+        variability == "Additive" ~ glue::glue("  {parm} = TV{parm} + ETA({ieta})"),
+        variability == "Exponential" ~ glue::glue("  {parm} = TV{parm}*EXP(ETA({ieta}))"),
+        variability == "Logit" & parm_min == "0" & parm_max == "1" ~
           # Individual parameter within 0 and 1
-          glue::glue("  {parm} = 1/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)")
-        } else if ( parms$Min[iparm] == 0 & parms$Max[iparm] != 1 ){
+          "  {parm} = 1 / ( 1 + EXP( - (L{parm} + ETA({ieta}) ) ) )",
+        variability == "Logit" & parm_min == "0" & parm_max != "1" ~
           # Individual parameter between 0 and a positive value different from 1
-          glue::glue(
-            "  {parm} = {hi}/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)",
-            hi = parms$Max[iparm]
-          )
-        } else {
+          "  {parm} = {parm_max} / ( 1 + EXP( - (L{parm} + ETA({ieta}) ) ) )",
+        variability == "Logit" & parm_min != "0" ~
           # Individual parameter boundaries different from 0 and 1
-          glue::glue(
-            "  {parm} = {lo} + ({hi} - {lo})/((1/TV{parm} - 1)*EXP(-ETA({ieta})) + 1)",
-            lo = parms$Min[iparm],
-            hi = parms$Max[iparm]
-          )
-        }
+          "  {parm} = {parm_min} + ({parm_max} - {parm_min}) / ( 1 + EXP( - (L{parm} + ETA({ieta}) ) ) )"
+      )
     )
   }
 }

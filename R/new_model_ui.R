@@ -243,7 +243,8 @@ new_model_ui <- function(){
             wellPanel(
               uiOutput("parameterWarningUI"),
               uiOutput("parameterUI"),
-              uiOutput("warningParameterUI"),
+              uiOutput("parmInfoUI"),
+              uiOutput("duplicateParmWarningUI"),
               uiOutput("importParameterUI")
             )
           ),
@@ -275,7 +276,11 @@ new_model_ui <- function(){
             wellPanel(
               conditionalPanel(
                 condition = "input.platformInput != 'NONMEM'",
-                HTML_info("Tasks cannot be defined for the selected software platform")
+                message_box(
+                  text = "Tasks cannot be defined for the selected software platform",
+                  icon = "info-circle-fill",
+                  theme = "info"
+                )
               ),
               uiOutput("taskUI")
             )

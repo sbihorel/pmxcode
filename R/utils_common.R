@@ -1,13 +1,16 @@
 
 #' Replacement of @PURPOSE tag
 #'
-#' @param input Internal parameter for {shiny}.
+#' @param input Internal parameter for \code{shiny}.
 #' @param new Text template
+#' @param parms Parameter selection
 #' @param varianceTable Variance- table
+#' @noRd
 
 replace_purpose <- function(
     input,
     new,
+    parms,
     varianceTable
 ) {
 
@@ -93,13 +96,13 @@ replace_purpose <- function(
         switch(
           input$pdInput,
           "direct" = "Direct effect model",
-          "link" = "Biophase model",
+          "biophase" = "Biophase model",
           "idr" = "Indirect response model",
           "ode" = "Model defined by custom ODEs",
           "logistic" = "Logistic regression model",
           "ordcat" = "Logistic regression model for ordered categorical data"
         ),
-        if ( input$pdInput %in% c("direct", "link") && isTruthy(input$effectFormInput) ){
+        if ( input$pdInput %in% c("direct", "biophase") && isTruthy(input$effectFormInput) ){
           paste0(
             " - ",
             switch(
@@ -179,6 +182,38 @@ replace_purpose <- function(
       ""
     )
   )
+
+  # List parameters and scales
+  replacement <- paste0(
+    replacement,
+    glue::glue(
+      "\n{commentChar}    Parameters{mu}: ",
+      mu = ifelse(
+        # Need to check for length of muInput for mrgsolve models
+        length(input$muInput) > 0 && any(input$muInput == "TRUE"),
+        " (mu)",
+        ""
+      ),
+      .trim = FALSE
+    ),
+    parms %>%
+      # Merge variability from varianceTable
+      dplyr::select(-Variability) %>%
+      dplyr::left_join( varianceTable, by = "Parameter" ) %>%
+      dplyr::mutate(
+        tag = glue::glue(
+          "{Parameter}{open}{scale}{sep}{iiv}{close}",
+          open = ifelse( Scale != "Linear" | Variability != "None", " (", "" ),
+          scale = ifelse( Scale != "Linear", tolower(Scale), "" ),
+          sep = ifelse( Scale != "Linear" | Variability != "None", "|", ""),
+          iiv = c("", "add", "exp", "logit")[as.numeric(Variability)],
+          close = ifelse( Scale != "Linear" | Variability != "None", ")", "" )
+        )
+      ) %>%
+      pull( tag ) %>%
+      paste( collapse = ", " )
+  )
+
 
   if ( input$platformInput == "NONMEM" & input$nmFlavorInput == "PsN/Xpose style" ){
     purpose <- c(
@@ -301,8 +336,9 @@ replace_purpose <- function(
 
 #' Replacement of @PATH tag
 #'
-#' @param input Internal parameter for {shiny}.
+#' @param input Internal parameter for \code{shiny}.
 #' @param new Text template
+#' @noRd
 
 replace_path <- function(input, new ){
 
@@ -372,6 +408,7 @@ replace_path <- function(input, new ){
 #'
 #' @param code Code lines containing comments to align across
 #'
+#' @noRd
 
 align_tags <- function(code ){
 
@@ -404,6 +441,7 @@ align_tags <- function(code ){
 #'
 #' @param code Code lines containing comments to align across
 #'
+#' @noRd
 
 align_annotations <- function(code){
 
@@ -462,9 +500,10 @@ align_annotations <- function(code){
 #' Get lines of preamble code for transit compartment absorption model and delayed
 #' dosing records
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param vars Character vector of variable names
+#' @noRd
 
 get_preamble_code <- function(
     input,
@@ -553,11 +592,12 @@ get_preamble_code <- function(
 
 #' Get code lines for scaling and bioavailability
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param parm_lib Library of parameters
 #' @param scaling  Library for scaling
+#' @noRd
 
 
 get_scaling_code <- function(
@@ -660,7 +700,7 @@ get_scaling_code <- function(
 
 #' Get lines of code for derived parameters
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param isPRED Reactive object - is model coded with $PRED?
@@ -668,6 +708,7 @@ get_scaling_code <- function(
 #' @param isLINMAT Reactive object - is model coded as linear matrix?
 #' @param parms Parameter selection
 #' @param parm_lib Library of parameters
+#' @noRd
 #'
 
 get_derived_parms_code <- function(
@@ -727,7 +768,7 @@ get_derived_parms_code <- function(
   }
 
   # Cases when LINMAT PK model is associated with link PD model
-  if ( isLINMAT() & !isODE() & input$pdInput == "link" ){
+  if ( isLINMAT() & !isODE() & input$pdInput == "biophase" ){
     tmp <- c(
       tmp,
       glue::glue("  K{input$pkDefaultObsInput}{input$pknCMTInput+1} = KE0"),
@@ -803,7 +844,7 @@ get_derived_parms_code <- function(
     tmp <- c(
       tmp,
       parm_lib %>%
-        dplyr::slice(n = indexModel) %>%
+        dplyr::slice(indexModel) %>%
         dplyr::pull(.data$DERIVED) %>%
         strsplit(split = "[|]" ) %>%
         unlist()
@@ -847,11 +888,12 @@ get_derived_parms_code <- function(
 
 #' Get the number of PK and PD compartments
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param isPRED Reactive object - is model coded with $PRED?
 #' @param isPREDPP Reactive object - is mode coded with $PK?
 #' @param model_lib Library for $MODEL replacement
+#' @noRd
 
 get_ncmts <- function(
     input,
@@ -896,7 +938,7 @@ get_ncmts <- function(
     }
 
     # PD compartments
-    if ( input$pdInput %in% c("link", "idr") ){
+    if ( input$pdInput %in% c("biophase", "idr") ){
       nPDcmts <- 1
     } else if ( input$pdInput == "ode" ){
       nPDcmts <- input$pdnCMTInput
@@ -911,11 +953,12 @@ get_ncmts <- function(
 
 #' Get compartment intialization block
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param nPKcmts,nPDcmts Number of compartments for PK and PD model components
 #' @param parm_lib Library of parameters
+#' @noRd
 
 get_init_code <- function(
     input,
@@ -945,7 +988,7 @@ get_init_code <- function(
         indent,
         parm_lib %>%
           dplyr::slice(
-            n = get_model_lib_index(
+            get_model_lib_index(
               input = input, advan = advan, trans = trans, parm_lib = parm_lib
             )
           ) %>%
@@ -984,7 +1027,7 @@ get_init_code <- function(
           ifelse(input$platformInput == "NONMEM", "    ", "  "),
           parm_lib %>%
             dplyr::filter(.data$TYPE == "idr") %>%
-            dplyr::slice(n = 1) %>%
+            dplyr::slice(1) %>%
             dplyr::pull(.data$INITIALIZATION)
         )
       )
@@ -1034,6 +1077,7 @@ get_init_code <- function(
 #' Format variables by lines of 10.
 #'
 #' @param x  Character vectors of variables
+#' @noRd
 
 tenvars <- function( x ){
   varsBy10 <- NULL
@@ -1053,6 +1097,7 @@ tenvars <- function( x ){
 #' Determines if a file path exists
 #'
 #' @param file a path to a file
+#' @noRd
 
 
 file_exists <- function( file ){
@@ -1062,6 +1107,35 @@ file_exists <- function( file ){
     error = function(e ){ FALSE },
     warning = function(e ){ FALSE },
     finally = {}
+  )
+
+}
+
+#' Prepare initial estimate, min, and max for $THETA
+#'
+#' @param min_value the minimum value entered in the UI
+#' @param value the value entered in the UI
+#' @param max_value the maximum value entered in the UI
+#' @param scale the scale entered in the UI
+#' @noRd
+
+scale_value <- function( min_value, value, max_value, scale ){
+
+  val <- suppressWarnings( as.numeric(value) )
+  min <- suppressWarnings( as.numeric(min_value) )
+  max <- suppressWarnings( as.numeric(max_value) )
+
+  scale_val <- suppressWarnings( (val - min)/(max - min) )
+
+  dplyr::case_when(
+    tolower(value) == '-inf' ~ '-INF',
+    tolower(value) == '+inf' ~ '+INF',
+    scale == "Log" & val <= 0 ~ '-INF',
+    scale == "Log" ~ as.character( signif( suppressWarnings( log(val) ), 6 ) ),
+    scale == "Logit" & scale_val <= 0 ~ '-INF',
+    scale == "Logit" & scale_val >= 1 ~ '+INF',
+    scale == "Logit" ~ as.character( signif( suppressWarnings( log(scale_val/(1-scale_val) ) ), 6 ) ),
+    TRUE ~ toupper(value)
   )
 
 }

@@ -1,10 +1,11 @@
 #' New model module
 #' @name new_model_server
 #'
-#' @param input,output,session Internal parameters for {shiny}.
+#' @param input,output,session Internal parameters for \code{shiny}.
 #' @param resources A list of internal resources
 #'
 #' @import rhandsontable
+#' @noRd
 
 new_model_server <- function(session, input, output, resources ){
 
@@ -209,19 +210,31 @@ new_model_server <- function(session, input, output, resources ){
   output$mapNAUI <- renderUI({
     if ( input$platformInput != "NONMEM") {
       return(
-        HTML_info("Variable mapping is not available for the selected software platform")
+        message_box(
+          text = "Variable mapping is not available for the selected software platform",
+          icon = "info-circle-fill",
+          theme = "info"
+        )
       )
     } else {
 
       if ( inherits(try(dataFileReactive(), silent = TRUE), "try-error") ){
         return(
-          HTML_info("No data file was selected")
+          message_box(
+            text = "No data file was selected",
+            icon = "info-circle-fill",
+            theme = "info"
+          )
         )
       }
 
       if ( inherits(dataFile(), "try-error") ){
         return(
-          HTML_info("Invalid data file")
+          message_box(
+            text = "Invalid data file",
+            icon = "x-circle-fill",
+            theme = "danger"
+          )
         )
       }
 
@@ -285,7 +298,7 @@ new_model_server <- function(session, input, output, resources ){
         "Compartment variable",
         "Endpoint identifier variable",
         "Time after dose variable",
-        "Amount ariable",
+        "Amount variable",
         "Rate variable",
         "BLQ variable"
       ),
@@ -314,8 +327,8 @@ new_model_server <- function(session, input, output, resources ){
     ) %>%
       hot_table(contextMenu = FALSE) %>%
       hot_col(col = 1, colWidths = 200, readOnly = TRUE) %>%
-      hot_col(col = 2, colWidths = 100, readOnly = TRUE) %>%
-      hot_col(col = 3, colWidths = 100, type = 'dropdown', source = dataVars()) %>%
+      hot_col(col = 2, colWidths = 125, readOnly = TRUE) %>%
+      hot_col(col = 3, colWidths = 120, type = 'dropdown', source = dataVars()) %>%
       # To fix display problem: https://github.com/jrowen/rhandsontable/issues/366
       htmlwidgets::onRender("
        function(el, x) {
@@ -1289,6 +1302,9 @@ new_model_server <- function(session, input, output, resources ){
   })
 
   output$effectDriverUI <- renderUI({
+
+    req( input$pkInput, input$pdInput )
+
     max <- value <- 1
     if ( input$pkInput == "pk" ){
       max <- as.numeric(input$pkCMTInput)
@@ -1381,7 +1397,11 @@ new_model_server <- function(session, input, output, resources ){
       return(
         fluidRow(
           col_12(
-            HTML_info("No model structure defined")
+            message_box(
+              text = "No model structure defined",
+              icon = "info-circle-fill",
+              theme = "info"
+            )
           )
         )
       )
@@ -1389,9 +1409,27 @@ new_model_server <- function(session, input, output, resources ){
 
   })
 
+  scales <- reactive({
+
+    req( input$pkInput, input$pdInput, input$nOTParmInput )
+
+    req( input$pkInput != "none" | input$pdInput != "none" )
+
+    scales <- c("Linear", "Log", "Logit")
+
+    if ( any( input$pdInput %in% c("logistic", "ordcat") ) ){
+      scales <- "Linear"
+    }
+
+    scales
+
+  })
+
+  ### Parameter matrix
+
   parameterDF <- reactive({
 
-    req( input$pkInput, input$pdInput, input$nOTParmInput, input$new_menu == "Parameters" )
+    req( input$pkInput, input$pdInput, scales(), input$nOTParmInput, input$new_menu == "Parameters" )
 
     req( input$pkInput != "none" | input$pdInput != "none" )
 
@@ -1412,6 +1450,7 @@ new_model_server <- function(session, input, output, resources ){
         Max = character(),
         Fixed = character(),
         Variability = character(),
+        Scale = character(),
         stringsAsFactors = FALSE
       )
 
@@ -1428,7 +1467,7 @@ new_model_server <- function(session, input, output, resources ){
         parm_lib = parm_lib
       )
       parm_info <- parm_lib %>%
-        dplyr::slice(n = index) %>%
+        dplyr::slice( index ) %>%
         tidyr::separate_rows(
           .data$PARMS, .data$VAR, .data$MIN, .data$INITIAL, .data$MAX,
           sep = "[|]"
@@ -1447,6 +1486,7 @@ new_model_server <- function(session, input, output, resources ){
         Max = parm_info$MAX,
         Fixed = "No",
         Variability = parm_info$VAR,
+        Scale = "Linear",
         stringsAsFactors = FALSE
       )
 
@@ -1472,6 +1512,7 @@ new_model_server <- function(session, input, output, resources ){
                 Max = "+INF",
                 Fixed = "No",
                 Variability = "exp",
+                Scale = "Linear",
                 stringsAsFactors = FALSE
               )
             )
@@ -1495,6 +1536,7 @@ new_model_server <- function(session, input, output, resources ){
                 Max = "+INF",
                 Fixed = "No",
                 Variability = "exp",
+                Scale = "Linear",
                 stringsAsFactors = FALSE
               )
             )
@@ -1516,6 +1558,7 @@ new_model_server <- function(session, input, output, resources ){
               Max = "+INF",
               Fixed = "No",
               Variability = "none",
+              Scale = "Linear",
               stringsAsFactors = FALSE
             )
           )
@@ -1534,6 +1577,7 @@ new_model_server <- function(session, input, output, resources ){
               Max = "1",
               Fixed = "No",
               Variability = "none",
+              Scale = "Linear",
               stringsAsFactors = FALSE
             )
           )
@@ -1602,6 +1646,7 @@ new_model_server <- function(session, input, output, resources ){
         Max = "+INF",
         Fixed = "No",
         Variability = ifelse(grepl("ALAG", PKparms), "none", "exp"),
+        Scale = "Linear",
         stringsAsFactors = FALSE
       ) %>%
         dplyr::mutate(
@@ -1623,6 +1668,7 @@ new_model_server <- function(session, input, output, resources ){
               Max = "1",
               Fixed = "No",
               Variability = "none",
+              Scale = "Linear",
               stringsAsFactors = FALSE
             )
           )
@@ -1769,7 +1815,7 @@ new_model_server <- function(session, input, output, resources ){
           .data$PARMS, .data$VAR, .data$MIN, .data$INITIAL, .data$MAX,
           sep = "[|]"
         ) %>%
-        dplyr::slice(n = -1)
+        dplyr::slice( -1 )
 
       parm_info <- parm_info %>%
         dplyr::bind_rows(
@@ -1812,6 +1858,7 @@ new_model_server <- function(session, input, output, resources ){
         Max = character(),
         Fixed = character(),
         Variability = character(),
+        Scale = character(),
         stringsAsFactors = FALSE
       )
     } else
@@ -1827,6 +1874,7 @@ new_model_server <- function(session, input, output, resources ){
         Max = parm_info$MAX,
         Fixed = "No",
         Variability = parm_info$VAR,
+        Scale = "Linear",
         stringsAsFactors = FALSE
       )
     }
@@ -1846,6 +1894,7 @@ new_model_server <- function(session, input, output, resources ){
         Max = character(),
         Fixed = character(),
         Variability = character(),
+        Scale = character(),
         stringsAsFactors = FALSE
       )
     } else
@@ -1876,6 +1925,7 @@ new_model_server <- function(session, input, output, resources ){
         Max = parm_info$MAX,
         Fixed = "No",
         Variability = parm_info$VAR,
+        Scale = "Linear",
         stringsAsFactors = FALSE
       )
 
@@ -1905,7 +1955,8 @@ new_model_server <- function(session, input, output, resources ){
             .data$Variability == "logit" ~ "3",
             TRUE ~ NA_character_
           )
-        )
+        ),
+        Scale = factor("Linear", levels = scales(), ordered = TRUE),
       )
 
     ### Check content of input$parameterTable and preserve custom inputs
@@ -1916,6 +1967,7 @@ new_model_server <- function(session, input, output, resources ){
         DF <- oDF
       }
       if ( !identical(DF, oDF)) {
+
         mDF <- merge(
           cbind(
             DF,
@@ -1956,9 +2008,17 @@ new_model_server <- function(session, input, output, resources ){
 
   output$parameterTable <- renderRHandsontable({
 
-    req( parameterDF() )
+    req( parameterDF(), scales() )
 
     DF <- parameterDF()
+
+    # Convert select variable to character (remove the glue class)
+    DF <- DF %>%
+      dplyr::mutate(
+        Type = as.character(Type),
+        SourceParam = as.character(SourceParam),
+        Parameter = as.character(Parameter)
+      )
 
     tmp <- rhandsontable(
       data = DF,
@@ -1966,7 +2026,7 @@ new_model_server <- function(session, input, output, resources ){
       contextMenu = FALSE,
       manualColumnMove = FALSE,
       manualRowMove = TRUE,
-      width = ifelse( input$platformInput == "NONMEM", 690, 640),
+      width = ifelse( input$platformInput == "NONMEM", 690, 640) + 60,
       height = max(200, (nrow(DF) + 1)*25 + 10)  # 25 px per row + 10 for potential scroll bar
     ) %>%
       hot_table(contextMenu = FALSE) %>%
@@ -1978,6 +2038,12 @@ new_model_server <- function(session, input, output, resources ){
       hot_col(col = "Min", colWidths = 50) %>%
       hot_col(col = "Initial", colWidths = 50) %>%
       hot_col(col = "Max", colWidths = 50) %>%
+      hot_col(
+        col = "Scale",
+        type = "dropdown",
+        source = scales(),
+        colWidths = 60
+      ) %>%
       hot_col(col = "Variability", colWidths = 0.1) %>% # Hide Variability
       hot_col(
         col = ifelse(
@@ -2030,13 +2096,11 @@ new_model_server <- function(session, input, output, resources ){
 
   outputOptions(output, "parameterTable", suspendWhenHidden = FALSE)
 
-  output$parameterTableUI <- renderUI( {
+  output$parameterTableUI <- renderUI({
     fluidRow(
-      col_12(
-        rHandsontableOutput("parameterTable")
-        )
-      )
-  } )
+      col_12( rHandsontableOutput("parameterTable") )
+    )
+  })
 
   parameterTable_content <- reactive({
     if ( is.null(input$parameterTable) | length(input$parameterTable$data) == 0) {
@@ -2048,7 +2112,7 @@ new_model_server <- function(session, input, output, resources ){
 
   output$parameterUI <- renderUI({
 
-    req( input$pkInput, input$pdInput)
+    req( input$pkInput, input$pdInput )
 
     if ( input$platformInput == 'NONMEM' & input$pdInput != 'logistic' & input$pdInput != 'ordcat' ){
       muBtn <- col_3(
@@ -2096,6 +2160,8 @@ new_model_server <- function(session, input, output, resources ){
       nPD <- NULL
     }
 
+    #
+
     fluidRow(
       col_12(
         fluidRow(
@@ -2119,7 +2185,6 @@ new_model_server <- function(session, input, output, resources ){
         ),
         fluidRow(
           col_12(
-            strong("Parameters"),
             uiOutput("parameterTableUI")
           )
         )
@@ -2130,16 +2195,17 @@ new_model_server <- function(session, input, output, resources ){
 
   outputOptions(output, "parameterUI", suspendWhenHidden = FALSE)
 
-  output$duplicateParmWarningUI <- renderUI({
+  parameterWarnings <- reactive({
+
     if ( is.null(input$parameterTable) | length(input$parameterTable$data) == 0 ){
       NULL
     } else {
-      parms <- hot_to_r(input$parameterTable)$Parameter
-      dupParms <- unique(parms[duplicated(parms)])
-      if ( length(dupParms) == 0 ){
-        NULL
-      } else {
-        HTML_info(
+      parms <- hot_to_r(input$parameterTable)
+
+      # Check for duplicate parameters
+      dupParms <- unique( parms[duplicated(parms$Parameter), "Parameter" ] )
+      if ( length(dupParms) > 0 ){
+        return(
           glue::glue(
             paste(
               "The parameter table includes duplicates ({vars}). Edit the parameter",
@@ -2148,19 +2214,132 @@ new_model_server <- function(session, input, output, resources ){
             vars = paste(dupParms, collapse = ", ")
           )
         )
-
       }
+
+      # Check for character initials
+      if ( any( is.na( suppressWarnings( as.numeric(parms$Initial) ) ) ) ) {
+        return(
+          "Initial values must be numeric."
+        )
+      }
+
+      if ( any(tolower(parms$Min) == '+inf') ) {
+        return(
+          "Minimum bounds cannot be set to +INF."
+        )
+      }
+
+      if ( any(tolower(parms$Max) == '-inf') ) {
+        return(
+          "Maximum bounds cannot be set to -INF."
+        )
+      }
+
+      mins <- parms$Min[ tolower(parms$Min) != "-inf" ]
+      maxs <- parms$Max[ tolower(parms$Max) != "+inf" ]
+
+      if ( any( is.na( suppressWarnings( as.numeric(mins) ) ) ) ) {
+        return(
+          "Lower boundaries must be numeric or -INF."
+        )
+      }
+      if ( any( is.na( suppressWarnings( as.numeric(maxs) ) ) ) ){
+        return(
+          "Upper boundaries must be numeric or +INF."
+        )
+      }
+
+      parms <- parms %>%
+        dplyr::mutate(
+          Min = as.numeric( sub('INF', 'Inf', Min) ),
+          Initial = as.numeric( sub('INF', 'Inf', Initial) ),
+          Max = as.numeric( sub('INF', 'Inf', Max) ),
+          minmax_check = Min >= Max,
+          initial_check = Min >= Initial | Initial >= Max,
+          logit_check = ifelse(
+            Scale == "Logit",
+            Min == -Inf | Max == Inf,
+            FALSE
+          )
+        )
+
+      if ( any(parms$minmax_check) ){
+        return(
+          "Lower boundaries must be lower than upper boundaries."
+        )
+      }
+      if ( any(parms$initial_check) ){
+        return(
+          "Initial values must be strictly between the lower and upper boundaries."
+        )
+      }
+      if ( any(parms$logit_check) ){
+        return(
+          "Boundaries must be finite for parameters defined on the logit scale."
+        )
+      }
+    }
+  })
+
+  output$parmInfoUI <- renderUI({
+    if ( is.null(input$parameterTable) | length(input$parameterTable$data) == 0 ){
+      NULL
+    } else {
+      parms <- hot_to_r(input$parameterTable)
+
+      text <- "All initial values and boundaries must be provided on the linear scale. Transformations to the log or logit scale will be automatically applied, whenever applicable."
+
+      if ( any( parms$Scale == 'Logit' ) & input$platformInput == 'NONMEM' ){
+        text <- c(
+          text,
+          "If required for the calculation of magnitude of variability, the expit function is defined as follows:",
+          "expit <- function(x, min = 0, max = 1){ min + (max-min)/(1+exp(-x)) }"
+        )
+      }
+
+      if ( any( parms$Scale != 'Linear' ) ){
+        message_box(
+          text = text,
+          icon = "info-circle-fill",
+          theme = "info"
+        )
+      } else {
+        NULL
+      }
+
+    }
+  })
+
+  output$duplicateParmWarningUI <- renderUI({
+
+    if ( !isTruthy(parameterWarnings()) ) {
+      NULL
+    } else {
+      message_box(
+        text = parameterWarnings(),
+        icon = "cone-striped",
+        theme = "warning"
+      )
     }
   })
 
   output$importParameterUI <- renderUI({
 
-    if ( input$platformInput != 'mrgsolve' ){
+    if ( input$platformInput != 'mrgsolve' | notTruthy(input$pkInput, input$pdInput) ){
       return(NULL)
     }
 
     fluidRow(
-      col_6(
+      col_3(
+        radioButtons(
+          inputId = "posthocInput",
+          label = "Include POSTHOC estimates",
+          choices = c("Yes", "No"),
+          selected = "No",
+          inline = TRUE
+        )
+      ),
+      col_3(
         radioButtons(
           inputId = "nmextInput",
           label = "Import NONMEM estimates",
@@ -2209,14 +2388,18 @@ new_model_server <- function(session, input, output, resources ){
     if ( notTruthy(input$pkInput, input$pdInput) ){
       fluidRow(
         col_12(
-          HTML_info("No model structure defined")
+          message_box(
+            text = "No model structure defined",
+            icon = "info-circle-fill",
+            theme = "info"
+          )
         )
       )
     }
 
   })
 
-  output$varianceTable <- renderRHandsontable({
+  varianceDF <- reactive({
 
     if ( input$platformInput == "Berkeley Madonna") {
       return(NULL)
@@ -2235,8 +2418,12 @@ new_model_server <- function(session, input, output, resources ){
             .data$Variability == 3 ~ "Logit",
             TRUE ~ "NA"
           ),
-          levels = c("None", "Additive", "Exponential", "Logit"),
+          levels = c( "None", "Additive", "Exponential", "Logit" ),
           ordered = TRUE
+        ),
+        Fixed = factor(
+          "No",
+          levels = c( "Yes", "No" )
         )
       )
     parms <- parameterTable$Parameter
@@ -2246,15 +2433,59 @@ new_model_server <- function(session, input, output, resources ){
 
     # Get parameters and variability info
     DF <- parameterTable %>%
-      dplyr::select(.data$Variability, .data$Parameter)
+      dplyr::select(.data$Variability, .data$Parameter, .data$Fixed)
     row.names(DF) <- DF$Parameter
+
+    ### Check content of input$varianceTable and preserve custom inputs
+    if ( length(isolate(input$varianceTable)) > 0 )
+    {
+      oDF <- hot_to_r(isolate(input$varianceTable))
+      if ( nrow(DF) == 0 ){
+        DF <- oDF
+      }
+      if ( !identical(DF, oDF)) {
+
+        mDF <- merge(
+          cbind(
+            DF,
+            data.frame("_SORT_" = 1:nrow(DF))
+          ),
+          oDF,
+          by = "Parameter",
+          all.x = TRUE
+        )
+        mDF <- mDF[order(mDF[, "X_SORT_"]), ]
+
+        for (col in names(oDF)[-2] ){
+          DF[, col] <- ifelse(
+            is.na(mDF[,paste(col, "y", sep = ".")]),
+            mDF[, paste(col, "x", sep = ".")],
+            mDF[, paste(col, "y", sep = ".")]
+          )
+          if ( is.factor(oDF[, col]) ){
+            # ifelse coerces factors to integers, must reset to factor
+            DF[, col] <- factor(levels(oDF[, col])[DF[, col]], levels = levels(oDF[, col]), ordered = TRUE)
+          }
+        }
+      }
+    }
+
+    DF
+
+  })
+
+  output$varianceTable <- renderRHandsontable({
+
+    req( varianceDF )
+
+    DF <- varianceDF()
 
     rhandsontable(
       data = DF,
       contextMenu = FALSE,
       manualColumnMove = FALSE,
       manualRowMove = TRUE,
-      width = 150,
+      width = 200,
       height = max(200, (nrow(DF) + 1)*25 + 10)  # 25 px per row + 10 for potential scroll bar
     ) %>%
       hot_table(contextMenu = FALSE) %>%
@@ -2268,6 +2499,12 @@ new_model_server <- function(session, input, output, resources ){
         colWidths = 100,
         type = "dropdown",
         source = c("None", "Additive", "Exponential", "Logit")
+      ) %>%
+      hot_col(
+        col = "Fixed",
+        colWidths = 50,
+        type = "dropdown",
+        source = c("Yes", "No")
       ) %>%
       # To fix display problem: https://github.com/jrowen/rhandsontable/issues/366
       htmlwidgets::onRender("
@@ -2417,7 +2654,7 @@ new_model_server <- function(session, input, output, resources ){
   # Process covariance matrix and check if there are errors
   covarianceBlocks <- reactive({
 
-    chk1 <- chk2 <- chk3 <- chk4 <- TRUE
+    checks <- as.list( rep(TRUE, 7) )
     blocks <- NULL
 
     if ( isTruthy(input$covarianceTable) ){
@@ -2431,12 +2668,29 @@ new_model_server <- function(session, input, output, resources ){
         )
       )
 
-      ## Check 1: detect  if variance is set to 0 on a parameter with variability
       covarianceTable <- as.matrix(hot_to_r(input$covarianceTable))
+      varianceTable <- hot_to_r(input$varianceTable)
+
+      if ( all( covarianceTable == 0, na.rm = TRUE ) ){
+        return(
+          list(
+            checks = checks,
+            blocks = list(
+              list(
+                omega = covarianceTable,
+                type = "diagonal",
+                fixed = "No"
+              )
+            )
+          )
+        )
+      }
+
+      ## Check 1: detect if variance is set to 0 on a parameter with variability
       n <- nrow(covarianceTable)
       diag(covarianceTable)[is.na(diag(covarianceTable))] <- 0
 
-      chk1 <- !any(
+      checks[[1]] <- !any(
         diag(covarianceTable) == 0 &
           isolate(varianceTable_content())$Variability != "None"
       )
@@ -2453,12 +2707,12 @@ new_model_server <- function(session, input, output, resources ){
       check1 <- unlist(
         apply(check1, 1, function(x) {as.vector(table(x[x!=0]) > 1)  })
       )
-      chk2 <- all(!check1)
+      checks[[2]] <- all(!check1)
 
       ## Check 3: detect rows of parameter without correlation with others and
       # check that the corresponding columns also contains just one 1
-      if ( !chk2 ){
-        chk3 <- FALSE
+      if ( !checks[[2]] ){
+        checks[[3]] <- FALSE
         blocks <- NULL
       } else {
         # Get correlation "table" as matrix of ones and zeros
@@ -2477,26 +2731,44 @@ new_model_server <- function(session, input, output, resources ){
           rowSums,
           n
         )
-        chk3 <- all(rowSums[isRowDiagonal] == colSums[isRowDiagonal])
+        checks[[3]] <- all(rowSums[isRowDiagonal] == colSums[isRowDiagonal])
       }
 
       ## Check 4: process covariance matrix sub-blocks
-      if ( !chk2 | !chk3 |
-           ( nrow(covarianceTable) != nrow(hot_to_r(input$varianceTable)) )
+      ## Check 5: consistency of fixed elements
+      if ( !checks[[2]] | !checks[[3]] |
+           ( nrow(covarianceTable) != nrow(varianceTable) )
       ){
-        chk4 <- FALSE
+        checks[[4]] <- FALSE
         blocks <- NULL
       } else {
         # Process isRowDiagonal info
         if ( length(isRowDiagonal) > 0 && all(isRowDiagonal) ){
           # Covariance matrix is diagonal
-          chk4 <- TRUE
-          blocks =  list(
-            list(
-              omega = covarianceTable,
-              type = "diagonal"
+          checks[4] <- TRUE
+          checks[5] <- TRUE
+          fixed <- as.character( varianceTable$Fixed )
+          if ( length(unique(fixed)) == 1 ){
+            blocks =  list(
+              list(
+                omega = covarianceTable,
+                type = "diagonal",
+                fixed = fixed[1]
+              )
             )
-          )
+          } else {
+            fixed_rle <- rle(fixed)
+            ends <- cumsum( fixed_rle$length )
+            starts <- c( 1, 1+ends[ 1:(length(ends)-1) ] )
+            blocks <- vector( "list", length(fixed_rle$length) )
+            for ( iblock in 1:length(blocks) ){
+              blocks[[iblock]] <- list(
+                omega = covarianceTable[starts[iblock]:ends[iblock], starts[iblock]:ends[iblock], drop = FALSE],
+                type = "diagonal",
+                fixed = fixed_rle$value[iblock]
+              )
+            }
+          }
         } else {
           # Covariance matrix is NOT diagonal - detect
           # tmp contains zero's for zero off-diagonal elements and upper triangle
@@ -2541,43 +2813,153 @@ new_model_server <- function(session, input, output, resources ){
               omega <- covarianceTable[minIndex:maxIndex, minIndex:maxIndex, drop = FALSE]
               blocks[[iblock]] <- list(
                 omega = omega,
-                type = is_EDB(omega)
+                type = is_EDB(omega),
+                fixed = unique( varianceTable$Fixed[minIndex:maxIndex] )
               )
             }
           }
 
-          chk4 <- all(sapply(blocks, function(x) x$type != "error"))
+          checks[[4]] <- all(sapply(blocks, function(x) x$type != "error"))
+          checks[[5]] <- all(
+            sapply(
+              blocks,
+              function(x)
+                x$type == "diagonal" |
+                ( x$type != "diagonal" & length(x$fixed) == 1 )
+            )
+          )
 
         }
       }
+
+      ## Check 6: check variability model
+      checks[[6]] <- hot_to_r(input$parameterTable) %>%
+        dplyr::left_join(
+          hot_to_r(input$varianceTable),
+          by = 'Parameter'
+        ) %>%
+        dplyr::mutate(
+          invalid = case_when(
+            Scale == 'Log' & Variability.y == 'Logit' ~ TRUE,
+            Scale == 'Logit' & !Variability.y %in% c('None', 'Logit') ~ TRUE,
+            TRUE ~ FALSE
+          )
+        ) %>%
+        filter( invalid == TRUE ) %>%
+        pull( Parameter )
+
+      ## Check 7: check boundary of parameter with logit variability
+      checks[[7]] <- hot_to_r(input$parameterTable) %>%
+        dplyr::left_join(
+          hot_to_r(input$varianceTable),
+          by = 'Parameter'
+        ) %>%
+        dplyr::rowwise() %>%
+        dplyr::mutate(
+          invalid = ifelse(
+            Scale == 'Linear' & Variability.y == 'Logit' & ( as.numeric(Min) == -Inf | as.numeric(Max)==Inf ),
+            TRUE,
+            FALSE
+          )
+        ) %>%
+        filter( invalid == TRUE ) %>%
+        pull( Parameter )
+
     }
 
-    list(chk1 = chk1, chk2 = chk2, chk3 = chk3, chk4 = chk4, blocks = blocks)
+    list(checks = checks, blocks = blocks)
 
   })
 
   ## Dynamic UI for misspecified covariance matrix
   output$covarianceWarningUI <- renderUI({
 
-    if ( all(c(covarianceBlocks()$chk1, covarianceBlocks()$chk2, covarianceBlocks()$chk3, covarianceBlocks()$chk4)) ){
+    req( input$covarianceTable )
+
+    if (
+      all( c(
+        covarianceBlocks()$checks[[1]], covarianceBlocks()$checks[[2]],
+        covarianceBlocks()$checks[[3]], covarianceBlocks()$checks[[4]],
+        covarianceBlocks()$checks[[5]], length(covarianceBlocks()$checks[[6]]) == 0,
+        length(covarianceBlocks()$checks[[7]]) == 0
+      ) )
+    ){
       NULL
     } else {
       tagList(
-        if ( !covarianceBlocks()$chk1 ) {
-          HTML_info(
-            "Variance cannot be set to 0 for a parameter with estimated variance"
+        if ( !covarianceBlocks()$checks[[1]] ) {
+          message_box(
+            text = "Variance cannot be set to 0 for a parameter with estimated variance",
+            icon = "cone-striped",
+            theme = "warning"
           )
         },
-        if ( !covarianceBlocks()$chk1 ) {
-          p()
-        },
-        if ( any(!c(covarianceBlocks()$chk2, covarianceBlocks()$chk3, covarianceBlocks()$chk4)) ) {
-          HTML_info(
-            paste(
+        if ( any(
+          !c( covarianceBlocks()$checks[[2]], covarianceBlocks()$checks[[3]],
+             covarianceBlocks()$checks[[4]]) )
+        ) {
+          message_box(
+            text = paste(
               "The covariance matrix must be constructed as a series of diagonal,",
               "band, or full block matrices. Correlation will be ignored in",
               "the model."
-            )
+            ),
+            icon = "cone-striped",
+            theme = "warning"
+          )
+        },
+        if ( !covarianceBlocks()$checks[[5]] ){
+          invalids <- sapply(
+            covarianceBlocks()$blocks,
+            function(x) length(x$fixed) > 1 && x$type == "block"
+          )
+          fixed <- ifelse(
+            sapply(
+              covarianceBlocks()$blocks,
+              function(x) x$fixed[1]
+            ) == "Yes",
+            "fixed",
+            "estimated"
+          )
+          message_box(
+            text = c(
+              paste(
+                "All elements of a covariance block must be either fixed or not,",
+                "which is not the case for the following",
+                ifelse( length(which(invalids)) > 1, "blocks:", "block:"),
+                paste( which(invalids), collapse = ", " ),
+                "\n"
+              ),
+              paste0(
+                ifelse( length(which(invalids)) > 1, "These ", "This "),
+                ifelse( length(which(invalids)) > 1, "blocks ", "block "),
+                "will be assumed to be",
+                ifelse( length(which(invalids)) > 1, " respectively: ", " "),
+                paste( fixed[which(invalids)], collapse = ", " )
+              )
+            ),
+            icon = "cone-striped",
+            theme = "warning"
+          )
+        },
+        if ( length( covarianceBlocks()$checks[[6]] ) > 0 ) {
+          message_box(
+            text = paste(
+              "Invalid variability selection for:",
+              paste(covarianceBlocks()$checks[[6]], collapse = ", ")
+            ),
+            icon = "cone-striped",
+            theme = "warning"
+          )
+        },
+        if ( length( covarianceBlocks()$checks[[7]] ) > 0 ) {
+          message_box(
+            text = paste(
+              "Invalid parameter boundary selection for:",
+              paste(covarianceBlocks()$checks[[7]], collapse = ", ")
+            ),
+            icon = "cone-striped",
+            theme = "warning"
           )
         }
       )
@@ -2591,13 +2973,21 @@ new_model_server <- function(session, input, output, resources ){
 
     if ( input$platformInput == "Berkeley Madonna") {
       return(
-        HTML_info("Variance-covariance settings are not available for the selected software platform")
+        message_box(
+          text = "Variance-covariance settings are not available for the selected software platform",
+          icon = "info-circle-fill",
+          theme = "info"
+        )
       )
     }
 
     if ( notTruthy(input$parameterTable) ){
       return(
-        HTML_info("No parameters defined")
+        message_box(
+          text = "No parameters defined",
+          icon = "info-circle-fill",
+          theme = "info"
+        )
       )
     }
 
@@ -2630,14 +3020,20 @@ new_model_server <- function(session, input, output, resources ){
 
     if ( input$platformInput == "Berkeley Madonna" ) {
       return(
-        HTML_info("Residual variability cannot be defined for the selected software platform")
+        message_box(
+          text = "Residual variability cannot be defined for the selected software platform",
+          icon = "info-circle-fill",
+          theme = "info"
+        )
       )
     }
 
     if ( notTruthy(input$pkInput, input$pdInput) ){
       fluidRow(
-        col_12(
-          HTML_info("No model structure defined")
+        message_box(
+          text = "No model structure defined",
+          icon = "info-circle-fill",
+          theme = "info"
         )
       )
     }
@@ -2912,7 +3308,11 @@ new_model_server <- function(session, input, output, resources ){
     if ( rvCheck()$isOK ){
       NULL
     } else {
-      HTML_info("Variance cannot be set to 0 for an estimated RV variance")
+      message_box(
+        text = "Variance cannot be set to 0 for an estimated RV variance",
+        icon = "cone-striped",
+        theme = "warning"
+      )
     }
   })
 
@@ -3115,8 +3515,10 @@ new_model_server <- function(session, input, output, resources ){
     if ( notTruthy(input$pkInput, input$pdInput) ){
       return(
         fluidRow(
-          col_12(
-            HTML_info("No model structure defined")
+          message_box(
+            text = "No model structure defined",
+            icon = "info-circle-fill",
+            theme = "info"
           )
         )
       )
@@ -3187,8 +3589,10 @@ new_model_server <- function(session, input, output, resources ){
     if ( notTruthy(input$pkInput, input$pdInput) ){
       return(
         fluidRow(
-          col_12(
-            HTML_info("No model structure defined")
+          message_box(
+            text = "No model structure defined",
+            icon = "info-circle-fill",
+            theme = "info"
           )
         )
       )
@@ -3276,7 +3680,7 @@ new_model_server <- function(session, input, output, resources ){
           downloadButton(
             outputId = "downloadButton",
             label = NULL,#"Download",
-            icon = icon("download")
+            icon = icon("upload")
           ),
           "Download",
           options = list(delay =list(show=800, hide=100))
@@ -3392,13 +3796,23 @@ new_model_server <- function(session, input, output, resources ){
         length(covarianceTable) > 0
       )
 
-      if ( length(parameterTable$Parameter) != length(unique(parameterTable$Parameter)) ){
-        return("Duplicates in parameter tables prevents the code generation.")
+      if ( input$platformInput == "NONMEM" ){
+        req( input$muInput )
+      }
+
+      if ( isTruthy(parameterWarnings()) ){
+        return("Invalid parameter definition prevents the code generation.")
       } else if (
         nrow(parameterTable) != nrow(varianceTable) |
         nrow(varianceTable) != nrow(covarianceTable)
       ) {
-        return("Inconsistent dimension of parameter and variance/covariance tables.")
+        return("Inconsistent dimension of parameter and variance/covariance tables prevents the code generation.")
+      } else if ( length(covarianceBlocks()$chk6) > 0 ) {
+        return("Invalid parameter boundary selection prevents the code generation")
+      } else if (
+        !all(c(covarianceBlocks()$chk1, covarianceBlocks()$chk2, covarianceBlocks()$chk3, covarianceBlocks()$chk4, length(covarianceBlocks()$chk5) == 0 ) )
+      ){
+        return("Invalid variability selection prevents the code generation")
       } else {
 
         get_code(
