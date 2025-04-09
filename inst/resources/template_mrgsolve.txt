@@ -5,7 +5,7 @@
 // Created on @TIMESTAMP @USER
 //         for mrgsolve and R @VERSION
 //------------------------------------------------------------------------------
-// Purpose: @PURPOSE
+// @PURPOSE
 
 @NMEXT
 @PLUGIN
