@@ -1,0 +1,13 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^app\.R$
+^rsconnect$
+^.rscsignore
+^.gitignore
+^.Rbuildignore
+^doc$
+^Meta$
+builds
+builds/.*.gz
+dev
+dev/*.R

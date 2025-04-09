@@ -2,7 +2,7 @@
 <table>
 <tr>
 <th>
-<img src="../app/www/favicon.png" align="left" width=104 height=120/>
+<img src="../app/www/logo.png" align="left" width=104 height=120/>
 </th>
 <th>
   
@@ -16,10 +16,17 @@ aims at reducing the time needed to create a new model code and at
 promoting good coding practices. PMXcode provides a wide library of
 template code and, as such, implements an opinionated approach to coding
 and documenting pharmacometric models. Additionally, PMXcode supports
-the automated creation of code for univariate covariate testing.
+the automated creation of code for univariate covariate
+testing.</br></br>Documentation and user’s guides for each PMXcode
+module are provided in articles published at
+<a href="https://sbihorel.github.io/pmxcode/">https://sbihorel.github.io/pmxcode/</a>
 </tr>
 </tr>
 </table>
 
-**Please, report any bug to <sb.pmlab@gmail.com> with a detailed
-description of the problem and a reproducible example.**
+.
+
+**Please, report any bug using the package [Github
+page](https://github.com/sbihorel/pmxcode) or by send an email to
+<sb.pmlab@gmail.com>. A detailed description of the problem and a
+reproducible example are required.**

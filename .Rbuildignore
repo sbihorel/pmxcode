@@ -2,5 +2,10 @@
 ^\.Rproj\.user$
 ^app\.R$
 ^rsconnect$
+^.rscignore
 ^doc$
 ^Meta$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

@@ -1,0 +1,100 @@
+"mu","time","Scale","Variability","Code"
+FALSE,"NA","Linear","None","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = LX
+X = TVX"
+FALSE,"NA","Linear","Additive","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = LX
+X = TVX + ETA(1)"
+FALSE,"NA","Linear","Exponential","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = LX
+X = TVX * EXP( ETA(1) )"
+FALSE,"NA","Linear","Logit","LX = ACOV_X + MCOV_X * LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )
+TVX = 1 / (1 + EXP(-LX) )
+X = minX + (maxX – minX) / ( 1 + EXP( - (LX + ETA(1) ) ) )"
+FALSE,"NA","Log","None","LX = ACOV_X + THETA(1)
+TVX = EXP(LX)
+X = TVX"
+FALSE,"NA","Log","Additive","LX = ACOV_X + THETA(1)
+TVX = EXP(LX)
+X = TVX + ETA(1)"
+FALSE,"NA","Log","Exponential","LX = ACOV_X + THETA(1)
+TVX = EXP(LX)
+X = TVX * EXP( ETA(1) )"
+FALSE,"NA","Log","Logit","N/A"
+FALSE,"NA","Logit","None","LX = ACOV_X + MCOV_X * THETA(1) 
+TVX = minX + (maxX – minX) / (1 + EXP(-LX) )
+X = TVX"
+FALSE,"NA","Logit","Additive","N/A"
+FALSE,"NA","Logit","Exponential","N/A"
+FALSE,"NA","Logit","Logit","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = minX + (maxX – minX) / (1 + EXP(-LX) )
+X = minX + (maxX – minX) / (1 + EXP(- (LX + ETA(1) ) ) )"
+TRUE,FALSE,"Linear","None","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = LX
+X = TVX"
+TRUE,FALSE,"Linear","Additive","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = LX
+MU_1 = LX
+X = MU_1 + ETA(1)"
+TRUE,FALSE,"Linear","Exponential","LX = ACOV_X + MCOV_X * ( THETA(1) )
+TVX = LX
+MU_1 = LOG(LX)
+X = EXP( MU_1 + ETA(1) )"
+TRUE,FALSE,"Linear","Logit","LX = ACOV_X + MCOV_X * LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )
+TVX = 1 / (1 + EXP(-LX) )
+MU_1 = LX
+X = minX + (maxX – minX) / ( 1 + EXP( - (MU_1 + ETA(1) ) ) )"
+TRUE,FALSE,"Log","None","LX = ACOV_X + THETA(1)
+TVX = EXP(LX)
+X = TVX"
+TRUE,FALSE,"Log","Additive","LX = ACOV_X + THETA(1)
+TVX = EXP(LX)
+MU_1 = TVX
+X = MU_1 + ETA(1)"
+TRUE,FALSE,"Log","Exponential","LX = ACOV_X + THETA(1)
+TVX = EXP(LX)
+MU_1 = LX
+X = EXP( MU_1 + ETA(1) )"
+TRUE,FALSE,"Log","Logit","N/A"
+TRUE,FALSE,"Logit","None","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = minX + (maxX – minX) / (1 + EXP(-LX) )
+X = TVX"
+TRUE,FALSE,"Logit","Additive","N/A"
+TRUE,FALSE,"Logit","Exponential","N/A"
+TRUE,FALSE,"Logit","Logit","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = minX + (maxX – minX) / (1 + EXP(-LX) )
+MU_1 = LX
+X = minX + (maxX – minX) / (1 + EXP(- (MU_1 + ETA(1) ) ) )"
+TRUE,TRUE,"Linear","None","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = LX
+X = TVX"
+TRUE,TRUE,"Linear","Additive","LX = THETA(1)
+TVX = ACOV_X + LX
+MU_1 = LX
+X = ACOV_X + ( MU_1 + ETA(1) )"
+TRUE,TRUE,"Linear","Exponential","LX = THETA(1)
+TVX = ACOV_X + MCOV_X * LX
+MU_1 = LOG(LX)
+X = (ACOV_X/LX + MCOV_X) * EXP( MU_1 + ETA(1) )"
+TRUE,TRUE,"Linear","Logit","LX = LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )
+TVX = minX + (maxX – minX) / (1 + EXP(- (ACOV_X+LX) ) )
+MU_1 = LX
+X = minX + (maxX – minX) / ( 1 + EXP( - (ACOV_X + (MU_1 + ETA(1) ) ) ) )"
+TRUE,TRUE,"Log","None","LX = ACOV_X + THETA(1)
+TVX = EXP(LX)
+X = TVX"
+TRUE,TRUE,"Log","Additive","N/A"
+TRUE,TRUE,"Log","Exponential","LX = THETA(1)
+TVX = EXP( ACOV_X + ( LX) )
+MU_1 = LX
+X = EXP( ACOV_X) * ( EXP( MU_1 + ETA(1) ) )"
+TRUE,TRUE,"Log","Logit","N/A"
+TRUE,TRUE,"Logit","None","LX = ACOV_X + MCOV_X * THETA(1)
+TVX = minX + (maxX – minX) / (1 + EXP(-LX) )
+X = TVX"
+TRUE,TRUE,"Logit","Additive","N/A"
+TRUE,TRUE,"Logit","Exponential","N/A"
+TRUE,TRUE,"Logit","Logit","LX = THETA(1)
+TVX = minX + (maxX – minX) / (1 + EXP(- (ACOV_X + LX) ) )
+MU_1 = LX
+X = minX + (maxX – minX) / ( 1 + EXP( - (ACOV_X + (MU_1 + ETA(1) ) ) ) )"
