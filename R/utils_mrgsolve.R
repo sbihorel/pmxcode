@@ -1,7 +1,7 @@
 
 #' Creation of mrgsolve code
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param template Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -17,6 +17,7 @@
 #' @param rv_lib  Library for residual variability replacement
 #' @param scaling  Library for scaling
 #' @param replacement Logical value indicating with replacement is required
+#' @noRd
 #'
 
 get_mrgsolve_code <- function(
@@ -47,6 +48,22 @@ get_mrgsolve_code <- function(
   user <- Sys.info()["user"]
   date <- format(Sys.time(), "%b %d, %Y %H:%M:%S %Z")
 
+  # Extract tables content
+  if ( areTruthy(input$parameterTable, input$varianceTable) ){
+    parms <- hot_to_r(input$parameterTable)
+    variance <- hot_to_r(input$varianceTable)
+
+    req( identical(parms$Parameter, variance$Parameter) )
+
+    parms <- dplyr::bind_cols(
+      parms %>% dplyr::select(-.data$Variability),
+      variance %>% dplyr::select(.data$Variability)
+    )
+  } else {
+    parms <- NULL
+  }
+  estimations <- hot_to_r(input$estimationTable)
+
   # Replace @TIMESTAMP
   new <- sub("@TIMESTAMP", date, new)
 
@@ -58,7 +75,7 @@ get_mrgsolve_code <- function(
 
   # Replace @PURPOSE
   if ( areTruthy(input$pkInput, input$pdInput) ){
-    new <- replace_purpose(input = input, new = new, varianceTable = varianceTable)
+    new <- replace_purpose(input = input, new = new, parms = parms, varianceTable = varianceTable)
   }
 
   # Replace @PATH
@@ -76,6 +93,11 @@ get_mrgsolve_code <- function(
   }
 
   new <- replace_nmext(input = input, new = new, nmextImport = nmextImport)
+
+  if ( length(new) == 1 ){
+    # The path provided for importing the NONMEM info is invalid
+    return( new )
+  }
 
   # Replace @PLUGIN
   if ( areTruthy(input$pkInput, input$pdInput) ){
@@ -116,21 +138,12 @@ get_mrgsolve_code <- function(
     )
   }
 
-  # Extract tables content
-  if ( areTruthy(input$parameterTable, input$varianceTable) ){
-    parms <- hot_to_r(input$parameterTable)
-    variance <- hot_to_r(input$varianceTable)
-
-    req( identical(parms$Parameter, variance$Parameter) )
-
-    parms <- dplyr::bind_cols(
-      parms %>% dplyr::select(-.data$Variability),
-      variance %>% dplyr::select(.data$Variability)
-    )
+  # Use posthocs?
+  if ( isTruthy(input$posthocInput) && input$posthocInput == "Yes" ){
+    posthoc <- TRUE
   } else {
-    parms <- NULL
+    posthoc <- FALSE
   }
-  estimations <- hot_to_r(input$estimationTable)
 
   # Replace @PARAM
   if ( isTruthy(parms) ){
@@ -138,17 +151,20 @@ get_mrgsolve_code <- function(
       input = input,
       new = new,
       parms = parms,
-      nmextImport = nmextImport
+      nmextImport = nmextImport,
+      posthoc = posthoc
     )
   }
 
   # Replace @OMEGA
   if ( areTruthy(parms, covarianceBlock) ){
     new <- replace_mrg_omega(
+      input = input,
       new = new,
       parms = parms,
       blocks = covarianceBlock,
-      nmextImport = nmextImport
+      nmextImport = nmextImport,
+      posthoc = posthoc
     )
   }
 
@@ -176,7 +192,8 @@ get_mrgsolve_code <- function(
     parms_code <- get_mrg_parms_code(
       input = input,
       parms = parms,
-      mu = as.logical(input$muInput)
+      mu = as.logical(input$muInput),
+      posthoc = posthoc
     )
   }
 
@@ -282,10 +299,11 @@ get_mrgsolve_code <- function(
 
 #' Replacement of @NMEXT tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
+#' @noRd
 
 replace_nmext <- function(
     input,
@@ -300,7 +318,8 @@ replace_nmext <- function(
         shinyFiles::parseDirPath(c(root = "/"), input$nmextDirChoose)
       )
     } else {
-      return( new[ !grepl("@NMEXT", new) ] )
+      # return( new[ !grepl("@NMEXT", new) ] )
+      return( "Invalid NONMEM run directory" )
     }
 
     path_elements <- unlist(strsplit(path, .Platform$file.sep))
@@ -313,7 +332,8 @@ replace_nmext <- function(
 
     # run must use runXYZ notation
     if ( !grepl("^run[0-9]+$", run) ){
-      return( new[ !grepl("@NMEXT", new) ] )
+      # return( new[ !grepl("@NMEXT", new) ] )
+      return( "The selected NONMEM run directory must be named runX, where X is a number." )
     }
 
     # If model directory was provided, set project as a relative path
@@ -349,8 +369,9 @@ replace_nmext <- function(
 
 #' Replacement of @PLUGIN tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
+#' @noRd
 
 replace_mrg_plugin <- function(
     input,
@@ -376,12 +397,13 @@ replace_mrg_plugin <- function(
 
 #' Replacement of @GLOBAL tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
 #' @param nPKcmts Number of compartments for PK
 #' @param parm_lib Library of parameters
+#' @noRd
 #'
 
 replace_mrg_global <- function(
@@ -479,10 +501,11 @@ replace_mrg_global <- function(
 
 #' Replacement of @CMT tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param model_lib Library for $MODEL replacement
 #' @param isPRED Reactive object - is model coded with $PRED?
+#' @noRd
 
 replace_mrg_cmt <- function(
     input,
@@ -577,20 +600,23 @@ replace_mrg_cmt <- function(
 
 #' Replacement of @PARAM tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param parms Parameter selection
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
+#' @param posthoc A logical indicating whether posthoc estimates should be used
+#' @noRd
 
 replace_mrg_param <- function(
     input,
     new,
     parms,
-    nmextImport
+    nmextImport,
+    posthoc
 ){
 
-  if ( nmextImport ){
+  if ( nmextImport & !posthoc ){
     return( new[ !grepl("@PARAM", new) ] )
   }
 
@@ -604,45 +630,58 @@ replace_mrg_param <- function(
 
   if ( nparms > 0 ){
 
-    # Set default prefix based upon whether model includes IIV or not
-    prefix <- ifelse(
-      parms$Variability != "None",
-      "TV",
-      ""
-    )
-
-    # Set prefix for ordered categorical models
-    if ( input$pdInput == "ordcat" ){
-      prefix <- c(
-        rep("T", input$maxCategoryInput - input$minCategoryInput),
-        rep("TV", nparms - (input$maxCategoryInput - input$minCategoryInput))
-      )
-    }
-
     # Get value and label for every model parameters
     tmp <- "[ PARAM ] @annotated"
-    for ( i in 1:nparms ){
-      tmp <- c(
-        tmp,
-        glue::glue(
-          "  {prefix}{parm} : {init} : {label}{unit}",
-          prefix = prefix[i],
-          parm = parms$Parameter[i],
-          init = parms$Initial[i],
-          label = ifelse(
-            parms$Label[i] == "",
-            glue::glue("Label for THETA{i}"),
-            parms$Label[i]
-          ),
-          unit = ifelse(
-            parms$Unit[i] == "",
-            " (unitless)",
-            glue::glue(" ({parms$Unit[i]})")
+
+    if ( !nmextImport ) {
+      for ( i in 1:nparms ){
+        tmp <- c(
+          tmp,
+          glue::glue(
+            "  THETA_{parm} : {init} : {label}{unit}{transform}",
+            parm = parms$Parameter[i],
+            init = scale_value( parms$Min[i], parms$Initial[i], parms$Max[i], parms$Scale[i] ),
+            label = ifelse(
+              parms$Label[i] == "",
+              glue::glue("Label for THETA{i}"),
+              sub( "\\s+[(]logit[)]", "", parms$Label[i])
+            ),
+            unit = ifelse(
+              parms$Unit[i] == "",
+              " (unitless)",
+              glue::glue(" ({parms$Unit[i]})")
+            ),
+            transform = dplyr::case_when(
+              grepl("[(]logit[)]", parms$Label[i]) ~ " [logit]",
+              parms$Scale[i] == "Linear" ~ "",
+              TRUE ~ glue::glue(" [{tolower(parms$Scale[i])}]")
+            )
           )
         )
-      )
+      }
+      tmp <- c(tmp, "")
     }
-    tmp <- c(tmp, "")
+
+    if ( posthoc ){
+      tmp <- c(
+        tmp,
+        "  POSTHOC : 0 : Use posthoc estimates of variability"
+      )
+
+      for ( iparm in 1:nparms ){
+        if ( parms$Variability[iparm] != "None" ){
+          tmp <- c(
+            tmp,
+            glue::glue(
+              "  ETA_{parm} : 0 : Posthoc estimate of {parm}",
+              parm = parms$Parameter[iparm]
+            )
+          )
+        }
+      }
+      tmp <- c(tmp, "")
+
+    }
 
     # Align tags
     tmp <- align_annotations(code = tmp)
@@ -661,19 +700,22 @@ replace_mrg_param <- function(
 
 #' Replacement of @OMEGA tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param parms Parameter selection
 #' @param blocks Variance - covariance matrix
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
+#' @param posthoc A logical indicating whether posthoc estimates should be used
+#' @noRd
 
 replace_mrg_omega <- function(
     input,
     new,
     parms,
     blocks,
-    nmextImport
+    nmextImport,
+    posthoc
 ){
 
   if ( nmextImport ){
@@ -733,7 +775,8 @@ replace_mrg_omega <- function(
       tmp <- c(
         tmp,
         glue::glue(
-          "  E{eta} : {init}: IIV in {parm} [{model}]",
+          "  {prefix}{eta} : {init}: IIV in {parm} [{model}]",
+          prefix = ifelse( input$posthocInput == "Yes", "OMEGA_", "E" ),
           eta = parms$Parameter[index],
           init = ifelse(
             type == "diagonal",
@@ -777,10 +820,11 @@ replace_mrg_omega <- function(
 #' Replacement of @SIGMA tag
 #'
 #' @param new Text template
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param rvTable Residual variability selection
 #' @param nmextImport A logical indicating whether NONMEM ext file content
 #' should be imported
+#' @noRd
 
 replace_mrg_sigma <- function(
     input,
@@ -937,7 +981,7 @@ replace_mrg_sigma <- function(
 
 #' Replace @MAIN or @PRED tags
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param preamble_code Preamble code
 #' @param parms_code Typical and individual parameter code
@@ -948,6 +992,7 @@ replace_mrg_sigma <- function(
 #' @param parms Parameter selection
 #' @param parm_lib Library of parameters
 #' @param rv_lib  Library for residual variability replacement
+#' @noRd
 
 replace_mrg_main_pred <- function(
     input,
@@ -1106,7 +1151,8 @@ replace_mrg_main_pred <- function(
         } else if ( isTruthy(input$logisticVarTextInput) ){
           tmpModel <- gsub("<x>", input$logisticVarTextInput, tmpModel)
         }
-        tmpRV <- tmpModel
+
+        tmp <- c(tmp, tmpModel)
 
       } else if ( input$pdInput == "ordcat" ) {
 
@@ -1120,7 +1166,7 @@ replace_mrg_main_pred <- function(
         minCategory <- min(
           floor( c(input$minCategoryInput, input$maxCategoryInput) )
         )
-        maxCategory <- min(
+        maxCategory <- max(
           ceiling( c(input$minCategoryInput, input$maxCategoryInput) )
         )
 
@@ -1191,7 +1237,7 @@ replace_mrg_main_pred <- function(
             if ( i == minCategory ){
               logit_indiv <- c(
                 logit_indiv,
-                get_mrg_individual_parm_code(
+                get_mrg_parms_code_minion(
                   parms = utils::modifyList(parms, list(Parameter = parms$SourceParam[1])),
                   iparm = 1,
                   eparm = parms$Parameter[1]
@@ -1200,7 +1246,7 @@ replace_mrg_main_pred <- function(
             }
             logit_indiv <- c(
               logit_indiv,
-              get_mrg_individual_parm_code(
+              get_mrg_parms_code_minion(
                 parms =  utils::modifyList(parms, list(Parameter = paste0("LG", i))),
                 iparm = 1,
                 eparm = parms$Parameter[1]
@@ -1302,7 +1348,7 @@ replace_mrg_main_pred <- function(
 
 #' Replacement of @ODE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -1310,6 +1356,7 @@ replace_mrg_main_pred <- function(
 #' @param nPKcmts Number of PK compartments in the model
 #' @param nPDcmts Number of PD compartments in the model
 #' @param parm_lib Library of parameters
+#' @noRd
 
 replace_mrg_ode <- function(
     input,
@@ -1345,7 +1392,7 @@ replace_mrg_ode <- function(
         )
       )
 
-      if ( parm_lib[index, "ELIMINATION"] != "lin"){
+      if ( grepl( 'mm', parm_lib[index, "ELIMINATION"]) ){
         value <- ifelse(parm_lib[index, "ABSORPTION"] == "bolus_zero", 1, 2)
         if ( input$kmScaleInput ){
           tmpModel <- gsub(
@@ -1466,7 +1513,7 @@ replace_mrg_ode <- function(
 
 #' Replacement of @TABLE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param advan Reactive object - NONMEM ADVAN value
 #' @param trans Reactive object - NONMEM TRANS value
@@ -1475,6 +1522,7 @@ replace_mrg_ode <- function(
 #' @param nPDcmts Number of PD compartments in the model
 #' @param parm_lib Library of parameters
 #' @param rv_lib  Library for residual variability replacement
+#' @noRd
 
 replace_mrg_table <- function(
     input,
@@ -1508,7 +1556,7 @@ replace_mrg_table <- function(
         tmp,
         parm_lib %>%
           dplyr::slice(
-            n = get_model_lib_index(
+            get_model_lib_index(
               input = input, advan = advan, trans = trans, parm_lib = parm_lib
             )
           ) %>%
@@ -1641,9 +1689,10 @@ replace_mrg_table <- function(
 
 #' Replacement of @CAPTURE tag
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param new Text template
 #' @param parms Parameter selection
+#' @noRd
 
 replace_mrg_capture <- function(
     input,
@@ -1676,7 +1725,7 @@ replace_mrg_capture <- function(
     if ( input$pdInput == "logistic" ) {
       tmp <- c(tmp, "PROB", "EVENT")
     } else if ( input$pdInput == "ordcat" ) {
-      range <- sort( req(input$minCategoryInput), req(input$maxCategoryInput))
+      range <- sort( c(req(input$minCategoryInput), req(input$maxCategoryInput)) )
       range <- c( floor(range[1]), ceiling(range[2]) -1 )
       tmp <- c(
         tmp,
@@ -1735,27 +1784,49 @@ replace_mrg_capture <- function(
 
 #' Get mrgsolve model parameter code lines as list
 #'
-#' @param input Internal parameter for {shiny}
+#' @param input Internal parameter for \code{shiny}
 #' @param parms Parameter selection
 #' @param mu A logical indicator for mu transformation
+#' @param posthoc A logical indicating whether posthoc estimates should be used
+#' @noRd
 
-get_mrg_parms_code <- function(input, parms, mu){
+get_mrg_parms_code <- function(input, parms, mu, posthoc){
 
-  PK <- PD <- OT <- NULL
+  POSTHOC <- PK <- PD <- OT <- NULL
   multipleType <- FALSE
+
+  if ( posthoc & any(parms$Variability != "None") ){
+    POSTHOC <- "  // Define variability"
+
+    for ( iparm in 1:nrow(parms) ){
+      if ( parms$Variability[iparm] != "None" ){
+        POSTHOC <- c(
+          POSTHOC,
+          glue::glue(
+            "  E{parm} = POSTHOC*ETA_{parm} + (1-POSTHOC)*OMEGA_{parm}",
+            parm = parms$Parameter[iparm]
+          )
+        )
+      }
+    }
+
+    POSTHOC <- c( POSTHOC, "" )
+
+  }
 
   if ( any(parms$Variability != "None") ) {
     for ( type in unique(parms$Type) ){
-      individual <- glue::glue(
+      typical <- glue::glue(
         "  {pre}// {type} parameters",
         pre = ifelse(multipleType, "\n  ", "")
       )
+      individual <- ""
 
       if ( input$pdInput %in% c("ordcat") ){
 
         req( input$minCategoryInput, input$maxCategoryInput )
 
-        range <- sort(input$minCategoryInput, input$maxCategoryInput)
+        range <- sort( c(input$minCategoryInput, input$maxCategoryInput) )
         range <- c( floor(range[1]), ceiling(range[2]) -1 )
         nCategories <- diff(range) + 1
 
@@ -1778,16 +1849,18 @@ get_mrg_parms_code <- function(input, parms, mu){
             )
           )
         } else {
-          individual <- c( individual, get_mrg_individual_parm_code(parms, iparm) )
+          parm_code <- get_mrg_parms_code_minion( parms, iparm )
+          typical <- c( typical, parm_code[1] )
+          individual <- c( individual, parm_code[2] )
         }
       }
 
       if ( type == "PK" ){
-        PK <- individual
+        PK <- c( typical, individual )
       } else if ( type == "PD" ){
-        PD <- individual
+        PD <- c( typical, individual )
       } else {
-        OT <- individual
+        OT <- c( typical, individual )
       }
 
       multipleType <- TRUE
@@ -1795,46 +1868,70 @@ get_mrg_parms_code <- function(input, parms, mu){
     }
   }
 
-  list(PK = PK, PD = PD, OT = OT)
+  list(POSTHOC = POSTHOC, PK = PK, PD = PD, OT = OT)
 
 }
 
-#' Get line of code for individual parameter value
+#' Get line of code for each parameter
 #'
 #' @param parms Parameter selection
 #' @param iparm Index of parameter in parms data frame
 #' @param eparm Parameter associated with IIV in ordered categorical models
+#' @noRd
 
 
-get_mrg_individual_parm_code <- function(parms, iparm, eparm){
+get_mrg_parms_code_minion <- function(parms, iparm, eparm){
 
   parm <- parms$Parameter[iparm]
+  scale <- parms$Scale[iparm]
+  variability <- parms$Variability[iparm]
+  parm_min <- parms$Min[iparm]
+  parm_max <- parms$Max[iparm]
 
   # eparm is only provided in ordered categorical model
   if (missing(eparm)){
     eparm <- parm
   }
 
-  switch(
-    levels(parms$Variability)[parms$Variability[iparm]],
-    "None" = glue::glue( "  double {parm} = TV{parm};" ),
-    "Additive" = glue::glue( "  double {parm} = TV{parm} + E{eparm};" ),
-    "Exponential" = glue::glue( "  double {parm} = TV{parm}*exp(E{eparm});" ),
-    "Logit" =
-      # Use the numerically stable of logit transform
-      if (parms$Min[iparm] == 0 & parms$Max[iparm] == 1){
-        glue::glue(
-          "  double {parm} = 1/((1/TV{parm} - 1)*exp(-E{eparm}) + 1);"
-        )
-      } else if (parms$Min[iparm] == 0 & parms$Max[iparm] != 1){
-        glue::glue(
-          "  double {parm} = {parms$Max[iparm]}/((1/TV{parm} - 1)*exp(-E{eparm}) + 1);"
-        )
-      } else {
-        glue::glue(
-          "  {parm} = {parms$Min[iparm]} + ({parms$Max[iparm]} - {parms$Min[iparm]})/((1/TV{parm} - 1)*exp(-E{eparm}) + 1)"
-        )
-      }
+  # Typical values
+  parm_code <- glue::glue(
+    dplyr::case_when(
+      scale == "Linear" ~ "  double TV{parm} = THETA_{parm};",
+      scale == "Log" ~ "  double TV{parm} = exp(THETA_{parm});",
+      scale == "Logit" & parm_min == 0 & parm_max == 1 ~
+        # Parameters bound between 0 and 1
+        "  double TV{parm} = 1 / (1 + exp(-THETA_{parm}));",
+      scale == "Logit" & parm_min == 0 & parm_max != 1 ~
+        # Parameters bound between 0 and max > min
+        "  double TV{parm} = {parm_max} / (1 + exp(-THETA_{parm}));",
+      scale == "Logit" & parm_min != 0 ~
+        # Parameters bound between min > 0 and max > min
+        "  double TV{parm} = {parm_min} + ({parm_max} - {parm_min})/(1 + exp(THETA_{parm}))"
+    )
   )
+
+  # Individual values
+  parm_code <- c(
+    parm_code,
+    glue::glue(
+      dplyr::case_when(
+        variability == "None" ~ "  double {parm} = TV{parm};",
+        variability == "Additive" ~ "  double {parm} = TV{parm} + E{eparm};" ,
+        variability == "Exponential" ~ "  double {parm} = TV{parm}*exp(E{eparm});",
+        variability == "Logit" & parm_min == 0 & parm_max == 1 ~
+          # Parameters bound between 0 and 1
+          "  double {parm} = 1/((1/TV{parm} - 1)*exp(-E{eparm}) + 1);",
+        variability == "Logit" & parm_min == 0 & parm_max != 1 ~
+          # Parameters bound between 0 and max > min
+          "  double {parm} = {parm_min}/((1/TV{parm} - 1)*exp(-E{eparm}) + 1);",
+        variability == "Logit" & parm_min != 0 ~
+          # Parameters bound between min > 0 and max > min
+          "  double {parm} = {parm_min} + ({parm_max} - {parm_min})/((1/TV{parm} - 1)*exp(-E{eparm}) + 1)",
+
+      )
+    )
+  )
+
+  parm_code
 }
 
