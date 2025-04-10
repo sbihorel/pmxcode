@@ -2,7 +2,6 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @noRd
 #' @importFrom bsicons bs_icon
 #' @importFrom bslib bs_theme
 #' @importFrom config get
@@ -15,11 +14,28 @@
 #' @importFrom dplyr pull
 #' @importFrom dplyr select
 #' @importFrom dplyr slice
+#' @importFrom flextable add_footer_row
+#' @importFrom flextable add_header_row
+#' @importFrom flextable align
+#' @importFrom flextable as_highlight
+#' @importFrom flextable as_paragraph
+#' @importFrom flextable border_inner
+#' @importFrom flextable border_outer
+#' @importFrom flextable color
+#' @importFrom flextable compose
+#' @importFrom flextable delete_rows
+#' @importFrom flextable flextable
+#' @importFrom flextable fontsize
+#' @importFrom flextable merge_h
+#' @importFrom flextable merge_v
+#' @importFrom flextable rotate
+#' @importFrom flextable set_table_properties
 #' @importFrom glue glue
 #' @importFrom htmltools HTML
 #' @importFrom htmltools tags
 #' @importFrom htmlwidgets onRender
 #' @importFrom jsonlite fromJSON
+#' @importFrom officer fp_border
 #' @importFrom rclipboard rclipboardSetup
 #' @importFrom rclipboard rclipButton
 #' @importFrom readr read_csv
@@ -42,5 +58,6 @@
 #' @importFrom utils installed.packages
 #' @importFrom utils modifyList
 #' @importFrom xfun relative_path
+#' @noRd
 ## usethis namespace: end
 NULL
