@@ -1,0 +1,186 @@
+---
+title: "Model library"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Model library}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The library module of `pmxcode` enables the creation of pharmacometric models for NONMEM and mrgsolve based upon the selection of model component that you make within the interface. This process is generally self-explanatory for users with minimal training in the field of pharmacometrics and population analysis.
+
+The user interface is vertically divided into 3 parts:
+
+* a menu bar on the left, listing the main elements defining a model in the natural order they should be selected,
+* a center region which dynamically changes based upon the selected item in the menu toolbar, and 
+* a text editing area on the right which is automatically updated as selections are made in the center region. The toolbar above the text editing area on the right includes 5 buttons which perform the following actions (in order): ![](./images/library-toolbar.png)
+    + Freeze the content of the editing area (even if changes are made in the center region),
+    + Request an update of the editing area content,
+    + Copy the content of the editing area to clipboard,
+    + Download the content of the editing area, and
+    + Open a webpage providing information about keyboard shortcut working in the text editing area.
+    
+To form a complete model, you must go through all the items of the left menu bar and make appropriate selections. Selections made in a menu are likely to affect the choices available in downstream menus. Additionally, be advised that any selection made in a menu can be lost if you return to an earlier menu and make changes.
+
+# PLATFORM
+
+If this menu, you can select whether the model is intended to be run using NONMEM or mrgsolve. A optional text field allows you to define the version of NONMEM or mrgsolve will be used. This information will be included in a comment in the model file header.
+
+If you select NONMEM, you can choose a coding style:
+
+  * Standard style 
+      + The model file name is based upon any combination of characters and set to "mymodel.ctl" by default.
+      + Only one $TABLE statement is included, combining all output variables.
+      + A simple header is created displaying the file path/name, time stamp, author, and model purpose.
+  * PsN/Xpose style:
+      + The model file uses the *.mod extension
+      + The model file name is expected to following the "run#" standard (where # is one or more digits) and set to run001.mod by default
+      + Up to four $TABLE statements are included, generating the sdtab#, patab#, cotab#, and catab# files based upon the [Xpose](https://cran.r-project.org/web/packages/xpose/xpose.pdf) and [Xpose4](https://cran.r-project.org/web/packages/xpose4/xpose4.pdf) file convention.
+      + The header includes the file path/name, time stamp, author, and model purpose in a format compliant with the Perl-speaks-NONMEM [runrecord](file:///home/sebastien/Downloads/runrecord_userguide.pdf) command.
+
+# FILES
+
+In this menu, you can select the directory in which the model file will be saved using the SELECT MODEL DIRECTORY button.  You can also change the base name of the model file in the dedicated text field. The file extension can be either \*.ctl (for standard style only) or \*.mod. The file path and name are included in the file header and defines the name of the file that can be downloaded from the toolbar above the model editing area.
+
+In this menu, you can also select the data file using the SELECT DATA FILE button. If the selected platform is NONMEM, the path and name of the selected file are used to define the \$DATA statement. Additionally, after a file is selected, `pmxcode` will attempt to process this file and displays a summary of the data if successful or an error message if not. If the selected platform is NONMEM, the list of variables extracted from the data file are displayed in the \$INPUT statement
+
+# MAPPING
+
+If the selected platform is NONMEM and a data file is selected in the FILES menu, `pmxcode` attempts to map variables extracted from the file with data items expected or understood by NONMEM. In an editable table, you can manually select or change the selection of variable Using drop-down list for the following data items:
+
+* Subject identifier variable
+* Independent variable
+* Dependent variable
+* Compartment variable
+* Endpoint identifier variable
+* Time after dose variable
+* Amount variable
+* Rate variable
+* BLQ variable
+
+Using a dedicated multi-selection text field, you can also select the variables to be dropped from the \$INPUT statements. Two additional multi-selection text fields enables the identification of continuous and categorical variables, that will be automatically include in the appropriate \$TABLE statements.
+
+# STRUCTURE
+
+In this menu, you can select the structural components of your model. The interface content is presented under a NONMEM-centric perspective but the choices are generally applicable for both NONMEM and mrgsolve platforms.
+
+The interface includes 3 panels. The top panels relates to pharmacokinetic (PK) models. The middle panel relates to pharmacodynamic (PD) models. The bottom panel relates to coding options that are mostly relevant to NONMEM models. The default model is a 1-compartment PK model with linear first-order absorption and linear elimination.
+
+The fields displayed in the top and middle panels and the list of options they offered change in a very dynamic manner. The number of possible combinations is too large to be exhaustively presented here, but available choices should be obvious to users familiar with pharmacometric topics. Only the main options are delineated here.
+
+## Pharmacokinetic models
+
+A library of pre-defined pharmaocokinetic models is available if the field directly under the panel title is set to "Defined by subroutines", in reference to the NONMEM $SUBROUTINE statements. Other panel fields enables the selection of the number of disposition compartment, the type of intra- and/or extra-vascular dosing, and the type of elimination.
+
+If you needs to write your own code while benefiting of the other functionality provided by `pmxcode`, you can change the field selection to:
+
+* Defined by first-order rates: this is applicable to linear models defined by first-order rate constants. This selection can be useful for parent-metabolite models.
+* Defined by ODEs: this is applicable to non-linear models requiring the use of ordinary differential equations. Note that  standard non-linear models such as models with saturable elimination or target-mediated drug disposition are available from the code library defined by subroutines.
+* Defined by explicit solutions: this is applicable in cases where you can define the PK model with a closed form solution.
+
+In all 3 cases, you will have to define the parameters of your model in the PARAMETERS menu and write your own code in the text editing area on the write. This should be done after you went through all menus to avoid the update of the text editing area and, thus, the loss of any written code.
+
+## Pharmacodynamic models
+
+The default model does not include any PD model. You can change the selection in the field directly under the middle panel title to include a PD component to the model. The available selection will differ whether the model also include a PK component, as illustrated below.
+
+```{r, echo = FALSE}
+data.frame(
+  PD = rep("Pharmacodynamic model", 9),
+  types = c(
+    "None", "Exposure-Response", "Direct effect", "Biophase / Link", 
+    "Indirect response", "Defined by ODEs", "Defined by explicit solutions",
+    "Logistic regression", "Ordered categorical model"
+  ),
+  None = c("-", "Y", "-", "-", "-", "Y", "Y", "Y", "Y"),
+  Subroutine = c("Y", "-", "Y", "Y", "Y", "Y", "-", "-", "-"),
+  First = c("Y", "-", "Y", "Y", "Y", "Y", "-", "-", "-"),
+  ODE = c("Y", "-", "Y", "Y", "Y", "Y", "-", "-", "-"),
+  Explicit = c("-", "Y", "-", "-", "-", "-", "Y", "-", "-")
+) |>
+  flextable::flextable() |>
+  flextable::set_header_labels(
+    PD = "",
+    types = "",
+    Subroutine = "Defined by\nsubroutines",
+    First = "Defined by\nfirst-order rates",
+    ODE = "Defined by\nODEs",
+    Explicit = "Defined by\nexplicit solutions"
+  ) |>
+  flextable::add_header_row( values = c(rep("", 2), rep("Pharmacokinetic model", 5) ) ) |>
+  flextable::rotate( i = 1:9, j = 1 , rotation = "btlr" ) |>
+  flextable::merge_h( i = 1, part = "header") |>
+  flextable::merge_at( i = 1:2, j = 1:2, part = "header") |>
+  flextable::merge_v( j = 1, part = "body") |>
+  flextable::align( i = 1:2, j = 1:7, align = "center", part = "header" ) |>
+  flextable::align( i = 1:9, j = 1:7, align = "center", part = "body" ) |>
+  # Format content
+  flextable::border_outer( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::border_inner( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::fontsize( i = 1:2, j = 1:7, part = "header", size = 9 ) |>
+  flextable::fontsize( i = 1:9, j = 1:7, part = "body", size = 9 ) |> 
+  flextable::set_table_properties(
+    width = 1,
+    layout = "autofit"
+  )
+```
+
+A library of pre-defined inhibitory or stimulatory models is available for exposure-Response models, direct effects models, biophase / link models, indirect response models, logistic regression, and ordered categorical model. You can select among different functional forms and parameterizations and also defined which exposure variable or PK model state drives the PD effects.
+
+# PARAMETERS
+
+You must visit and make selections in the STRUCTURE menu before the PARAMETERS menu populates. Note that you typically have to visit both the PARAMETERS and COVARIANCE menus before any code is generated in the model text editing area.
+
+![](./images/library-parameters.png)
+
+The main element of the PARAMETERS interface is the table of parameters where you can define the parameter name, label, unit, minimum value, initial value, maximum value, scale, and whether the parameter is fixed or not (for NONMEM models only). If the model selected in the STRUCTURE menu was part of the code library of PK and/or PD models, the table will be pre-populated with the expected parameters of the model. Alternatively, you can add parameters to the table using the Additional parameters fields shown above the table.
+
+Default values for the minimum, initial, and maximum values of each parameters are used as `pmxcode` has no *a priori* knowledge of your particular use case. You will most likely have to change these default values to fit your needs. All values must be provided on the linear scale even if the parameters are defined on the log of logit scales.
+
+Warning messages are displayed below the table if automatic checks of the table content are triggered.
+
+For NONMEM models, you can use the "MU referencing" toggle button at the top left of the interface to indicate that model parameters associated with interindividual variability should be MU-referenced or not. Please refer to the NONMEM user's guide for more information about MU-referencing.
+
+For mrgsolve models, you can switch the "Include POSTHOC estimates" toggle button to Yes in case your model should be used for simulations based upon data-provided post hoc estimates of parameters. Similarly, you can switch the "Import NONMEM estimates" toggle button to Yes if you intent to extract the parameter estimates from a NONMEM estimation run. In such cases, the `[ PARAM ]`, `[ OMEGA ]`, and `[ SIGMA ]` blocks are not included in the model code.
+
+# COVARIANCE
+
+You must visit and make selections in the STRUCTURE and PARAMETERS menus before the COVARIANCE menu populates. The interface displays a VARIANCE table and a COVARIANCE table.
+
+The "Variance" table enables you to select the variability model associated with each parameter of the model. The possible selection are:
+
+* `None`: this indicates that no variability must be associated with the parameter,
+* `Additive`: this indicates that the individual values of the parameter must be normally distributed,
+* `Exponential`: this indicates that the individual values of the parameter must be log-normally distributed, and
+* `Logit`: this indicates that the individual values of the parameter must be normally distributed on the logit scale.
+
+The "Covariance" table present an editable triangular covariance matrix. Rows and columns associated with each parameter are automatically enabled or disabled if variability is associated with the parameter or not. You can edit the values of the diagonal and off-diagonal elements as needed. `pmxcode` automatically processes the content of this matrix to generate one or more OMEGA blocks in the NONMEM or mrgsolve model code.
+
+Warning messages are displayed below the table if automatic checks of the "Covariance" table content are triggered.
+
+# RV
+
+You must visit and make selections in the STRUCTURE menu before the RV menu populates. You can select one residual variability model for each PK and/or PD endpoint in your model. The possible selections are:
+
+* `None`: this indicates that no variability should be associated with the endpoint (this is mostly useful for a PKD/PD model in which only the PD endpoint is modeled)
+* `Additive`: this indicates that the amount of residual variability associated with the model predictions is constant
+* `Constant CV`: this indicates that the amount of residual variability associated with the model predictions is proportional to the model prediction
+* `Additive + Constant CV`: this indicates that the amount of residual variability associated with the model predictions is proportional to the model predictions plus a constant
+* `Logarithmic`: this indicates that the amount of residual variability associated with the log-transformed model predictions is constant
+
+You can define the variance of each residual variability parameters in the "Residual variability parameters" table.
+
+For NONMEM models, you can request the implementation of Beal's M3 method (DOI: [10.1023/a:1012299115260](https://doi.org/10.1023/a:1012299115260)) by switching the toggle button to Yes on the bottom right side of the interface.
+
+# TASKS 
+
+This menu is only relevant for NONMEM models. In this menu, you can define whether NONMEM should perform estimation steps, a covariance step, and/or a simulation step. The table at the bottom of the interface allows the selection of options for one or more estimation steps.
+
+# SCALING
+
+The goal of the SCALING menu is to implement in the NONMEM or mrgsolve code the proper scaling factor that ensure that the units of dose, volume, and measured PK endpoint are internally consistent, including taking into account differences between mass and molar units between dose and measured endpoints.
+
+Dedicated fields are displayed to define the units of dose, volume, and concentration, and if necessary molecular mass.

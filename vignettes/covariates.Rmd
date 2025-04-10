@@ -1,0 +1,342 @@
+---
+title: "Covariate module"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Univariate model creation for stepwise covariate search}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The covariate module of `pmxcode` supports the bulk creation of univariate models for execution of stepwise covariate analysis in NONMEM. It is akin to the `scm` tool from [Perl-speaks-NONMEM](file:///home/sebastien/Downloads/scm_userguide.pdf), but defers in several ways: 
+
+* It does not execute NONMEM control streams, nor does it process their results
+* It only creates control streams one step of covariate search at a time
+* The list of valid parameter-covariate relationships are slightly different
+
+The creation of univariate models is implemented sequentially for each step of forward covariate selection and backward elimination. For each step, 3 actions are required and are performed in one of the tab panels:
+
+* The selection of a reference model (in REFERENCE MODEL)
+* The definition of parameter/covariate relationships (in COVARIATE EFFECTS)
+* The creation of the univariate models (in UNIVARIATE MODELS)
+
+# REFERENCE MODEL
+
+This panel is vertically divided into a left and a right area. 
+
+## Left area
+
+In the left side of the  panel, you must upload a reference model for the intended step of each step of forward covariate selection and backward elimination. This is done using the SELECT REFERENCE MODEL button. Valid control stream files use the .ctl or .mod extension. Files using the .ctl extension are assumed to follow standard style, while the file using the .mod extension are assumed to follow the PsN style (see [Model library](./library.html) article for more details on this topic).
+
+Once uploaded, the model code is shown in a text editing field that allows you to make any desired modification.
+
+The content of the display area is automatically parsed by `pmxcode` and various diagnostic messages may be displayed in colored boxes indicating whether any issues has been identified. It is required that the selected model complies with NONMEM coding and commenting conventions implemented by `pmxcode`. Therefore, it is typically expected that the selected model was created in `pmxcode` or derived from a model created in `pmxcode`.
+
+## Right area
+
+To facilitate the implementation of these requirements, at step 1 of forward covariate selection, you can use the CONVERT button shown on the right side of the panel to automatically modify the code of the uploaded reference model. This modified version is shown in a second text editing field that allows you to make any desired modification (not recommended).
+
+The modified version will be used as reference for creation of univariate models instead of the uploaded code.
+
+## Conventions
+
+* *Name*
+
+The header of the reference control stream must contain a comment providing a file path and name that matches that of the selected reference model. The comment must start with `;; Name:` as illustrated below.
+
+```
+;; Name: /home/joesmith/pmx/projectA/models/run176.mod
+```
+
+* *Parameters* 
+
+The header of the reference control stream must contain a comment providing a list and description of all model parameters. Note that the Model library module automatically generates this comment in the control streams it produces. The expected format of the parameter description is illustrated in the example below.
+
+```
+;;    Parameters (mu): CL (|exp), VC (log|exp), Q (log|), VP, KA (|add), F1 (|logit), BASE (|add), KOUT (|add), IMAX (logit|logit), IC50 (|exp)
+```
+
+The comment must start with `;; Parameters:` or `;; Parameters (mu):`. "`(mu)`" indicates that the parameters associated with variability are MU-referenced. If "`(mu)`" is not included prior to the colon, it is assumed that MU-referencing is not used. Using MU-referencing prevents some parameter-covariate relationships to be tested (see [COVARIATE EFFECTS]).
+
+After the colon, information for each model parameter is separated by commas. The parameter name is provided first, possibly followed by information about scale and variability between parentheses and separated by "`|`". Valid values of scale are "`log`" and "`logit`" for logarithmic and logit scales; the absence of information indicates the use of a linear scale. Valid values for variability are "`add`", "`exp`", and "`logit`" for additive, exponential, and logit variability models; the absence of information indicates the lack of variability.
+
+In the example above, `CL` is assumed to be parameterized on the linear scale and associated with exponential variability; `VC` is assumed to be parameterized on the log scale and associated with exponential variability; `Q` is assumed to be parameterized on the log scale without variability; `VP` is assumed to be parameterized on the linear scale without variability; `IMAX` is assumed to be parameterized on the logit scale and associated with a logit variability model; etc...
+
+* *Time-varying covariates*
+
+Caution must be exercised when testing time-varying covariate on parameters that are MU-referenced, especially when an expectation-maximization algorithm (eg SAEM or IMP) is used for model optimization. As per NONMEM's user guide, MU variables must be time-invariant within an occasion (or completely time-invariant if no occasions are defined). If a covariate is time-varying, its effect must be applied outside of the linear MU + ETA relationship.
+
+To indicate that at least one covariate in the dataset is time-varying, the control stream header must include the following comment "`; Time-varying covariates`". This will only affect the possible choice of covariate effect to be tested when MU-referencing is used.
+
+* *TVX / LX / X*
+
+For each parameter `X` listed in the parameter description listed mentioned above (and generally all parameter included in the model), the typical value of the parameter must be defined by the variable `TVX`, and the individual value of the parameter must be defined by the variable `X`. For parameter associated with a logit variability model, the logit transform of the typical value of the parameter must be defined by the variable `LX`. For instance,
+
+```
+  TVCL = THETA(1)
+  CL = TVCL * EXP(ETA(1))
+  
+  TVF1 = THETA(2)
+  LF1 = LOG( TVF1 / (1-TVF1) )
+  F1 = 1 / (1 + EXP(-(LF1 + ETA(2) ) ) )
+```
+
+# COVARIATE EFFECTS
+
+In this panel, you can define the parameter-covariate relationships for which univariate models must be created. 
+
+## Possible relationships
+
+The parameter-covariate relationships that can be tested for continuous or categorical covariates are listed below (actual code is illustrated in [Code implementation]): 
+
+* Continuous: linear, power, and exponential
+* Categorical: additive, proportional, direct proportional, and exponential
+
+The list of relationships that are actually testable depends on the scale of the parameter, the associated variability model, the use of MU-referencing, and whether time-varying covariates are used. Error messages are displayed in the interface when an invalid relationship is selected.
+
+```{r, echo = FALSE}
+
+header1 <- c("Scale", "Linear", "Linear", "Linear", "Linear", "Log", "Log", 
+"Log", "Log", "Logit", "Logit", "Logit", "Logit", "Linear", "Linear", 
+"Linear", "Linear", "Log", "Log", "Log", "Log", "Logit", "Logit", 
+"Logit", "Logit")
+header2 <- c("Variability", "No*", "Additive", "Exponential", "Logit", "No*", 
+"Additive", "Exponential", "Logit", "No*", "Additive", "Exponential", 
+"Logit", "No*", "Additive", "Exponential", "Logit", "No*", "Additive", 
+"Exponential", "Logit", "No*", "Additive", "Exponential", "Logit"
+)
+header3 <- c( 
+  "", 
+  rep("No MU-referencing or\nMU-referencing and no time-varying covariates", 12), 
+  rep("MU-referencing and time-varying covariates", 12) 
+)
+rel <- data.frame(
+  V1 = c("Linear", "Power", "Exponential", "Additive", "Proportional", "Direct proportional"), 
+  V2 = c("Y", "Y", "Y", "Y", "Y", "Y"),
+  V3 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V4 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V5 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V6 = c("-", "Y", "-", "-", "-", "Y"), 
+  V7 = c("-", "Y", "-", "-", "-", "Y"),
+  V8 = c("-", "Y", "-", "-", "-", "Y"), 
+  V9 = c("-", "-", "-", "-", "-", "-"), 
+  V10 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V11 = c("-", "-", "-", "-", "-", "-"),
+  V12 = c("-", "-", "-", "-", "-", "-"), 
+  V13 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V14 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V15 = c("Y", "-", "-", "Y", "-", "-"),
+  V16 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V17 = c("Y", "-", "-", "Y", "-", "-"),
+  V18 = c("-", "Y", "-", "-", "-", "Y"), 
+  V19 = c("-", "-", "-", "-", "-", "-"),
+  V20 = c("-", "Y", "-", "-", "-", "Y"), 
+  V21 = c("-", "-", "-", "-", "-", "-"), 
+  V22 = c("Y", "Y", "Y", "Y", "Y", "Y"), 
+  V23 = c("-", "-", "-", "-", "-", "-"), 
+  V24 = c("-", "-", "-", "-", "-", "-"),
+  V25 = c("Y", "-", "-", "Y", "-", "Y")
+)
+
+cor_color <- function(x){ c("#F46D43", "#1A9850")[ as.numeric(x=="Y") + 1 ] }
+
+flextable::flextable(rel) |>
+  # Add headers
+  flextable::delete_rows( 1, part = "header" ) |>
+  flextable::add_header_row( values = header3 ) |>
+  flextable::add_header_row( values = header2 ) |>
+  flextable::add_header_row( values = header1 ) |> 
+  flextable::rotate(i = 2, j = 2:25, rotation = "btlr", part = "header" ) |>
+  flextable::merge_h( i = 1:3, part = "header" ) |>
+  flextable::align( i = 1:3, j = 2:25, align = "center", part = "header" ) |>
+  flextable::align( i = 1:6, j = 2:25, align = "center", part = "body" ) |>
+  # Format content
+  flextable::border_outer( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::border_inner( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::color( j = ~ . - V1, color = cor_color ) |>
+  # Add footer
+  flextable::add_footer_row(
+    value = "* In absence of variability, parameters are never MU-referenced in code.",
+    colwidths = 25
+  ) |>
+  # flextable::width(width = 1) |>
+  flextable::fontsize( i = 1:3, j = 1:25, part = "header", size = 9 ) |>
+  flextable::fontsize( i = 1:6, j = 1:25, part = "body", size = 9 ) |> 
+  flextable::fontsize( i = 1, part = "footer", size = 8 ) |>
+  flextable::set_table_properties(
+    width = 1,
+    layout = "autofit"
+  )
+```
+
+## Inferface
+
+Parameter/covariate relationships are defined for each step of the forward selection or backward elimination stages using the table provided in the COVARIATE EFFECTS panel. Since NONMEM execution can take time, the covariate effect definitions can be saved (using the <img src='images//download_grey.svg' width='13px' height='13px'> button) in a .csv file and later uploaded (using the <img src='images/upload_grey.svg' width='13px' height='13px'> button) for further modifications.
+
+The interface table includes multiple columns:
+
+* Parameter and covariate must be entered as single variables in the eponymous columns (using alphanumeric characters only);
+* The *Type* column defines whether the covariate is discrete or continuous variables;
+* The *Functional form* column defines the mathematical form of the relationship: "Linear", "Power", or "Exponential" for continuous variables and "Additive", "Proportional", or "Direct proportional" for discrete variables;
+* Any centering value of the covariate effect must be entered in the *Center value for continuous covariate*;
+* The initial estimate of the covariate effect must be entered in the eponymous column;
+* For discrete covariates with \> 2 categories, non-reference categories are each associated with a specific dichotomous flag and initial estimate. The flags must be entered in the *Dichotomous flags for discrete covariate* column separated by colons without spaces and estimates must be entered in a similar fashion (and corresponding order) in the *Initial estimate* column. For instance, to define the effects of renal function categories, one can enter "RFMILD:RFMOD:RFSEV" in the flag column and "0.1:0.2:0.3" in the estimate column.
+* The *Action* column defines what action will be taken based upon the information entered in the row: "Create" to create a control stream, "Do not create" to perform no action, "Select" to indicate that the covariate effect was selected at a particular forward selection step, and "Remove" to indicate that the covariate effect to be removed at a particular backward elimination step.
+
+Use the <img src='images/plus_grey.svg' width='13px' height='13px'> and <img src='images/minus_grey.svg' width='13px' height='13px'> buttons to add and delete rows in the interface table. Table content can also be copied (<img src='images/copy_grey.svg' width='13px' height='13px'>) and pasted (<img src='images/paste_grey.svg' width='13px' height='13px'>). You can also click on <img src='images/duplicate_grey.svg' width='13px' height='13px'> to create a new step by duplicating the content of the current step (selected covariate effect will be filtered out based upon the Action column selection). For step 1 of backward elimination, you can also click on <img src='images/extract_grey.svg' width='13px' height='13px'> to extract the list of parameter/covariate relationships that were previously included in the reference model.
+
+Note that :
+
+* The variables (parameters, covariates, and flags) must be defined in the NONMEM control stream in the \$INPUT, \$PRED, or \$PK block.
+* If covariates and flags need to be defined in the control stream, this must be done prior to ;-- COVARIATE EFFECT START.
+* The downloaded .csv files will contain the following data column: *Stage*, *Step*, *Parameter*, *Covariate*, *Type*, *Function*, *Center*, *Flags*, *Initial*, and *Action*. 
+
+# UNIVARIATE MODELS
+
+Univariate models are automatically created by clicking on the CREATE button after selecting the stage of analysis ("Forward selection" or "Backward elimination") and the step of analysis (1, 2, 3, etc.). Optionally, you can define the folder in which the univariate model files will be saved using the SELECT MODEL DIRECTORY button. You will have to download and save the files at this location using the EXTRACT ALL button. This button only shows up after creation of the univariate runs.
+
+Note that, if the uploaded reference model uses PsN convention, the univariate model files will be named runX.mod, with X being a 3 or 4-digit number starting at the value set in the field entitled "Run nº start at". If the uploaded reference model uses standard NONMEM convention and a user-defined named, the univariate model files will use a different naming convention: \<prefix\>-\<parameter\>-\<covariate\>-\<function\>-\<number\>.ctl
+
+where \<prefix\> is the value set in the Filename prefix field, \<parameter\> and \<covariate\> are the variables involved in the relationship, \<function\> is either "lin", "pow", "exp", "add", "prop" or "dirprop" based upon the selected functional form, and \<number\> is a 2-digit number.
+
+After creation of the univariate model code, you can see the content of each file in LIST OF UNIVARIATE MODELS tab and look at checks performs across all univariate models in the CHECKS tab.
+
+# Code implementation
+
+This section describes the principles applied by `pmxcode` to generate the NONMEM code for univariate models and illustrates these principles with prototypical code examples. 
+
+## Definition of `ACOV_X` and `MCOV_X`
+
+For each univariate model testing the effect of a covariate on parameter `X`, `pmxcode` checks if the reference model already defines the variables `ACOV_X` and `MCOV_X`, and, if that is not the case, `pmxcode` inserts lines of code that defines these variables. `ACOV_X` is intended to combines all additive covariate effects applied to `X` and `MCOV_X` combines all multiplicative effects applied to `X`. Depending on the use of MU-referencing and time-varying covariates, `ACOV_X` and `MCOV_X` are applied on `TVX` or `LX`. Prior to any inclusion of covariate effect, `ACOV_X` and `MCOV_X` are defined as follows:
+
+```
+ACOV_X = 0
+MCOV_X = 1
+```
+
+## Definition of `COVi`
+
+For each univariate model created at step i (i = 1 to n) of forward selection, `pmxcode` inserts a line of code defining the `COVi` variable (COV1, COV2, COV3, etc...) defining the covariate effect being tested. The parameterization of all possible relationships are illustrated below for a continuous covariate `CONT` centered at a value of 25 and a discrete variable `CAT` which is either equal to 1, 2 or 3. For discrete variables, binary variables must be defined for each value of `CAT` that are not the reference value. In the examples below, 1 is assume to be the reference, `CAT2` is a binary variable set to 1 if `CAT=2` and 0 otherwise, and `CAT3` is a binary variable set to 1 if `CAT=3` and 0 otherwise. `CAT2` and `CAT3` must be either in the dataset or defined in the control stream.
+
+The prototypical code provided below assumed the creation of the `COV1` for step 1 of forward selection. For later steps, `pmxcode` applies the same principles for the creation of `COV2` for step 2, `COV3` for step 3, etc.
+
+```{r, echo = FALSE}
+data.frame(
+  Scale = c( rep("Linear/\nLogit", 7), rep("Log", 2) ),
+  Covariate = c( rep("Continuous", 3), rep("Discrete", 4), "Continuous", "Discrete"),
+  Function = c( 
+    "Linear", "Power", "Exponential", "Additive", "Proportional", 
+    "Direct\nproportional", "Exponential", "Power", "Direct\nproportional"
+  ),
+  Code = c(
+    "COV1 = THETA(2) * (CONT-25)",
+    "COV1 = (CONT/25)**THETA(2)",
+    "COV1 = EXP(THETA(2)*(CONT-25))",
+    "COV1 = CAT2 * THETA(2) + CAT3 * THETA(3)",
+    "COV1 = 1 + CAT2*THETA(2) + CAT3*THETA(3)",
+    "COV1 = THETA(2)**CAT2 * THETA(3)**CAT3",
+    "COV1 = EXP(THETA(2)*CAT2 + THETA(3)*CAT3)",
+    "COV1 = LOG(CONT/25)*THETA(2)",
+    "COV1 = THETA(2)*CAT2 + THETA(3)*CAT3"
+  ),
+  Applies = c( 
+    "ACOV_X", "MCOV_X", "MCOV_X", "ACOV_X", "MCOV_X", "MCOV_X", "MCOV_X", 
+    "ACOV_X", "ACOV_X"
+  )
+) |> 
+  flextable::flextable() |>
+  flextable::set_header_labels( Applies = "Applies to" ) |>
+  flextable::merge_v( j = 1, part = "body") |>
+  # Format content
+  flextable::border_outer( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::border_inner( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::compose( 
+    i = 1:9, j = 4, 
+    value = flextable::as_paragraph( flextable::as_highlight(Code, color = "#f1f3f5") ),
+    part = "body"
+  ) |>
+  # flextable::width(width = 1) |>
+  flextable::fontsize( i = 1, j = 1:5, part = "header", size = 9 ) |>
+  flextable::fontsize( i = 1:9, j = 1:5, part = "body", size = 9 ) |>
+  flextable::set_table_properties(
+    width = 1,
+    layout = "autofit"
+  )
+```
+
+
+At later steps of forward selection, multiple covariates could affect the same parameter `X`. In such cases, all additive covariate effects (eg COV1, COV3, and COV6) are combined in `ACOV_X` and all multiplicative covariate effects (eg COV2, COV4, and COV5) are combined in `MCOV_X` as follows:
+
+```
+ACOV_X = COV1 + COV3 + COV6
+MCOV_X = COV2 * COV4 * COV5
+```
+
+## Assignment of `ACOV_X` and `MCOV_X`
+
+The `ACOV_X` and `MCOV_X` are applied to either `TVX` or `LX` variables depending on the scale of the parameter `X`, the variability associated with the parameter `X`, the use of MU-referencing, and the use of time-varying covariates. The section below describes how the code is implemented in these various situations.
+
+Below `minX` and `maxX` are the minimum and maximum values of a parameter `X` defined on the logit scale or associated with a logit variability model
+
+### No MU-referencing
+
+```{r, echo = FALSE}
+table <- read.csv("../inst/resources/covariate_code.csv")
+table |> 
+  dplyr::filter( mu == FALSE ) |>
+  dplyr::select( -mu, -time ) |>
+  flextable::flextable() |>
+  flextable::merge_v( j = 1, part = "body" ) |>
+  # Format content
+  flextable::border_outer( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::border_inner( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  # flextable::width(width = 1) |>
+  flextable::fontsize( i = 1, j = 1:3,  part = "header", size = 9 ) |>
+  flextable::fontsize( i = 1:12, j = 1:3, part = "body", size = 9 ) |>
+  flextable::set_table_properties(
+    width = 1,
+    layout = "autofit"
+  )
+```
+
+### MU-referencing without time-varying covariates
+
+```{r, echo = FALSE}
+table |> 
+  dplyr::filter( mu == TRUE & time == FALSE ) |>
+  dplyr::select( -mu, -time ) |>
+  flextable::flextable() |>
+  flextable::merge_v( j = 1, part = "body" ) |>
+  # Format content
+  flextable::border_outer( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::border_inner( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  # flextable::width(width = 1) |>
+  flextable::fontsize( i = 1, j = 1:3,  part = "header", size = 9 ) |>
+  flextable::fontsize( i = 1:12, j = 1:3, part = "body", size = 9 ) |>
+  flextable::set_table_properties(
+    width = 1,
+    layout = "autofit"
+  )
+```
+
+### MU-referencing without time-varying covariates
+
+```{r, echo = FALSE}
+table |> 
+  dplyr::filter( mu == TRUE & time == TRUE ) |>
+  dplyr::select( -mu, -time ) |>
+  flextable::flextable() |>
+  flextable::merge_v( j = 1, part = "body" ) |>
+  # Format content
+  flextable::border_outer( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  flextable::border_inner( border = officer::fp_border( color = "grey"), part = "all" ) |>
+  # flextable::width(width = 1) |>
+  flextable::fontsize( i = 1, j = 1:3,  part = "header", size = 9 ) |>
+  flextable::fontsize( i = 1:12, j = 1:3, part = "body", size = 9 ) |>
+  flextable::set_table_properties(
+    width = 1,
+    layout = "autofit"
+  )
+```

@@ -6,7 +6,17 @@
 \alias{pmxcode-package}
 \title{pmxcode: Create Pharmacometric Models}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Provides a user interface to create or modify pharmacometric models for various modeling and simulation software platforms.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/sbihorel/pmxcode}
+  \item \url{https://sbihorel.github.io/pmxcode/}
+}
+
 }
 \author{
 \strong{Maintainer}: Sebastien Bihorel \email{sb.pmlab@gmail.com}
