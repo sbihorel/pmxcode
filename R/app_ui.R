@@ -3,10 +3,13 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#'
 #' @noRd
+
 app_ui <- function(request) {
   tagList(
     rclipboard::rclipboardSetup(),
+    shinyjs::useShinyjs(),
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
@@ -88,7 +91,9 @@ app_ui <- function(request) {
 #' @import shiny
 #' @import markdown
 #' @importFrom golem add_resource_path activate_js favicon bundle_resources
+#'
 #' @noRd
+
 golem_add_external_resources <- function() {
   add_resource_path(
     "www",
