@@ -1049,7 +1049,7 @@ create_univariate_models <- function(
               "MCOV_{parm} was defined in the reference control stream but",
               "cannot be used with {parm} which is parameterized {text}"
             ),
-            text = dplyr::case(
+            text = dplyr::case_when(
               scale == "linear" & variability == "add" & mu & timeVarying ~
                 "on the linear scale with an additive variability model , with MU referencing and time varying covariates",
               scale == "logit" & mu & timeVarying ~
