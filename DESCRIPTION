@@ -28,6 +28,7 @@ Imports:
     shiny (>= 1.7.1),
     shinyAce,
     shinyFiles,
+    shinyjs,
     stats,
     tidyr,
     tools,
