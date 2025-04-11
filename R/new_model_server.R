@@ -2839,7 +2839,7 @@ new_model_server <- function(session, input, output, resources ){
           by = 'Parameter'
         ) %>%
         dplyr::mutate(
-          invalid = case_when(
+          invalid = dplyr::case_when(
             Scale == 'Log' & Variability.y == 'Logit' ~ TRUE,
             Scale == 'Logit' & !Variability.y %in% c('None', 'Logit') ~ TRUE,
             TRUE ~ FALSE
