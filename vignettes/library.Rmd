@@ -38,7 +38,7 @@ If you select NONMEM, you can choose a coding style:
   * PsN/Xpose style:
       + The model file uses the *.mod extension
       + The model file name is expected to following the "run#" standard (where # is one or more digits) and set to run001.mod by default
-      + Up to four $TABLE statements are included, generating the sdtab#, patab#, cotab#, and catab# files based upon the [Xpose](https://cran.r-project.org/web/packages/xpose/xpose.pdf) and [Xpose4](https://cran.r-project.org/web/packages/xpose4/xpose4.pdf) file convention.
+      + Up to four $TABLE statements are included, generating the sdtab#, patab#, cotab#, and catab# files based upon the [Xpose](https://cran.r-project.org/package=xpose) and [Xpose4](https://cran.r-project.org/package=xpose4) file convention.
       + The header includes the file path/name, time stamp, author, and model purpose in a format compliant with the Perl-speaks-NONMEM [runrecord](file:///home/sebastien/Downloads/runrecord_userguide.pdf) command.
 
 # FILES
