@@ -7,7 +7,8 @@
       "template_nonmem", "template_mrgsolve", "template_bm", "model_lib",
       "Action", "Center", "Covariate", "Flags", "Function", "Functional form",
       "Initial", "SourceParam", "Parameter", "Stage", "Step", "Type", "combo", "name",
-      "Max", "Min", "Scale", "invalid"
+      "Max", "Min", "Scale", "invalid", "MU", "MU_match", "MU_times", "Variability",
+      "Variability.y"
       )
   )
 
