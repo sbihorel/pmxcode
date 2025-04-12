@@ -10,7 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The covariate module of `pmxcode` supports the bulk creation of univariate models for execution of stepwise covariate analysis in NONMEM. It is akin to the `scm` tool from [Perl-speaks-NONMEM](file:///home/sebastien/Downloads/scm_userguide.pdf), but defers in several ways: 
+The covariate module of `pmxcode` supports the bulk creation of univariate models for execution of stepwise covariate analysis in NONMEM. It is akin to the `scm` tool from [Perl-speaks-NONMEM](https://github.com/UUPharmacometrics/PsN/releases/download/v5.5.0/scm_userguide.pdf), but defers in several ways: 
 
 * It does not execute NONMEM control streams, nor does it process their results
 * It only creates control streams one step of covariate search at a time
