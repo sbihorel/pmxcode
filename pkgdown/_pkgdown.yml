@@ -1,0 +1,12 @@
+url: https://sbihorel.github.io/pmxcode/
+template:
+  bootstrap: 5
+  includes:
+    in_header: pkgdown/extra.css
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - library
+  - covariates
+
