@@ -1,0 +1,7 @@
+aaa .container.template-article {
+  max-width: 90%;
+}
+
+bbb .row > main {
+  max-width: 75%;
+}
