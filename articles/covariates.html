@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Covariate module • pmxcode</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -41,7 +40,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pmxcode</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -247,216 +246,216 @@ MU-referencing, and whether time-varying covariates are used. Error
 messages are displayed in the interface when an invalid relationship is
 selected.</p>
 <div class="tabwid">
-<style>.cl-7f83c90e{table-layout:auto;width:100%;}.cl-7f7af36a{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7f7af37e{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(26, 152, 80, 1.00);background-color:transparent;}.cl-7f7af388{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(244, 109, 67, 1.00);background-color:transparent;}.cl-7f7af389{font-family:'DejaVu Sans';font-size:8pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7f7e4024{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7f7e4038{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7f7e4039{margin:0;text-align:center;margin-left:auto;margin-right:auto;writing-mode: vertical-rl;transform: rotate(180deg);-ms-writing-mode:bt-lr;-webkit-writing-mode:vertical-rl;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7f7e650e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7f7e6518{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7f7e6519{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7f7e6522{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7f7e6523{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7f7e652c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-7f83c90e">
+<style>.cl-4f4395c8{table-layout:auto;width:100%;}.cl-4f3adb5e{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4f3adb68{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(26, 152, 80, 1.00);background-color:transparent;}.cl-4f3adb72{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(244, 109, 67, 1.00);background-color:transparent;}.cl-4f3adb73{font-family:'DejaVu Sans';font-size:8pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4f3e2c78{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4f3e2c82{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4f3e2c8c{margin:0;text-align:center;margin-left:auto;margin-right:auto;writing-mode: vertical-rl;transform: rotate(180deg);-ms-writing-mode:bt-lr;-webkit-writing-mode:vertical-rl;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4f3e4dde{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f3e4de8{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f3e4de9{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f3e4dea{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f3e4df2{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f3e4df3{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-4f4395c8">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Scale</span></p></th>
-<th colspan="4" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">Linear</span></p></th>
-<th colspan="4" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">Log</span></p></th>
-<th colspan="4" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">Logit</span></p></th>
-<th colspan="4" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">Linear</span></p></th>
-<th colspan="4" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">Log</span></p></th>
-<th colspan="4" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">Logit</span></p></th>
+<th class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Scale</span></p></th>
+<th colspan="4" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">Linear</span></p></th>
+<th colspan="4" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">Log</span></p></th>
+<th colspan="4" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">Logit</span></p></th>
+<th colspan="4" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">Linear</span></p></th>
+<th colspan="4" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">Log</span></p></th>
+<th colspan="4" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">Logit</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Variability</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">No*</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Additive</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Exponential</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Logit</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">No*</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Additive</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Exponential</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Logit</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">No*</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Additive</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Exponential</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Logit</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">No*</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Additive</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Exponential</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Logit</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">No*</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Additive</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Exponential</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Logit</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">No*</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Additive</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Exponential</span></p></th>
-<th class="cl-7f7e6519"><p class="cl-7f7e4039"><span class="cl-7f7af36a">Logit</span></p></th>
+<th class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Variability</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">No*</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Additive</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Exponential</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Logit</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">No*</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Additive</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Exponential</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Logit</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">No*</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Additive</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Exponential</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Logit</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">No*</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Additive</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Exponential</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Logit</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">No*</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Additive</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Exponential</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Logit</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">No*</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Additive</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Exponential</span></p></th>
+<th class="cl-4f3e4de9"><p class="cl-4f3e2c8c"><span class="cl-4f3adb5e">Logit</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a"></span></p></th>
-<th colspan="12" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">No MU-referencing or</span><br><span class="cl-7f7af36a">MU-referencing and no time-varying covariates</span></p></th>
-<th colspan="12" class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af36a">MU-referencing and time-varying covariates</span></p></th>
+<th class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e"></span></p></th>
+<th colspan="12" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">No MU-referencing or</span><br><span class="cl-4f3adb5e">MU-referencing and no time-varying covariates</span></p></th>
+<th colspan="12" class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb5e">MU-referencing and time-varying covariates</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f7e6522"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Linear</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6523"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
+<td class="cl-4f3e4dea"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Linear</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4df2"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Power</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
+<td class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Power</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Exponential</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
+<td class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Exponential</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Additive</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
+<td class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Additive</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Proportional</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
+<td class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Proportional</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f7e650e"><p class="cl-7f7e4024"><span class="cl-7f7af36a">Direct proportional</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af388">-</span></p></td>
-<td class="cl-7f7e6518"><p class="cl-7f7e4038"><span class="cl-7f7af37e">Y</span></p></td>
+<td class="cl-4f3e4dde"><p class="cl-4f3e2c78"><span class="cl-4f3adb5e">Direct proportional</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb72">-</span></p></td>
+<td class="cl-4f3e4de8"><p class="cl-4f3e2c82"><span class="cl-4f3adb68">Y</span></p></td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="25" class="cl-7f7e652c"><p class="cl-7f7e4024"><span class="cl-7f7af389">* In absence of variability, parameters are never MU-referenced in code.</span></p></td></tr></tfoot>
+<tfoot><tr style="overflow-wrap:break-word;"><td colspan="25" class="cl-4f3e4df3"><p class="cl-4f3e2c78"><span class="cl-4f3adb73">* In absence of variability, parameters are never MU-referenced in code.</span></p></td></tr></tfoot>
 </table>
 </div>
 </div>
@@ -467,9 +466,9 @@ selected.</p>
 forward selection or backward elimination stages using the table
 provided in the COVARIATE EFFECTS panel. Since NONMEM execution can take
 time, the covariate effect definitions can be saved (using the
-<img src="images%2Fdownload_grey.svg" width="13px" height="13px"> button)
+<img src="images/download_grey.svg" width="13px" height="13px"> button)
 in a .csv file and later uploaded (using the
-<img src="images%2Fupload_grey.svg" width="13px" height="13px"> button)
+<img src="images/upload_grey.svg" width="13px" height="13px"> button)
 for further modifications.</p>
 <p>The interface table includes multiple columns:</p>
 <ul>
@@ -501,17 +500,17 @@ the covariate effect was selected at a particular forward selection
 step, and “Remove” to indicate that the covariate effect to be removed
 at a particular backward elimination step.</li>
 </ul>
-<p>Use the <img src="images%2Fplus_grey.svg" width="13px" height="13px">
-and <img src="images%2Fminus_grey.svg" width="13px" height="13px"> buttons
+<p>Use the <img src="images/plus_grey.svg" width="13px" height="13px">
+and <img src="images/minus_grey.svg" width="13px" height="13px"> buttons
 to add and delete rows in the interface table. Table content can also be
-copied (<img src="images%2Fcopy_grey.svg" width="13px" height="13px">) and
-pasted (<img src="images%2Fpaste_grey.svg" width="13px" height="13px">).
+copied (<img src="images/copy_grey.svg" width="13px" height="13px">) and
+pasted (<img src="images/paste_grey.svg" width="13px" height="13px">).
 You can also click on
-<img src="images%2Fduplicate_grey.svg" width="13px" height="13px"> to
+<img src="images/duplicate_grey.svg" width="13px" height="13px"> to
 create a new step by duplicating the content of the current step
 (selected covariate effect will be filtered out based upon the Action
 column selection). For step 1 of backward elimination, you can also
-click on <img src="images%2Fextract_grey.svg" width="13px" height="13px">
+click on <img src="images/extract_grey.svg" width="13px" height="13px">
 to extract the list of parameter/covariate relationships that were
 previously included in the reference model.</p>
 <p>Note that :</p>
@@ -600,71 +599,71 @@ in the dataset or defined in the control stream.</p>
 <code>pmxcode</code> applies the same principles for the creation of
 <code>COV2</code> for step 2, <code>COV3</code> for step 3, etc.</p>
 <div class="tabwid">
-<style>.cl-7fa13098{table-layout:auto;width:100%;}.cl-7f9b0a60{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7f9b0a74{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:rgba(241, 243, 245, 1.00);}.cl-7f9d93a2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7f9dadf6{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7f9dae00{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-7fa13098">
+<style>.cl-4f60f816{table-layout:auto;width:100%;}.cl-4f5ad8f0{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4f5ad904{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:rgba(241, 243, 245, 1.00);}.cl-4f5d6282{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4f5d7cb8{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f5d7cc2{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-4f60f816">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Scale</span></p></th>
-<th class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Covariate</span></p></th>
-<th class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Function</span></p></th>
-<th class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Code</span></p></th>
-<th class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Applies to</span></p></th>
+<th class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Scale</span></p></th>
+<th class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Covariate</span></p></th>
+<th class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Function</span></p></th>
+<th class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Code</span></p></th>
+<th class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Applies to</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="7" class="cl-7f9dae00"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Linear/</span><br><span class="cl-7f9b0a60">Logit</span></p></td>
-<td class="cl-7f9dae00"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Continuous</span></p></td>
-<td class="cl-7f9dae00"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Linear</span></p></td>
-<td class="cl-7f9dae00"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = THETA(2) * (CONT-25)</span></p></td>
-<td class="cl-7f9dae00"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">ACOV_X</span></p></td>
+<td rowspan="7" class="cl-4f5d7cc2"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Linear/</span><br><span class="cl-4f5ad8f0">Logit</span></p></td>
+<td class="cl-4f5d7cc2"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Continuous</span></p></td>
+<td class="cl-4f5d7cc2"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Linear</span></p></td>
+<td class="cl-4f5d7cc2"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = THETA(2) * (CONT-25)</span></p></td>
+<td class="cl-4f5d7cc2"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">ACOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Continuous</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Power</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = (CONT/25)**THETA(2)</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">MCOV_X</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Continuous</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Power</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = (CONT/25)**THETA(2)</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">MCOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Continuous</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Exponential</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = EXP(THETA(2)*(CONT-25))</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">MCOV_X</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Continuous</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Exponential</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = EXP(THETA(2)*(CONT-25))</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">MCOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Discrete</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Additive</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = CAT2 * THETA(2) + CAT3 * THETA(3)</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">ACOV_X</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Discrete</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Additive</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = CAT2 * THETA(2) + CAT3 * THETA(3)</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">ACOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Discrete</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Proportional</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = 1 + CAT2*THETA(2) + CAT3*THETA(3)</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">MCOV_X</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Discrete</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Proportional</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = 1 + CAT2*THETA(2) + CAT3*THETA(3)</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">MCOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Discrete</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Direct</span><br><span class="cl-7f9b0a60">proportional</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = THETA(2)**CAT2 * THETA(3)**CAT3</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">MCOV_X</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Discrete</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Direct</span><br><span class="cl-4f5ad8f0">proportional</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = THETA(2)**CAT2 * THETA(3)**CAT3</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">MCOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Discrete</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Exponential</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = EXP(THETA(2)*CAT2 + THETA(3)*CAT3)</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">MCOV_X</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Discrete</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Exponential</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = EXP(THETA(2)*CAT2 + THETA(3)*CAT3)</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">MCOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="2" class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Log</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Continuous</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Power</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = LOG(CONT/25)*THETA(2)</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">ACOV_X</span></p></td>
+<td rowspan="2" class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Log</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Continuous</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Power</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = LOG(CONT/25)*THETA(2)</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">ACOV_X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Discrete</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">Direct</span><br><span class="cl-7f9b0a60">proportional</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a74">COV1 = THETA(2)*CAT2 + THETA(3)*CAT3</span></p></td>
-<td class="cl-7f9dadf6"><p class="cl-7f9d93a2"><span class="cl-7f9b0a60">ACOV_X</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Discrete</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">Direct</span><br><span class="cl-4f5ad8f0">proportional</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad904">COV1 = THETA(2)*CAT2 + THETA(3)*CAT3</span></p></td>
+<td class="cl-4f5d7cb8"><p class="cl-4f5d6282"><span class="cl-4f5ad8f0">ACOV_X</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -693,64 +692,64 @@ or associated with a logit variability model</p>
 <h4 id="no-mu-referencing">No MU-referencing<a class="anchor" aria-label="anchor" href="#no-mu-referencing"></a>
 </h4>
 <div class="tabwid">
-<style>.cl-7fde26b0{table-layout:auto;width:100%;}.cl-7fd771c6{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7fdaa24c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7fdabdf4{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7fdabdfe{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-7fde26b0">
+<style>.cl-4f9cff96{table-layout:auto;width:100%;}.cl-4f969372{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4f9992d4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4f99ac74{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f99ac7e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-4f9cff96">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Scale</span></p></th>
-<th class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Variability</span></p></th>
-<th class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Code</span></p></th>
+<th class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Scale</span></p></th>
+<th class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Variability</span></p></th>
+<th class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Code</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-7fdabdfe"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Linear</span></p></td>
-<td class="cl-7fdabdfe"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">None</span></p></td>
-<td class="cl-7fdabdfe"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7fd771c6">TVX = LX</span><br><span class="cl-7fd771c6">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4f99ac7e"><p class="cl-4f9992d4"><span class="cl-4f969372">Linear</span></p></td>
+<td class="cl-4f99ac7e"><p class="cl-4f9992d4"><span class="cl-4f969372">None</span></p></td>
+<td class="cl-4f99ac7e"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4f969372">TVX = LX</span><br><span class="cl-4f969372">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Additive</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7fd771c6">TVX = LX</span><br><span class="cl-7fd771c6">X = TVX + ETA(1)</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Additive</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4f969372">TVX = LX</span><br><span class="cl-4f969372">X = TVX + ETA(1)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Exponential</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7fd771c6">TVX = LX</span><br><span class="cl-7fd771c6">X = TVX * EXP( ETA(1) )</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Exponential</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4f969372">TVX = LX</span><br><span class="cl-4f969372">X = TVX * EXP( ETA(1) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Logit</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + MCOV_X * LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )</span><br><span class="cl-7fd771c6">TVX = 1 / (1 + EXP(-LX) )</span><br><span class="cl-7fd771c6">X = minX + (maxX – minX) / ( 1 + EXP( - (LX + ETA(1) ) ) )</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Logit</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + MCOV_X * LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )</span><br><span class="cl-4f969372">TVX = 1 / (1 + EXP(-LX) )</span><br><span class="cl-4f969372">X = minX + (maxX – minX) / ( 1 + EXP( - (LX + ETA(1) ) ) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Log</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">None</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + THETA(1)</span><br><span class="cl-7fd771c6">TVX = EXP(LX)</span><br><span class="cl-7fd771c6">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Log</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">None</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + THETA(1)</span><br><span class="cl-4f969372">TVX = EXP(LX)</span><br><span class="cl-4f969372">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Additive</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + THETA(1)</span><br><span class="cl-7fd771c6">TVX = EXP(LX)</span><br><span class="cl-7fd771c6">X = TVX + ETA(1)</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Additive</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + THETA(1)</span><br><span class="cl-4f969372">TVX = EXP(LX)</span><br><span class="cl-4f969372">X = TVX + ETA(1)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Exponential</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + THETA(1)</span><br><span class="cl-7fd771c6">TVX = EXP(LX)</span><br><span class="cl-7fd771c6">X = TVX * EXP( ETA(1) )</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Exponential</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + THETA(1)</span><br><span class="cl-4f969372">TVX = EXP(LX)</span><br><span class="cl-4f969372">X = TVX * EXP( ETA(1) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Logit</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">N/A</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Logit</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Logit</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">None</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + MCOV_X * THETA(1) </span><br><span class="cl-7fd771c6">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-7fd771c6">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Logit</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">None</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + MCOV_X * THETA(1) </span><br><span class="cl-4f969372">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-4f969372">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Additive</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">N/A</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Additive</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Exponential</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">N/A</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Exponential</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">Logit</span></p></td>
-<td class="cl-7fdabdf4"><p class="cl-7fdaa24c"><span class="cl-7fd771c6">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7fd771c6">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-7fd771c6">X = minX + (maxX – minX) / (1 + EXP(- (LX + ETA(1) ) ) )</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">Logit</span></p></td>
+<td class="cl-4f99ac74"><p class="cl-4f9992d4"><span class="cl-4f969372">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4f969372">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-4f969372">X = minX + (maxX – minX) / (1 + EXP(- (LX + ETA(1) ) ) )</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -760,64 +759,64 @@ or associated with a logit variability model</p>
 <h4 id="mu-referencing-without-time-varying-covariates">MU-referencing without time-varying covariates<a class="anchor" aria-label="anchor" href="#mu-referencing-without-time-varying-covariates"></a>
 </h4>
 <div class="tabwid">
-<style>.cl-7ff94b0c{table-layout:auto;width:100%;}.cl-7ff28d6c{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7ff5c482{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7ff5dfe4{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7ff5dfee{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-7ff94b0c">
+<style>.cl-4fb7b3e0{table-layout:auto;width:100%;}.cl-4fb14582{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4fb43f94{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4fb459c0{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4fb459ca{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-4fb7b3e0">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Scale</span></p></th>
-<th class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Variability</span></p></th>
-<th class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Code</span></p></th>
+<th class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Scale</span></p></th>
+<th class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Variability</span></p></th>
+<th class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Code</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-7ff5dfee"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Linear</span></p></td>
-<td class="cl-7ff5dfee"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">None</span></p></td>
-<td class="cl-7ff5dfee"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7ff28d6c">TVX = LX</span><br><span class="cl-7ff28d6c">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4fb459ca"><p class="cl-4fb43f94"><span class="cl-4fb14582">Linear</span></p></td>
+<td class="cl-4fb459ca"><p class="cl-4fb43f94"><span class="cl-4fb14582">None</span></p></td>
+<td class="cl-4fb459ca"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4fb14582">TVX = LX</span><br><span class="cl-4fb14582">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Additive</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7ff28d6c">TVX = LX</span><br><span class="cl-7ff28d6c">MU_1 = LX</span><br><span class="cl-7ff28d6c">X = MU_1 + ETA(1)</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Additive</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4fb14582">TVX = LX</span><br><span class="cl-4fb14582">MU_1 = LX</span><br><span class="cl-4fb14582">X = MU_1 + ETA(1)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Exponential</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + MCOV_X * ( THETA(1) )</span><br><span class="cl-7ff28d6c">TVX = LX</span><br><span class="cl-7ff28d6c">MU_1 = LOG(LX)</span><br><span class="cl-7ff28d6c">X = EXP( MU_1 + ETA(1) )</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Exponential</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + MCOV_X * ( THETA(1) )</span><br><span class="cl-4fb14582">TVX = LX</span><br><span class="cl-4fb14582">MU_1 = LOG(LX)</span><br><span class="cl-4fb14582">X = EXP( MU_1 + ETA(1) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Logit</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + MCOV_X * LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )</span><br><span class="cl-7ff28d6c">TVX = 1 / (1 + EXP(-LX) )</span><br><span class="cl-7ff28d6c">MU_1 = LX</span><br><span class="cl-7ff28d6c">X = minX + (maxX – minX) / ( 1 + EXP( - (MU_1 + ETA(1) ) ) )</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Logit</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + MCOV_X * LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )</span><br><span class="cl-4fb14582">TVX = 1 / (1 + EXP(-LX) )</span><br><span class="cl-4fb14582">MU_1 = LX</span><br><span class="cl-4fb14582">X = minX + (maxX – minX) / ( 1 + EXP( - (MU_1 + ETA(1) ) ) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Log</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">None</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + THETA(1)</span><br><span class="cl-7ff28d6c">TVX = EXP(LX)</span><br><span class="cl-7ff28d6c">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Log</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">None</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + THETA(1)</span><br><span class="cl-4fb14582">TVX = EXP(LX)</span><br><span class="cl-4fb14582">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Additive</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + THETA(1)</span><br><span class="cl-7ff28d6c">TVX = EXP(LX)</span><br><span class="cl-7ff28d6c">MU_1 = TVX</span><br><span class="cl-7ff28d6c">X = MU_1 + ETA(1)</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Additive</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + THETA(1)</span><br><span class="cl-4fb14582">TVX = EXP(LX)</span><br><span class="cl-4fb14582">MU_1 = TVX</span><br><span class="cl-4fb14582">X = MU_1 + ETA(1)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Exponential</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + THETA(1)</span><br><span class="cl-7ff28d6c">TVX = EXP(LX)</span><br><span class="cl-7ff28d6c">MU_1 = LX</span><br><span class="cl-7ff28d6c">X = EXP( MU_1 + ETA(1) )</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Exponential</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + THETA(1)</span><br><span class="cl-4fb14582">TVX = EXP(LX)</span><br><span class="cl-4fb14582">MU_1 = LX</span><br><span class="cl-4fb14582">X = EXP( MU_1 + ETA(1) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Logit</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">N/A</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Logit</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Logit</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">None</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7ff28d6c">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-7ff28d6c">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Logit</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">None</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4fb14582">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-4fb14582">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Additive</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">N/A</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Additive</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Exponential</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">N/A</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Exponential</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">Logit</span></p></td>
-<td class="cl-7ff5dfe4"><p class="cl-7ff5c482"><span class="cl-7ff28d6c">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-7ff28d6c">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-7ff28d6c">MU_1 = LX</span><br><span class="cl-7ff28d6c">X = minX + (maxX – minX) / (1 + EXP(- (MU_1 + ETA(1) ) ) )</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">Logit</span></p></td>
+<td class="cl-4fb459c0"><p class="cl-4fb43f94"><span class="cl-4fb14582">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4fb14582">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-4fb14582">MU_1 = LX</span><br><span class="cl-4fb14582">X = minX + (maxX – minX) / (1 + EXP(- (MU_1 + ETA(1) ) ) )</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -827,64 +826,64 @@ or associated with a logit variability model</p>
 <h4 id="mu-referencing-without-time-varying-covariates-1">MU-referencing without time-varying covariates<a class="anchor" aria-label="anchor" href="#mu-referencing-without-time-varying-covariates-1"></a>
 </h4>
 <div class="tabwid">
-<style>.cl-80146658{table-layout:auto;width:100%;}.cl-800d90d0{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8010c2b4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8010dd94{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8010dd9e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-80146658">
+<style>.cl-4fd2275c{table-layout:auto;width:100%;}.cl-4fcbb214{font-family:'DejaVu Sans';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4fceabe0{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4fcec53a{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4fcec544{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-4fd2275c">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Scale</span></p></th>
-<th class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Variability</span></p></th>
-<th class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Code</span></p></th>
+<th class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Scale</span></p></th>
+<th class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Variability</span></p></th>
+<th class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Code</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-8010dd9e"><p class="cl-8010c2b4"><span class="cl-800d90d0">Linear</span></p></td>
-<td class="cl-8010dd9e"><p class="cl-8010c2b4"><span class="cl-800d90d0">None</span></p></td>
-<td class="cl-8010dd9e"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-800d90d0">TVX = LX</span><br><span class="cl-800d90d0">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4fcec544"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Linear</span></p></td>
+<td class="cl-4fcec544"><p class="cl-4fceabe0"><span class="cl-4fcbb214">None</span></p></td>
+<td class="cl-4fcec544"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4fcbb214">TVX = LX</span><br><span class="cl-4fcbb214">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Additive</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = THETA(1)</span><br><span class="cl-800d90d0">TVX = ACOV_X + LX</span><br><span class="cl-800d90d0">MU_1 = LX</span><br><span class="cl-800d90d0">X = ACOV_X + ( MU_1 + ETA(1) )</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Additive</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = THETA(1)</span><br><span class="cl-4fcbb214">TVX = ACOV_X + LX</span><br><span class="cl-4fcbb214">MU_1 = LX</span><br><span class="cl-4fcbb214">X = ACOV_X + ( MU_1 + ETA(1) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Exponential</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = THETA(1)</span><br><span class="cl-800d90d0">TVX = ACOV_X + MCOV_X * LX</span><br><span class="cl-800d90d0">MU_1 = LOG(LX)</span><br><span class="cl-800d90d0">X = (ACOV_X/LX + MCOV_X) * EXP( MU_1 + ETA(1) )</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Exponential</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = THETA(1)</span><br><span class="cl-4fcbb214">TVX = ACOV_X + MCOV_X * LX</span><br><span class="cl-4fcbb214">MU_1 = LOG(LX)</span><br><span class="cl-4fcbb214">X = (ACOV_X/LX + MCOV_X) * EXP( MU_1 + ETA(1) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Logit</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )</span><br><span class="cl-800d90d0">TVX = minX + (maxX – minX) / (1 + EXP(- (ACOV_X+LX) ) )</span><br><span class="cl-800d90d0">MU_1 = LX</span><br><span class="cl-800d90d0">X = minX + (maxX – minX) / ( 1 + EXP( - (ACOV_X + (MU_1 + ETA(1) ) ) ) )</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Logit</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = LOG((THETA(1) - minX)/(maxX - minX)/(1 – (THETA(1) - minX)/(maxX – minX) ) )</span><br><span class="cl-4fcbb214">TVX = minX + (maxX – minX) / (1 + EXP(- (ACOV_X+LX) ) )</span><br><span class="cl-4fcbb214">MU_1 = LX</span><br><span class="cl-4fcbb214">X = minX + (maxX – minX) / ( 1 + EXP( - (ACOV_X + (MU_1 + ETA(1) ) ) ) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Log</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">None</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = ACOV_X + THETA(1)</span><br><span class="cl-800d90d0">TVX = EXP(LX)</span><br><span class="cl-800d90d0">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Log</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">None</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = ACOV_X + THETA(1)</span><br><span class="cl-4fcbb214">TVX = EXP(LX)</span><br><span class="cl-4fcbb214">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Additive</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">N/A</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Additive</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Exponential</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = THETA(1)</span><br><span class="cl-800d90d0">TVX = EXP( ACOV_X + ( LX) )</span><br><span class="cl-800d90d0">MU_1 = LX</span><br><span class="cl-800d90d0">X = EXP( ACOV_X) * ( EXP( MU_1 + ETA(1) ) )</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Exponential</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = THETA(1)</span><br><span class="cl-4fcbb214">TVX = EXP( ACOV_X + ( LX) )</span><br><span class="cl-4fcbb214">MU_1 = LX</span><br><span class="cl-4fcbb214">X = EXP( ACOV_X) * ( EXP( MU_1 + ETA(1) ) )</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Logit</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">N/A</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Logit</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td rowspan="4" class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Logit</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">None</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-800d90d0">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-800d90d0">X = TVX</span></p></td>
+<td rowspan="4" class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Logit</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">None</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = ACOV_X + MCOV_X * THETA(1)</span><br><span class="cl-4fcbb214">TVX = minX + (maxX – minX) / (1 + EXP(-LX) )</span><br><span class="cl-4fcbb214">X = TVX</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Additive</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">N/A</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Additive</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Exponential</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">N/A</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Exponential</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">N/A</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">Logit</span></p></td>
-<td class="cl-8010dd94"><p class="cl-8010c2b4"><span class="cl-800d90d0">LX = THETA(1)</span><br><span class="cl-800d90d0">TVX = minX + (maxX – minX) / (1 + EXP(- (ACOV_X + LX) ) )</span><br><span class="cl-800d90d0">MU_1 = LX</span><br><span class="cl-800d90d0">X = minX + (maxX – minX) / ( 1 + EXP( - (ACOV_X + (MU_1 + ETA(1) ) ) ) )</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">Logit</span></p></td>
+<td class="cl-4fcec53a"><p class="cl-4fceabe0"><span class="cl-4fcbb214">LX = THETA(1)</span><br><span class="cl-4fcbb214">TVX = minX + (maxX – minX) / (1 + EXP(- (ACOV_X + LX) ) )</span><br><span class="cl-4fcbb214">MU_1 = LX</span><br><span class="cl-4fcbb214">X = minX + (maxX – minX) / ( 1 + EXP( - (ACOV_X + (MU_1 + ETA(1) ) ) ) )</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -903,7 +902,7 @@ or associated with a logit variability model</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
