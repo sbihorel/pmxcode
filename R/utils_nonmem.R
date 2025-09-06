@@ -2744,7 +2744,10 @@ replace_table <- function(
     res <- c()
   }
   if ( hasRV ) {
-    res <- c(res, "CWRES", "NPDE" )
+    res <- c( res, "CWRES", "NPDE" )
+  }
+  if ( isTruthy(input$blqInput) && as.logical(input$blqInput) ) {
+    res <- c( res, "PREDV")
   }
 
   # Concatenate all
