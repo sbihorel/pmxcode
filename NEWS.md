@@ -1,3 +1,9 @@
+# pmxcode 0.3.1
+* Add PREDV variable for Beal's M3 method (ie output predictions for BLQ records)
+
+# pmcode 0.3.0
+* Add module for univariate model creation for stepwise covariate searcg
+
 # pmxcode 0.2.2
 * Add feature to fix variability estimates
 * Fix issue in parameterization for log and logit scale
