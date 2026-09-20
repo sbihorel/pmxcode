@@ -1,0 +1,4 @@
+# License
+
+    YEAR: 2022-$year$
+    COPYRIGHT HOLDER: Sebastien Bihorel
