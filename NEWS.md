@@ -1,3 +1,6 @@
+# pmxcode 0.3.2
+* Add Beal's M4 method (ie output predictions for BLQ records)
+
 # pmxcode 0.3.1
 * Add PREDV variable for Beal's M3 method (ie output predictions for BLQ records)
 
