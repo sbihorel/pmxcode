@@ -3339,10 +3339,10 @@ new_model_server <- function(session, input, output, resources ){
         radioButtons(
           inputId = "blqInput",
           width = "100%",
-          label = "Use Beal's M3 method for BLQ data?",
+          label = "Use Beal's methods for BLQ data?",
           inline = TRUE,
-          choices = c("Yes" = TRUE, "No" = FALSE),
-          selected = FALSE
+          choices = c( "No" = 0, "M3" = 1, "M4" = 2),
+          selected = 0
         )
       )
     )
@@ -3370,7 +3370,7 @@ new_model_server <- function(session, input, output, resources ){
       stringsAsFactors = FALSE
     )
 
-    if ( isTruthy(input$blqInput) && as.logical(input$blqInput) ){
+    if ( isTruthy(input$blqInput) && as.numeric(input$blqInput) > 0 ){
       DF$Options[1] <- "LAPLACE"
     }
 

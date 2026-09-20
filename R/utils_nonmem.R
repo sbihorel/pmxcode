@@ -1410,9 +1410,15 @@ replace_pk_pred <- function(
       tmpRV <- rv_lib %>%
         dplyr::filter(.data$TYPE == input$pkRVInput)
 
-      if ( isTruthy(input$blqInput) && as.logical(input$blqInput) ) {
-        tmpRV <- tmpRV %>%
-          dplyr::pull(.data$RV_NONMEM_M3)
+      if ( isTruthy(input$blqInput) && as.numeric(input$blqInput) > 0 ) {
+
+        if ( as.numeric(input$blqInput) == 1 ){
+          tmpRV <- tmpRV %>%
+            dplyr::pull(.data$RV_NONMEM_M3)
+        } else {
+          tmpRV <- tmpRV %>%
+            dplyr::pull(.data$RV_NONMEM_M4)
+        }
 
         blqVariable <- ""
 
@@ -1514,9 +1520,15 @@ replace_pk_pred <- function(
       # Add RV model
       tmpRV <- rv_lib %>%
         dplyr::filter(.data$TYPE == input$pdRVInput)
-      if ( isTruthy(input$blqInput) && as.logical(input$blqInput) ) {
-        tmpRV <- tmpRV %>%
-          dplyr::pull(.data$RV_NONMEM_M3)
+      if ( isTruthy(input$blqInput) && as.numeric(input$blqInput) > 0 ) {
+
+        if ( as.numeric(input$blqInput) == 1 ){
+          tmpRV <- tmpRV %>%
+            dplyr::pull(.data$RV_NONMEM_M3)
+        } else {
+          tmpRV <- tmpRV %>%
+            dplyr::pull(.data$RV_NONMEM_M4)
+        }
 
         if ( blqVariable != ""){
           tmpRV <- sub(
@@ -2172,9 +2184,14 @@ replace_error <- function(
     # Extract RV model
     tmpRV <- rv_lib %>%
       dplyr::filter(.data$TYPE == input$pkRVInput)
-    if ( isTruthy(input$blqInput) && as.logical(input$blqInput) ) {
-      tmpRV <- tmpRV %>%
-        dplyr::pull(.data$RV_NONMEM_M3)
+    if ( isTruthy(input$blqInput) && as.numeric(input$blqInput) > 0 ) {
+      if ( as.numeric(input$blqInput) == 1 ){
+        tmpRV <- tmpRV %>%
+          dplyr::pull(.data$RV_NONMEM_M3)
+      } else {
+        tmpRV <- tmpRV %>%
+          dplyr::pull(.data$RV_NONMEM_M4)
+      }
 
       if ( blqVariable != ""){
         tmpRV <- sub(
@@ -2259,9 +2276,15 @@ replace_error <- function(
     # Extract RV model
     tmpRV <- rv_lib %>%
       dplyr::filter(.data$TYPE == input$pdRVInput)
-    if ( isTruthy(input$blqInput) && as.logical(input$blqInput) ) {
-      tmpRV <- tmpRV %>%
-        dplyr::pull(.data$RV_NONMEM_M3)
+    if ( isTruthy(input$blqInput) && as.numeric(input$blqInput) > 0 ) {
+
+      if ( as.numeric(input$blqInput) == 1 ){
+        tmpRV <- tmpRV %>%
+          dplyr::pull(.data$RV_NONMEM_M3)
+      } else {
+        tmpRV <- tmpRV %>%
+          dplyr::pull(.data$RV_NONMEM_M4)
+      }
 
       if ( blqVariable != ""){
         tmpRV <- sub(
@@ -2746,8 +2769,9 @@ replace_table <- function(
   if ( hasRV ) {
     res <- c( res, "CWRES", "NPDE" )
   }
-  if ( isTruthy(input$blqInput) && as.logical(input$blqInput) ) {
-    res <- c( res, "PREDV")
+
+  if ( isTruthy(input$blqInput) && as.numeric(input$blqInput) > 0 ) {
+    res <- c( res, "PREDV" )
   }
 
   # Concatenate all
