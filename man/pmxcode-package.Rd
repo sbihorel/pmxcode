@@ -21,5 +21,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Sebastien Bihorel \email{sb.pmlab@gmail.com}
 
+Authors:
+\itemize{
+  \item Sebastien Bihorel \email{sb.pmlab@gmail.com}
+}
+
 }
 \keyword{internal}
