@@ -14,3 +14,7 @@ Useful links:
 ## Author
 
 **Maintainer**: Sebastien Bihorel <sb.pmlab@gmail.com>
+
+Authors:
+
+- Sebastien Bihorel <sb.pmlab@gmail.com>
