@@ -10,12 +10,12 @@ Source:
 [`DESCRIPTION`](https://github.com/sbihorel/pmxcode/blob/main/DESCRIPTION)
 
 Bihorel S (2026). *pmxcode: Create Pharmacometric Models*. R package
-version 0.3.2, <https://github.com/sbihorel/pmxcode>.
+version 0.3.3, <https://github.com/sbihorel/pmxcode>.
 
     @Manual{,
       title = {pmxcode: Create Pharmacometric Models},
       author = {Sebastien Bihorel},
       year = {2026},
-      note = {R package version 0.3.2},
+      note = {R package version 0.3.3},
       url = {https://github.com/sbihorel/pmxcode},
     }
