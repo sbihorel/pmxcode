@@ -1,3 +1,6 @@
+# pmxcode 0.3.3 
+* Various fixes for deployment to Posit Cloud Connect
+
 # pmxcode 0.3.2
 * Add Beal's M4 method (ie output predictions for BLQ records)
 
