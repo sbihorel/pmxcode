@@ -1,5 +1,9 @@
 # Changelog
 
+## pmxcode 0.3.3
+
+- Various fixes for deployment to Posit Cloud Connect
+
 ## pmxcode 0.3.2
 
 CRAN release: 2026-09-20
