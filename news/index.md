@@ -2,6 +2,8 @@
 
 ## pmxcode 0.3.2
 
+CRAN release: 2026-09-20
+
 - Add Beal’s M4 method (ie output predictions for BLQ records)
 
 ## pmxcode 0.3.1
