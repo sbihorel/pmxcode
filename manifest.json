@@ -3216,6 +3216,41 @@
         "RemoteSha": "0.4.0"
       }
     },
+    "progress": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "progress",
+        "Title": "Terminal Progress Bars",
+        "Version": "1.2.3",
+        "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Rich\", \"FitzJohn\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Configurable Progress bars, they may include percentage,\n    elapsed time, and/or the estimated completion time. They work in\n    terminals, in 'Emacs' 'ESS', 'RStudio', 'Windows' 'Rgui' and the\n    'macOS' 'R.app'. The package also provides a 'C++' 'API', that works\n    with or without 'Rcpp'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/progress#readme,\nhttp://r-lib.github.io/progress/",
+        "BugReports": "https://github.com/r-lib/progress/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "crayon, hms, prettyunits, R6",
+        "Suggests": "Rcpp, testthat (>= 3.0.0), withr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-12-05 09:33:10 UTC; gaborcsardi",
+        "Author": "Gábor Csárdi [aut, cre],\n  Rich FitzJohn [aut],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-12-06 10:30:02 UTC",
+        "Built": "R 4.6.0; ; 2026-04-25 23:16:07 UTC; unix",
+        "RemoteType": "standard",
+        "RemoteRef": "progress",
+        "RemotePkgRef": "progress",
+        "RemoteRepos": "https://cloud.r-project.org",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "aarch64-apple-darwin23",
+        "RemoteSha": "1.2.3"
+      }
+    },
     "promises": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5234,13 +5269,13 @@
       "checksum": "063f3a5eef4f372e57a32ee3d6219f67"
     },
     ".Rprofile": {
-      "checksum": "8d62896a1c308b2a965d67b27ddeb86a"
+      "checksum": "405aa35bb85acf166724124c2798125c"
     },
     "app.R": {
       "checksum": "a40d4f22c184ef95bd274f42779ad415"
     },
     "DESCRIPTION": {
-      "checksum": "00347d828da5500e353bff9a1049da24"
+      "checksum": "6cc0e00497f9a03861a0b82087c4c2bf"
     },
     "docs/404.html": {
       "checksum": "777fa541a8e030afea6cd2368012b5da"
@@ -5609,7 +5644,7 @@
       "checksum": "febaca2e387531ab6b8df5cf030132a3"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/DESCRIPTION": {
-      "checksum": "4b787e0d0132fdc2cb64591044f95d3d"
+      "checksum": "6af8d95e6b7e59c64612b353d52aaad0"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/inst/app/www/custom.css": {
       "checksum": "d41d8cd98f00b204e9800998ecf8427e"
@@ -5639,7 +5674,7 @@
       "checksum": "ade26bd81d5ee59cf9d913819d1366fd"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/inst/doc/covariates.html": {
-      "checksum": "269ecaff48575f6886953544bd005eaf"
+      "checksum": "369474bae27cd3b268916b1ef16d346b"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/inst/doc/covariates.R": {
       "checksum": "b2614f9f7c8a99ae2f1ce22a65bf0039"
@@ -5648,7 +5683,7 @@
       "checksum": "ac458f0952fdd677845d28db0fde705b"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/inst/doc/library.html": {
-      "checksum": "1b3526b39f68c8b39dd2e7d3daf99735"
+      "checksum": "0a3c5bed539221d65e721a02dd7a24c1"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/inst/doc/library.R": {
       "checksum": "bbc8a5a7a51e108aeace3ddc06215a5e"
@@ -5708,13 +5743,13 @@
       "checksum": "bc797a97e709b89c1ced1af7bc93a7d1"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/man/pmxcode-package.Rd": {
-      "checksum": "c1045779bc7189c47debdea2908c2e6f"
+      "checksum": "69960b4009fcea4b74be8ba3f188f199"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/man/run_app.Rd": {
       "checksum": "b9d122a44871acef9673b9def82908af"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/NAMESPACE": {
-      "checksum": "a830fbefbdfe1fe2ed9f4460701408ab"
+      "checksum": "44c9ce0d1ea3e462f70fcbd1056a7fc1"
     },
     "pmxcode.Rcheck/00_pkg_src/pmxcode/NEWS.md": {
       "checksum": "346ded9cb6537a732d7057838f99273a"
@@ -5828,25 +5863,25 @@
       "checksum": "0171c29c1eab4fb21e8c4ac437c3d1c2"
     },
     "pmxcode.Rcheck/00check.log": {
-      "checksum": "31ae6fbbddc27758e6c8e7f41a2676ff"
+      "checksum": "b5d4d15f730c91c78c36c7f1e0619da6"
     },
     "pmxcode.Rcheck/00install.out": {
-      "checksum": "88a28032d017e253eae164c80ed3aa9f"
+      "checksum": "454637eaa232b9be2e031fb40208977b"
     },
     "pmxcode.Rcheck/pmxcode-Ex.pdf": {
-      "checksum": "4a0bc55fc26464071144c513cf202d70"
+      "checksum": "24c8105a5dd7e7e763df229817b6550a"
     },
     "pmxcode.Rcheck/pmxcode-Ex.R": {
       "checksum": "b1dee1e15f228a0ef0883e28279bde28"
     },
     "pmxcode.Rcheck/pmxcode-Ex.Rout": {
-      "checksum": "dfa12a98b6fd56f7bbdde511f0e00f63"
+      "checksum": "a6810da2f82d9a3bcd71124589b903bf"
     },
     "pmxcode.Rcheck/pmxcode-manual.log": {
-      "checksum": "7c943c03f108d3208b56f3ed7e136595"
+      "checksum": "4ff598f87b302eb9929b026528e8e7e6"
     },
     "pmxcode.Rcheck/pmxcode-manual.pdf": {
-      "checksum": "cbb1b6721c50ca1dfca53a0b60397a9e"
+      "checksum": "a0035e0f631c3c48610de2b3446a6821"
     },
     "pmxcode.Rcheck/pmxcode/app/www/custom.css": {
       "checksum": "d41d8cd98f00b204e9800998ecf8427e"
@@ -5876,10 +5911,10 @@
       "checksum": "ade26bd81d5ee59cf9d913819d1366fd"
     },
     "pmxcode.Rcheck/pmxcode/DESCRIPTION": {
-      "checksum": "45b9767c5c9c49f78ca5a8dc275a7a2d"
+      "checksum": "454f4cfb73e163c179a1a9c07a4a6123"
     },
     "pmxcode.Rcheck/pmxcode/doc/covariates.html": {
-      "checksum": "269ecaff48575f6886953544bd005eaf"
+      "checksum": "369474bae27cd3b268916b1ef16d346b"
     },
     "pmxcode.Rcheck/pmxcode/doc/covariates.R": {
       "checksum": "b2614f9f7c8a99ae2f1ce22a65bf0039"
@@ -5891,7 +5926,7 @@
       "checksum": "1535ec3ad10db3b5ab54a4f258a3e057"
     },
     "pmxcode.Rcheck/pmxcode/doc/library.html": {
-      "checksum": "1b3526b39f68c8b39dd2e7d3daf99735"
+      "checksum": "0a3c5bed539221d65e721a02dd7a24c1"
     },
     "pmxcode.Rcheck/pmxcode/doc/library.R": {
       "checksum": "bbc8a5a7a51e108aeace3ddc06215a5e"
@@ -5915,13 +5950,13 @@
       "checksum": "38aa23f5997ce1e5e38dc330dc818d89"
     },
     "pmxcode.Rcheck/pmxcode/help/pmxcode.rdb": {
-      "checksum": "5e0dcbb897c9842c99fee9146e3baac4"
+      "checksum": "b4f5b4afda66030a1090e651f4b79e1b"
     },
     "pmxcode.Rcheck/pmxcode/help/pmxcode.rdx": {
-      "checksum": "53ad27a5577b309122d12f67cd1ee753"
+      "checksum": "f109ac7bab5c49e8887619c44b01e6da"
     },
     "pmxcode.Rcheck/pmxcode/html/00Index.html": {
-      "checksum": "b3a47e6bb2ee50110af98d937ec8f2f7"
+      "checksum": "7ee47295c408ca8c3deea4a719fe0ce0"
     },
     "pmxcode.Rcheck/pmxcode/html/R.css": {
       "checksum": "ee41876c0116916bb04bcf4fe3e43d78"
@@ -5942,10 +5977,10 @@
       "checksum": "23c44b34f06566a9d311f2436d2b4ed0"
     },
     "pmxcode.Rcheck/pmxcode/Meta/nsInfo.rds": {
-      "checksum": "e8787078bde7cdcf3264b1a7243763b7"
+      "checksum": "bf781df7d1b2bbb7ec80db7457d5d512"
     },
     "pmxcode.Rcheck/pmxcode/Meta/package.rds": {
-      "checksum": "f44f9c5c2c71112a521673ce920bcaca"
+      "checksum": "112513604c7f15f73ad014cfe4345efe"
     },
     "pmxcode.Rcheck/pmxcode/Meta/Rd.rds": {
       "checksum": "04ef48308e19df242a53391e41edc035"
@@ -5954,7 +5989,7 @@
       "checksum": "febaca2e387531ab6b8df5cf030132a3"
     },
     "pmxcode.Rcheck/pmxcode/NAMESPACE": {
-      "checksum": "a830fbefbdfe1fe2ed9f4460701408ab"
+      "checksum": "44c9ce0d1ea3e462f70fcbd1056a7fc1"
     },
     "pmxcode.Rcheck/pmxcode/NEWS.md": {
       "checksum": "346ded9cb6537a732d7057838f99273a"
@@ -5963,10 +5998,10 @@
       "checksum": "d6c68f1fe41ced6e98a766a3757313da"
     },
     "pmxcode.Rcheck/pmxcode/R/pmxcode.rdb": {
-      "checksum": "4e9fa272f2440f42a61ec0ea5b26ca7f"
+      "checksum": "ec36acb2bea9a9ee087a638423e1a0fa"
     },
     "pmxcode.Rcheck/pmxcode/R/pmxcode.rdx": {
-      "checksum": "fe4a225f95f6d254194b1f2ece01dd5a"
+      "checksum": "3e79a4b9a54cae4fb09118392d96f331"
     },
     "pmxcode.Rcheck/pmxcode/README.md": {
       "checksum": "03286147c539fcd7dcf910d24f2865ea"
@@ -6014,7 +6049,7 @@
       "checksum": "69e906aaaebc9cd6d691a0e9a21df7b1"
     },
     "pmxcode.Rcheck/Rdlatex.log": {
-      "checksum": "0d5cce40caf280012a9d1e5d477c8194"
+      "checksum": "cb241a33badd320615f7538f70d07856"
     },
     "R/app_config.R": {
       "checksum": "b92d9d8ec08e426a00fe0326a65078ca"
@@ -6092,7 +6127,7 @@
       "checksum": "b20fb73381522adbbf444beb0d65ccc5"
     },
     "renv.lock": {
-      "checksum": "d474d2d2abe9755088441f7308c9dec2"
+      "checksum": "6f03e0cf97af59bf3582a97b7ba265f8"
     },
     "vignettes/covariates.Rmd": {
       "checksum": "ac458f0952fdd677845d28db0fde705b"
