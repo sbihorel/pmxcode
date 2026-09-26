@@ -1,6 +1,6 @@
 Package: pmxcode
 Title: Create Pharmacometric Models
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: 
     person("Sebastien", "Bihorel", , "sb.pmlab@gmail.com", role = c("cre", "aut"))
 Description: Provides a user interface to create or modify pharmacometric
@@ -43,4 +43,4 @@ LazyData: true
 Depends: 
     shinyBS
 URL: https://github.com/sbihorel/pmxcode, https://sbihorel.github.io/pmxcode/
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

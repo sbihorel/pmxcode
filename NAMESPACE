@@ -5,82 +5,108 @@ import(markdown)
 import(rhandsontable)
 import(shiny)
 importFrom(bsicons,bs_icon)
-importFrom(bslib,bs_theme)
-importFrom(bslib,bs_theme_update)
-importFrom(bslib,font_collection)
-importFrom(bslib,input_switch)
-importFrom(bslib,nav_panel)
-importFrom(bslib,navset_pill_list)
-importFrom(bslib,navset_tab)
-importFrom(bslib,page_navbar)
-importFrom(bslib,showcase_left_center)
-importFrom(bslib,tooltip)
-importFrom(bslib,update_switch)
+importFrom(bslib,
+  bs_theme,
+  bs_theme_update,
+  font_collection,
+  input_switch,
+  nav_panel,
+  navset_pill_list,
+  navset_tab,
+  page_navbar,
+  showcase_left_center,
+  tooltip,
+  update_switch
+)
 importFrom(config,get)
-importFrom(dplyr,bind_cols)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,case_when)
-importFrom(dplyr,filter)
-importFrom(dplyr,left_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,pull)
-importFrom(dplyr,select)
-importFrom(dplyr,slice)
-importFrom(flextable,add_footer_row)
-importFrom(flextable,add_header_row)
-importFrom(flextable,align)
-importFrom(flextable,as_highlight)
-importFrom(flextable,as_paragraph)
-importFrom(flextable,border_inner)
-importFrom(flextable,border_outer)
-importFrom(flextable,color)
-importFrom(flextable,compose)
-importFrom(flextable,delete_rows)
-importFrom(flextable,flextable)
-importFrom(flextable,fontsize)
-importFrom(flextable,merge_h)
-importFrom(flextable,merge_v)
-importFrom(flextable,rotate)
-importFrom(flextable,set_table_properties)
+importFrom(dplyr,
+  bind_cols,
+  bind_rows,
+  case_when,
+  filter,
+  left_join,
+  mutate,
+  pull,
+  select,
+  slice
+)
+importFrom(flextable,
+  add_footer_row,
+  add_header_row,
+  align,
+  as_highlight,
+  as_paragraph,
+  border_inner,
+  border_outer,
+  color,
+  compose,
+  delete_rows,
+  flextable,
+  fontsize,
+  merge_h,
+  merge_v,
+  rotate,
+  set_table_properties
+)
 importFrom(glue,glue)
-importFrom(golem,activate_js)
-importFrom(golem,add_resource_path)
-importFrom(golem,bundle_resources)
-importFrom(golem,favicon)
-importFrom(golem,with_golem_options)
-importFrom(htmltools,HTML)
-importFrom(htmltools,tags)
+importFrom(golem,
+  activate_js,
+  add_resource_path,
+  bundle_resources,
+  favicon,
+  with_golem_options
+)
+importFrom(htmltools,
+  HTML,
+  tags
+)
 importFrom(htmlwidgets,onRender)
 importFrom(jsonlite,fromJSON)
 importFrom(magrittr,"%>%")
 importFrom(officer,fp_border)
-importFrom(rclipboard,rclipButton)
-importFrom(rclipboard,rclipboardSetup)
-importFrom(readr,read_csv)
-importFrom(readr,read_delim)
+importFrom(rclipboard,
+  rclipButton,
+  rclipboardSetup
+)
+importFrom(readr,
+  read_csv,
+  read_delim
+)
 importFrom(rlang,.data)
-importFrom(shiny,column)
-importFrom(shiny,shinyApp)
-importFrom(shiny,tagList)
-importFrom(shiny,tags)
-importFrom(shinyAce,aceEditor)
-importFrom(shinyAce,updateAceEditor)
-importFrom(shinyBS,bsButton)
-importFrom(shinyBS,updateButton)
-importFrom(shinyFiles,parseDirPath)
-importFrom(shinyFiles,parseFilePaths)
-importFrom(shinyFiles,shinyDirButton)
-importFrom(shinyFiles,shinyDirChoose)
-importFrom(shinyFiles,shinyFileChoose)
-importFrom(shinyFiles,shinyFilesButton)
-importFrom(shinyjs,disable)
-importFrom(shinyjs,enable)
-importFrom(shinyjs,useShinyjs)
+importFrom(shiny,
+  column,
+  shinyApp,
+  tagList,
+  tags
+)
+importFrom(shinyAce,
+  aceEditor,
+  updateAceEditor
+)
+importFrom(shinyBS,
+  bsButton,
+  updateButton
+)
+importFrom(shinyFiles,
+  parseDirPath,
+  parseFilePaths,
+  shinyDirButton,
+  shinyDirChoose,
+  shinyFileChoose,
+  shinyFilesButton
+)
+importFrom(shinyjs,
+  disable,
+  enable,
+  useShinyjs
+)
 importFrom(stats,runif)
 importFrom(tidyr,separate_rows)
 importFrom(tools,file_ext)
-importFrom(utils,capture.output)
-importFrom(utils,globalVariables)
-importFrom(utils,installed.packages)
-importFrom(utils,modifyList)
+importFrom(utils,
+  capture.output,
+  globalVariables,
+  installed.packages,
+  modifyList
+)
 importFrom(xfun,relative_path)
