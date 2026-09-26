@@ -3,6 +3,9 @@
 .RData
 .Ruserdata
 _disable_autoload.R
+renv
+renv.lock
+renv/*
 rsconnect
 rsconnect/*
 builds/
@@ -14,3 +17,4 @@ public
 /doc/
 /Meta/
 docs
+.positai

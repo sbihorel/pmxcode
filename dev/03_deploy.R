@@ -38,3 +38,17 @@ golem::add_dockerfile_with_renv()
 ## If you want to deploy to ShinyProxy
 golem::add_dockerfile_with_renv_shinyproxy()
 
+rsconnect::deployApp(
+  appName = 'pmxcode',
+  appTitle = 'pmxcode',
+  appFiles = c(
+    'R/',
+    'inst/',
+    'NAMESPACE',
+    'DESCRIPTION',
+    'app.R'
+  ),
+  appId = rsconnect::deployments('.')$appID,
+  lint = FALSE,
+  forceUpdate = TRUE
+)
